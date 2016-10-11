@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<!-- Website Template by freewebsitetemplates.com -->
+<html>
+<head>
+
+<SCRIPT language=Javascript>
+       <!--
+       function isNumberKey(evt)
+       {
+          var charCode = (evt.which) ? evt.which : evt.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+          return true;
+       } 
+	   
+	   function alphaOnly(e) {
+  var code;
+  if (!e) var e = window.event;
+  if (e.keyCode) code = e.keyCode;
+  else if (e.which) code = e.which;
+  if ((code >= 48) && (code <= 57)) { return false; }
+  return true;
+}
+
+       //-->
+    </SCRIPT>
+
+
+	<meta charset="UTF-8">
+	<title>La Leona Online Resort Reservation</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" type="text/css" href="css/ie.css">
+	<![endif]-->
+</head>
+<body>
+
+<?php
+error_reporting(0);
+session_start();
+$number_of_guest = $_POST['number_of_guest'];
+$check_in = $_POST['check_in'];
+$time = $_POST['time'];
+$contact_number = $_POST ['contact_number;'];
+$customer_name = $_POST['customer_name'];
+$catering= $_POST['catering'];
+$creditcard_number = $_POST['creditcard_number'];
+$total_payment = $_POST ['total_payment'];
+		
+?>
+
+<?php
+ $x=400;
+ $y=200;
+
+$con = mysql_connect("localhost","root");
+if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+
+mysql_select_db("laleona", $con);
+
+		$query=mysql_query("SELECT DISTINCT check_in  FROM event WHERE check_in = '".$check_in."'");
+	if(mysql_num_rows($query)>=1)
+	{
+		$_SESSION["error"] = "true";
+		$_SESSION["numberOfGuest"] = $number_of_guest;
+		$_SESSION["checkIn"] = $check_in;
+		$_SESSION["contact_number"] = $contact_number;
+		$_SESSION["time"] = $time;
+		$_SESSION["customerName"] = $customer_name;
+		$_SESSION["catering"] = $catering;
+		$_SESSION["creditCard"] = $creditcard_number;
+		Header("Location:http://localhost/dreamteam/services.php");
+	}
+	else {
+	$_SESSION["error"] = "false";
+	$_SESSION["numberOfGuest"] = "";
+		$_SESSION["checkIn"] = "";
+		$_SESSION["contact_number"] = "";
+		$_SESSION["time"] = "";
+		$_SESSION["customerName"] = "";
+		$_SESSION["catering"] = "";
+		$_SESSION["creditCard"] = "";
+	}
+
+mysql_query("SELECT Event_ID from event WHERE  ORDER BY Event_ID DESC LIMIT 1");
+mysql_query("SELECT catering FROM event");
+if($catering==yes)
+{
+	number_of_guest * $x = $total_payment;
+}
+else
+{
+	number_of_guest * $y = $total_payment;
+
+}
+		mysql_query("INSERT INTO event (Event_ID,number_of_guest, check_in, contact_number, time, customer_name, catering, creditcard_number) VALUES('$_POST[Event_ID]', '$_POST[number_of_guest]', '$_POST[check_in]', '$_POST[contact_number]', '$_POST[time]', '$_POST[customer_name]', '$_POST[catering]', '$_POST[creditcard_number]')");
+
+								
+?>
+
+
+	<div id="header">
+		<div>
+			<a href="index.html" class="logo"><img src="logo-trans.png" alt=""></a>
+			<form action="index.html">
+				<input type="text" name="search" id="search" value="">
+				<input type="submit" name="searchBtn" id="searchBtn" value="">
+			</form>
+		</div>
+		<div class="navigation">
+			<ul>
+				<li class="selected">
+					<a href="index.html">home</a>
+				</li>
+				<li>
+					<a href="about.html">Room</a>
+				</li>
+				<li>
+					<a href="services.html">event</a> 
+				</li>
+				<li>
+					<a href="contact.html">manage reservation</a>
+				</li>
+				<li class="booking">
+					<a href="booking.html">Admin</a>
+					<ul>
+					<li>
+					<a href="booking.html">event</a>
+					</li>
+					<li>
+					<a href="booking.html">room</a>
+					</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="body">
+		<div class="content">
+			<div class="section">
+				<div class="booking">
+					<h2>La leona Online Resort Reservation</h2>
+					<form method="post" action="index.html">
+					<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>
+						<h4>book a reservation now!</h4>
+						<div class="form1">
+							<div>
+								
+							<label> 
+							<span> Good day! <?php echo $customer_name; ?>. You just completed your Reservation on <?php echo $check_in;?> at <?php echo $time;?>. 
+											<br>Here is your confirmation ID:<?php echo mysql_insert_id();?>You can use this for managing your Reservation.
+											<br>See you at the Resort! <?php total_payment; ?> <span>					
+							</label>
+								
+							</div>
+						</div>
+						<div class="form2">
+							<div>
+							</div>
+						</div>
+						<input type= "submit" name="submit" value="Submit"/>
+					</form>
+				</div>
+			</div>
+			<div class="sidebar">
+				<div class="contact">
+					<div>
+						<a href=""><img src="hallbig.jpg" alt=""></a>
+					</div>
+					<h4>contact information</h4>
+					<ul>
+						<li>
+							<b>address:</b> <span>Brgy. Sampaguita, Lipa City, Batangas</span>
+						</li>
+						<li>
+						<b>landline:</b> <span>(043) 784-0153</span>
+					</li>
+					<li>
+						<b>mobile:</b> <span>09175048667</span>
+					</li>
+					<li>
+						<b>email:</b> <span>www.laleonaresort.com</span>
+					</li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div>
+			<div class="contact">
+				<h3>contact information</h3>
+				<ul>
+					<li>
+						<b>address:</b> <span>Brgy. Sampaguita, Lipa City, Batangas</span>
+					</li>
+					<li>
+						<b>landline:</b> <span>(043) 784-0153</span>
+					</li>
+					<li>
+						<b>mobile:</b> <span>09175048667</span>
+					</li>
+					<li>
+						<b>email:</b> <span>www.laleonaresort.com</span>
+					</li>
+				</ul>
+			</div>
+			<div class="tweets">
+				<h3>recent tweets</h3>
+				<ul>
+					<li>
+						<a href="#">We’re officially welcoming summer 2015! And with that, here are the new and updated rates here in La Leona Resort. Enjoy your vacation with us and have loads of fun here for a memorable summer.<span>1 day ago</span></a>
+					</li>
+				</ul>
+			</div>
+			<div class="posts">
+				<h3>recent blog post</h3>
+				<ul>
+					<li>
+						<a href="#">The Casa Leona</a>
+					</li>
+					<li>
+						<a href="#">Mutya ng Batangan 2010 Candidates’ Pictorial at La Leona Resort</a>
+					</li>
+					<li>
+						<a href="#">La Leona Resort is now Online!</a>
+					</li>
+					<li>
+						<a href="#">La Leona Resort’s Recreation  </a>
+					</li>
+				</ul>
+			</div>
+			<div class="connect">
+				<h3>stay in touch</h3>
+				<p>
+					Are you in search for the best venue for your event? Why not celebrate birthdays, reunions, anniversaries, and weddings or conduct corporate events like team building, seminars, fora and business meetings at La Leona Resort
+				</p>
+				<ul>
+					<li id="facebook">
+						<a href="">facebook</a>
+					</li>
+					<li id="twitter">
+						<a href="">twitter</a>
+					</li>
+					<li id="googleplus">
+						<a href="">googleplus</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="section">
+			<p>
+				&copy; this is the copyright area
+			</p>
+			<ul>
+				<li>
+					<a href="index.html">home</a>
+				</li>
+				<li>
+					<a href="about.html">room</a>
+				</li>
+				<li>
+					<a href="services.html">event</a>
+				</li>
+				<li>
+					<a href="blog.html">manage reservation</a>
+				</li>
+				<li>
+					<a href="booking.html">admin</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

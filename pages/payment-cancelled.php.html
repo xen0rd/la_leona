@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<?php
+include('session.php');
+?>
+<?php
+error_reporting(0);
+?>
+<font color="red">Customer User: <?php echo $login_session; ?></b></font>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Payment Cancelled</title>
+</head>
+<body>
+	<h1>Payment Cancelled</h1>
+	<p>Your payment was cancelled.</p>
+</body>
+</html>
+
+
+
+<?php
+	error_reporting(0);
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+	
+		$con = mysql_connect("localhost","root","");
+		if (!$con) 
+		 {
+		  die('Could not connect: ' . mysql_error());
+		  }
+
+			
+			else
+			{
+			$sql = ("DELETE FROM tblreserveevent WHERE username = '$login_session'");
+				
+			
+			}
+			if (!mysql_query($sql,$con))
+			{
+			die('Error: ' . mysql_error());
+			}
+				
+			}
+			mysql_close($con);
+		
+
+
+
+?>
+
+<form action="payment-cancelled.php" method="post"><br><br><br>
+	<input type="submit" value="submit"> <a href="payment-cancelled.php"><button type="button" class="buttons">Clear</button></a></span>
+	</form>

@@ -1,0 +1,4 @@
+
+		$('#checkin').datepicker({ });
+
+

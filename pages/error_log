@@ -1,0 +1,115 @@
+[18-Jan-2016 04:43:56 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/customerlogin.php:7) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:43:56 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/customerlogin.php:7) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:44:13 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/customerlogin.php:7) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:44:14 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/customerlogin.php:7) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:44:15 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:44:16 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:44:39 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:44:39 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/customerlogin.php:7) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:44:40 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/customerlogin.php:7) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:45:03 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/customerlogin.php:7) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:45:04 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/customerlogin.php:7) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:45:18 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:45:19 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:45:54 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:45:54 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:45:55 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33
+[18-Jan-2016 04:47:05 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:47:05 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:47:06 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33
+[18-Jan-2016 04:47:17 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:47:18 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33
+[18-Jan-2016 04:47:57 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:47:57 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:96) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:49:14 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:49:14 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:49:24 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33
+[18-Jan-2016 04:51:08 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:51:09 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33
+[18-Jan-2016 04:51:21 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:51:22 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33
+[18-Jan-2016 04:52:32 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_real_escape_string(): Access denied for user 'laleonar'@'localhost' (using password: NO) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:52:38 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33
+[18-Jan-2016 04:53:19 UTC] PHP Warning:  session_start(): Cannot send session cookie - headers already sent by (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/laleonar/public_html/CustLogin.php:103) in /home/laleonar/public_html/customerlogin.php on line 8
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_connect(): Can't connect to MySQL server on 'laleonaresort.net' (111) in /home/laleonar/public_html/customerlogin.php on line 19
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_real_escape_string(): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (111) in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 22
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_real_escape_string(): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (111) in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_real_escape_string(): A link to the server could not be established in /home/laleonar/public_html/customerlogin.php on line 23
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_select_db() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 24
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_query() expects parameter 2 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 25
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, null given in /home/laleonar/public_html/customerlogin.php on line 26
+[18-Jan-2016 04:53:20 UTC] PHP Warning:  mysql_close() expects parameter 1 to be resource, boolean given in /home/laleonar/public_html/customerlogin.php on line 33

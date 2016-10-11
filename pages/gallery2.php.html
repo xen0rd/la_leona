@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<!-- Website Template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>La Leona Online Resort Reservation</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" href="table.css" type="text/css">
+	<link rel="stylesheet" href="button.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/ie.css">
+
+
+	
+		<link rel="stylesheet" type="text/css" href="css/ie.css">
+
+
+</head>
+<body>
+	<div id="header">
+		<div>
+			<a href="index.php" class="logo"><img src="logo-trans.png" alt=""></a>
+			<form action="index.php">
+				<input type="text" name="search" id="search" value="">
+				<input type="submit" name="searchBtn" id="searchBtn" value="">
+			</form>
+		</div>
+		<div class="navigation">
+			<ul>
+				<li>
+					<a href="index.php">Home</a>
+					<ul>
+					<li>
+					<a href="bookingevent.php">About Us</a>
+					</li>
+					<li>
+					<a href="bookingroom.php">Contact</a>
+					</li>
+					</ul>
+				</li>
+					<li>
+					<a href="gallery.php">Facilities</a>
+					<ul>
+					<li>
+					<a href="bookingevent.php">Amenities</a>
+					</li>
+				</li>
+				</ul>
+				<li>
+					<a href="services.html">Gallery</a> 
+				<ul>
+					<li>
+					<a href="bookingevent.php">Pictures</a>
+					</li>
+					<li>
+					<a href="bookingroom.php">Videos</a>
+					</li>
+					</ul>
+				<li>
+					<a href="#">Reservation</a>
+					<ul>
+					<li>
+					<a href="register.php">Register</a>
+					</li>
+					<li>
+					<a href="CustLogin.php">Login</a>
+					</li>
+				</li>
+				</ul>
+				<li >
+					<a href="admin.php">Admin</a>
+										</li>
+               
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="body">
+
+
+											  
+		
+	<div class="body">
+	
+	  <td>
+    <h2> <font face="century gothic" color="#f3be4b" size="5">Cabanas & Mushroom </font></h2>
+    <span id="tab"><p style font-size="30" >Take pleasure in La Leona’s airconditioned rooms. You can choose to stay in the contemporary-styled La Leona Attic or in the native-inspired La Leona Loft. Whatever you choose, it will surely bring you that well-deserved La Leona comfort!
+
+<p>If you want more budget-friendly accommodation, why not try La Leona’s fan-cooled rooms? The resort has four nipa hut rooms and one duplex nipa hut. These may be low-priced rooms but will still provide you a relaxing stay at La Leona. </p></span>
+<span id="tab"><p>- easy access to the pool area.
+				</p></span>
+		<hr>
+
+							 <h2><font face="century gothic" color="#f3be4b" size="5">Rates & Availability</font></h2>
+
+							<input class="textarea" type="hidden" size="4" name="reg" value="<?php echo $incre['fldnum']; ?>">
+						<span id="tab"><?php 
+							$err = $_REQUEST['err'];
+						
+							echo "<font color='red'> $err </font>";
+				
+							?>
+							<br>
+						<span id="tab"><br><h4>Adults(13 years old and above): <font color="red"><?php echo $_REQUEST['adultErr']; ?></font><input OnChange="this.form.submit();" type="text" name="adult" value="<?php echo $_REQUEST['adult']; ?>"></span>
+				
+						<span id="tab">Kids(3-12 years old): <input  type="text" name="child" value="<?php echo $_REQUEST['child'];?>"></h4></span></span><br><br><br><br><br>
+						
+						
+						 <input class="textarea" type="hidden"  name="checkawt" value="<?php echo $_REQUEST['night']; ?>">
+					
+						<input class="textarea" type="hidden" name="checkin" value="<?php echo $_REQUEST['checkin']; ?>">
+						<input class="textarea" type="hidden" name="checkout" value="<?php echo $_REQUEST['checkout'];?>">
+	
+						<input  type="hidden"  name="night" value="<?php echo $_REQUEST['night']; ?>">
+						<input type="hidden" name="types" value="<?php echo $_REQUEST['types']; ?>">
+						
+					
+<hr class="hr">
+ 		
+		  <?php        
+		            include("connect.php");   
+					 $room = $_GET['id'];
+                            $query = mysql_query("SELECT * FROM resort_rooms WHERE fldtype='$room'") or die(mysql_error());
+                                                while($row = mysql_fetch_array($query))
+                                                {       
+                                                $f1 = $row['fldtype'];                                           
+                                                $f2 = $row['flddesc'];
+                                                $f3 = $row['fldday'];
+                                                $f4 = $row['fldnight'];
+                                                $f5 = $row['fldmaxpax'];
+                                                $f6 = $row['fldavailable'];
+                                                $f7 = $row['fldpic'];
+                                              ?>
+<table class="room">
+
+<tr>
+  <th>
+  <?php if(empty($f7)=== true) {
+                                                    echo 'No photo available';} else {
+                                                ?>
+                                                    <img width='250' height='200' src='images/<?php echo $f7;?>'>
+                                                <?php
+                                            }?>
+  </th>
+  <td>
+    <h1><font face="century gothic" color="#f3be4b" size="5"><?php echo $f1 ?></font></h1>
+
+    <p><?php echo $f2 ?></p>
+
+</tr>
+
+			<hr>
+
+            <?php
+              }
+            ?>
+			</div></div>
+</font>
+</form>
+</body>
+</table>
+</html>

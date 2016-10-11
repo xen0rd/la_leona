@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Reservation</title>
+	<?php
+	// <link rel="stylesheet" href="css/style.css" type="text/css">
+	?>
+</head>
+
+
+<SCRIPT language=Javascript>
+       <!--
+       function isNumberKey(evt)
+       {
+          var charCode = (evt.which) ? evt.which : evt.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+          return true;
+       } 
+	   
+	   function alphaOnly(e) {
+  var code;
+  if (!e) var e = window.event;
+  if (e.keyCode) code = e.keyCode;
+  else if (e.which) code = e.which;
+  if ((code >= 48) && (code <= 57)) { return false; }
+  return true;
+}
+
+       //-->
+    </SCRIPT>
+
+<body>
+
+ <?php	
+	// $customer_name = $contact_number = $check_in = $check_out = $creditcard_numbert = "";
+// $error = "";
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	// $valid = true;
+	// if (empty($_POST["customer_name"])){$error="Missing information."; $valid=false;}
+	// if (empty($_POST["contact_number"])) {$error="Missing information."; $valid=false;}
+	// if (empty($_POST["check_in"])) {$error="Missing information."; $valid=false;} 
+	// if (empty($_POST["check_out"])) {$error="Missing information."; $valid=false;}
+	// if (empty($_POST["creditcard_number"])) {$error="Missing information."; $valid=false;}
+	// }
+// ?>
+
+<?php
+$customer_name = $contact_number = $check_in = $time = $creditcard_number = "";
+$error = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$valid = true;
+	if (empty($_POST["customer_name"])){$error="Missing information."; $valid=false;}
+	if (empty($_POST["contact_number"])) {$error="Missing information."; $valid=false;}
+	if (empty($_POST["check_in"])) {$error="Missing information."; $valid=false;} 
+	if (empty($_POST["time"])) {$error="Missing information."; $valid=false;}
+	if (empty($_POST["creditcard_number"])) {$error="Missing information."; $valid=false;}
+	
+	$con = mysql_connect("localhost");
+	mysql_select_db("laleona", $con);
+	
+	$query=mysql_query("SELECT DISTINCT check_in FROM event WHERE check_in = '$_POST[check_in]'");
+	if(mysql_num_rows($query)>=1)
+	{
+		$error="NOT AVAILABLE.";
+		$valid=false;
+	}
+}
+?>	
+
+
+	<div id="header">
+		<div>
+			<img src="logo-trans.png" alt="">
+		</div>
+		<div class="navigation">
+			<ul>
+				<li class="selected booking">
+					<a href="firstpage.html">book a reservation</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="body">
+		<div class="content">
+			<div class="section">
+				<div class="booking">
+					<h2>La leona Online Resort Reservation</h2>
+					<form method="post" action="eventprocess.php">
+					<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+						<h4>book a reservation now!</h4>
+						<div class="form1">
+							<label for="number_of_guest"> <span>number of guest
+							echo "<select>";
+							$range = range(120,130);
+							foreach ($range as $cm) {
+							echo "<option value='$cm'>$cm cm</option>";
+							}
+							echo "</select>";</span>
+								<input type="text" name="number_of_guest"  id="number_of_guest" required>
+							</label>
+								<label for="check_in"> <span>reservation date</span>
+									<input type="date" name="check_in" id="check_in" required>
+								</label>
+								<label for="time"> <span>time</span>
+									<input type="time" name="time" id="time" required>
+								</label>
+								<label for="customer_name"> <span>name</span>
+									<input type="text" name="customer_name" id="customer_name" required>
+								</label>
+							
+							<div>
+							
+								<label for="contact_number"> <span>contact number</span>
+									<input type="text" name="contact_number" id="contact_number" required>
+								</label>
+										
+								<label for="creditcard_number"> <span>credit card number</span>
+									<input type="text" name="creditcard_number" id="creditcard_number" required>
+								</label>
+								
+								<label>
+								<span>Avail for catering sevice? (This cost PHP200 for each person/guest and food that includes the ff: .. , .. , .., ..)</span>
+								<select name="catering">
+								<option value	="">Select...</option>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+							</label>						
+								<input type= "submit" name="submit" value="Submit"/> 
+								
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+</body>
+</html>

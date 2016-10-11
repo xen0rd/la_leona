@@ -1,0 +1,21 @@
+table.room{
+	width: 100%;
+	border: 0px;
+	font-size: 16px;
+}
+table.room{ th, td { 
+    padding:10px;
+}
+table.room th {
+    width:40px;
+}
+table.lamp {
+    width:100%;
+    border:1px solid #d4d4d4;
+}
+table.lamp th, td { 
+    padding:10px;
+}
+table.lamp th {
+    width:40px;
+}

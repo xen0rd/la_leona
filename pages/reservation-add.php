@@ -1,0 +1,11 @@
+<?php
+	session_start();
+	if(isset($_GET['name'])){
+		if($_SESSION['login_type']!="customer"){
+			$_SESSION['set_reservation']=$_GET['name'];
+			header("location:facility.php");
+		}
+	}else{
+		header("location:customers-list.php");
+	}
+?>

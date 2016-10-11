@@ -1,0 +1,389 @@
+<html>
+<head>
+
+	<meta charset="UTF-8">
+	<title>La Leona Online Resort Reservation</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" type="text/css" href="css/ie.css">
+	<![endif]-->
+</head>
+<body>
+	<div id="header">
+		<div>
+			<a href="index.html" class="logo"><img src="logo-trans.png" alt=""></a>
+			<form action="index.html">
+				<input type="text" name="search" id="search" value="">
+				<input type="submit" name="searchBtn" id="searchBtn" value="">
+			</form>
+		</div>
+		<div class="navigation">
+			<ul>
+				<li class="selected">
+					<a href="home1.php">Home</a>
+					<ul>
+					<li>
+					<a href="#">About Us</a>
+					</li>
+					<li>
+					<a href="bookingroom.php">Contact</a>
+					</li>
+					</ul>
+				</li>
+					<li>
+					<a href="gallery.php">Accomodation</a>
+					<ul>
+					<li>
+					<a href="bookingevent.php">Amenities</a>
+					</li>
+				</li>
+				</ul>
+				<li>
+					<a href="services.html">Gallery</a> 
+				<ul>
+					<li>
+					<a href="bookingevent.php">Pictures</a>
+					</li>
+					<li>
+					<a href="bookingroom.php">Videos</a>
+					</li>
+					</ul>
+				<li>
+					<a href="contact.html">Reservation</a>
+					<ul>
+					<li>
+					<a href="register.php">Register</a>
+					</li>
+					<li>
+					<a href="CustLogin.php">Login</a>
+					</li>
+				</li>
+				</ul>
+				<li >
+					<a href="admin.php">Admin</a>
+				
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="body">
+		<div class="header">
+			<ul>
+				<li>
+					<div>
+
+					</div>
+				</li>
+				<li>
+			<label > <font face="century gothic" color="#f3be4b" size="6"> Customer Login </label></font>
+				</li>
+				<li>
+					
+					<div>
+					
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		 <?php
+		 error_reporting(0);
+include('customerlogin.php');
+if(isset($_SESSION['login_user'])){
+		header("location:register1.php?err=$err&extra=$_REQUEST[extra]&reg=$_REQUEST[reg]&numrooom=$_REQUEST[numrooom]&checkawt=$_REQUEST[checkawt]&checkin=$_REQUEST[checkin]&checkout=$_REQUEST[checkout]&room=$_REQUEST[room]&night=$_REQUEST[night]&adult=$_REQUEST[adult]&child=$_REQUEST[child]&roomtype=$_REQUEST[roomtype]&types=$_REQUEST[types]&cabana=$_REQUEST[cabana]&extra=$_REQUEST[extra]&totalp=$_REQUEST[totalp]&accommodation=$_REQUEST[accommodation]&numero=$_REQUEST[numero]&numeros=$_REQUEST[numeros]&numrooms=$_REQUEST[numrooms]&numroomss=$_REQUEST[numroomss]&room3=$_REQUEST[room3]&room2=$_REQUEST[room2]&room4=$_REQUEST[room4]&types=$_REQUEST[types]&numrooom=$_REQUEST[numrooom]&extra=$_REQUEST[extra]&totalp=$_REQUEST[totalp]&numero=$_REQUEST[numero]&numeros=$_REQUEST[numeros]&numrooms=$_REQUEST[numrooms]&numroomss=$_REQUEST[numroomss]&room3=$_REQUEST[room3]&room2=$_REQUEST[room2]&room4=$_REQUEST[room4]&roomtype=$_REQUEST[roomtype]&roomtypes2=$_REQUEST[roomtypes2]&roomtypes3=$_REQUEST[roomtypes3]&roomtypes4=$_REQUEST[roomtypes4]&roomtypes5=$_REQUEST[roomtypes5]&cabana=$_REQUEST[cabana]&cabana2=$_REQUEST[cabana2]&cabana3=$_REQUEST[cabana3]&cabana4=$_REQUEST[cabana4]&cabana5=$_REQUEST[cabana5]");
+}
+
+	$extra = $_REQUEST['extra'];
+	$checkin = $_REQUEST['checkin'];
+	$checkout = $_REQUEST['checkout'];
+	$night = $_REQUEST['night'];
+	$types = $_REQUEST['types'];
+	$adult = $_REQUEST['adult'];
+	$child = $_REQUEST['child'];
+	$totalp = $_REQUEST['totalp'];
+	$room4 = $_REQUEST['room4'];
+	$room3 = $_REQUEST['room3'];
+	$room2 = $_REQUEST['room2'];
+	$numrooom = $_REQUEST['numrooom'];
+	$numrooms = $_REQUEST['numrooms'];
+	$numroomss = $_REQUEST['numroomss'];
+	
+		
+	////COTTAGES
+	
+	$roomtype = $_REQUEST['roomtype'];
+	$roomtypes2 = $_REQUEST['roomtypes2'];
+	$roomtypes3 = $_REQUEST['roomtypes3'];
+	$roomtypes4 = $_REQUEST['roomtypes4'];
+	$roomtypes5 = $_REQUEST['roomtypes5'];
+	
+	$cabana = $_REQUEST['cabana'];
+	$cabana2 = $_REQUEST['cabana2'];
+	$cabana3 = $_REQUEST['cabana3'];
+	$cabana4 = $_REQUEST['cabana4'];
+	$cabana5 = $_REQUEST['cabana5'];
+
+	?>
+	<div id="body">
+		<div class="content">
+			<div class="section">
+			
+						<table border="1">
+							<td  height="530px" width="280px" style="border-style:dotted solid; border-width: 4px; margin-top: 100px; margin-left: 639px; position: absolute;"> 
+							<font color=crimson> <h3>Accomodation Preferences </h3></font>
+						
+							
+						<font size="4">Checkin: <?php echo $checkin; ?> <input  type="hidden" name="checkin" value="<?php echo $_REQUEST['checkin']; ?>"><br>
+						Checkout: <?php echo $checkout; ?><input type="hidden" name="checkout" value="<?php echo $_REQUEST['checkout'];?>"><br>
+						Night(s) of Stay:  <?php echo $night; ?><input  type="hidden"  name="night" value="<?php echo $_REQUEST['night']; ?>"><Br>
+						
+						Type of Stay:  <?php echo $types; ?> <input type="hidden" name="types" value="<?php echo $_REQUEST['types']; ?>"><br>
+						Adult(s): <?php echo $adult; ?> <input type="hidden" name="adult" value="<?php echo $_REQUEST['adult']; ?>"><br>
+																							
+						<input type="hidden" name="child" value="<?php echo $_REQUEST['child']; ?>">
+						<?php
+						if ($child == NULL)
+						{	
+
+							?>
+							Kid(s): <?php echo "None"; ?>  <br>
+							<?php
+						}
+						
+						if ($child != NULL)
+						{	
+							?>
+							Kid(s):<?php echo $child; ?> <br>
+							<?php
+						}
+						
+						
+						$tot = $_REQUEST['totalp'] * 0.12;
+						$tots = $_REQUEST['totalp'] - $tot;
+						?>
+												Extra Bed: <?php echo $extra; ?><input type="hidden" name="extra" value="<?php echo $_REQUEST['extra']; ?>">
+
+						<br><br>Vatable Sales: Php <?php echo $tots; ?><input type="hidden" name="tots" value="<?php echo $_REQUEST['tots']; ?>"><br>
+						VAT (12%): Php <?php echo $tot; ?><input type="hidden" name="tot" value="<?php echo $_REQUEST['tot']; ?>"><br>
+						
+						
+						
+						
+						Total: Php <?php echo $totalp; ?><input type="hidden" name="totalp" value="<?php echo $_REQUEST['totalp']; ?>">
+	
+	
+						
+						<input type="hidden" name="reg" value="<?php echo $_REQUEST['reg']; ?>">
+						<input type="hidden" name="checkawt" value="<?php echo $_REQUEST['checkawt'];?>">
+						<input type="hidden" name="room4" value="<?php echo $_REQUEST['room4']; ?>"> <input type="hidden" name="numroomss" value="<?php echo $_REQUEST['numroomss']; ?>">
+						<input type="hidden" name="room3" value="<?php echo $_REQUEST['room3']; ?>"> <input type="hidden" name="numrooms" value="<?php echo $_REQUEST['numrooms']; ?>">
+						<input type="hidden" name="room2" value="<?php echo $_REQUEST['room2']; ?>"> <input type="hidden" name="numrooom" value="<?php echo $_REQUEST['numrooom']; ?>">
+
+					
+						<input type="hidden" name="roomtype" value="<?php echo $_REQUEST['roomtype']; ?>"> <input type="hidden" name="cabana" value="<?php echo $_REQUEST['cabana']; ?>">
+						<input type="hidden" name="roomtypes2" value="<?php echo $_REQUEST['roomtypes2']; ?>"> <input type="hidden" name="cabana2" value="<?php echo $_REQUEST['cabana2']; ?>">
+						<input type="hidden" name="roomtypes3" value="<?php echo $_REQUEST['roomtypes3']; ?>"> <input type="hidden" name="cabana3" value="<?php echo $_REQUEST['cabana3']; ?>">
+						<input type="hidden" name="roomtypes4" value="<?php echo $_REQUEST['roomtypes4']; ?>"> <input type="hidden" name="cabana4" value="<?php echo $_REQUEST['cabana4']; ?>">
+						<input type="hidden" name="roomtypes5" value="<?php echo $_REQUEST['roomtypes5']; ?>"> <input type="hidden" name="cabana5" value="<?php echo $_REQUEST['cabana5']; ?>">
+
+						<?php 
+						if ($_REQUEST['room2']|| $_REQUEST['room3'] || $_REQUEST['room4'] != NULL)
+						{
+						?>
+						<font color=blue> <h3>Room</h3></font>
+
+						
+
+						<?php
+						if ($_REQUEST['room4'] != NULL)
+						{
+					
+						 echo $room4;  echo"&nbsp;($numroomss)<br>"; 
+
+						}
+						
+						if ($_REQUEST['room3'] != NULL)
+						{
+							echo $room3;  echo"&nbsp;($numrooms)<br>"; 				
+					
+						}
+						
+						if ($_REQUEST['room2'] != NULL)
+						{
+							
+						 echo $room2;  echo"&nbsp;($numrooom)<br>"; 
+						}
+						}
+						?>
+							<?php 
+						if ($_REQUEST['roomtype'] || $_REQUEST['roomtypes2'] || $_REQUEST['roomtypes3'] || $_REQUEST['roomtypes4'] || $_REQUEST['roomtypes5'] != NULL)
+						{
+							?>
+								<font color=blue> <h3>Cottages</h3></font>
+
+		
+							<?php
+							if ($_REQUEST['roomtype'] != NULL)
+							{	
+								echo $roomtype; echo "&nbsp;( $cabana)<br>";
+							}
+							?> 
+							<?php 
+							if ($_REQUEST['roomtypes2'] != NULL)
+							{	
+								echo $roomtypes2;  echo "&nbsp;( $cabana2)<br>"; 
+							}							
+							?>
+							<?php 
+							if ($_REQUEST['roomtypes3'] != NULL)
+							{	
+								echo $roomtypes3; echo "&nbsp;( $cabana3)<br>";
+							}
+							?> 
+							<?php 
+							if ($_REQUEST['roomtypes4'] != NULL)
+							{	
+								echo $roomtypes4; echo "&nbsp;( $cabana4)<br>";
+							}
+							?>
+							<?php 
+							if ($_REQUEST['roomtypes5'] != NULL)
+							{	
+								echo $roomtypes5; echo "&nbsp;( $cabana5)<br>";
+							}
+							?>
+							</th></tr>
+						<?php
+						}
+						?>
+							</td>
+							
+							
+							</table>
+<div id="body">
+		<div class="content">
+			<div class="section">
+				<div class="booking">
+					
+					<form method="post" action="">
+						<h4>Log In</h4>
+						<div class="form1">
+							<div>
+		    
+        <div class="card card-container">
+            
+          
+            
+
+
+
+ 
+<input id="name" name="username" placeholder="Username" type="text" autofocus> </input><br>
+
+<input id="password" name="password" placeholder="Password" type="password"> <br>
+<input name="submit"  type="submit" id="login-button" value=" Submit ">
+<span><?php echo $error; ?></span>
+
+	
+
+                <span><?php echo $error; ?></span>
+
+
+						
+							</div>
+						</div>
+						<div class="form2">
+							<div>
+							</div>
+						</div>
+						</div>
+                        </div>
+						</div>
+	</div>
+	<div id="footer">
+		<div>
+			<div class="contact">
+				<h3>contact information</h3>
+				<ul>
+					<li>
+						<b>address:</b> <span>Brgy. Sampaguita, Lipa City, Batangas</span>
+					</li>
+					<li>
+						<b>landline:</b> <span>(043) 784-0153</span>
+					</li>
+					<li>
+						<b>mobile:</b> <span>09175048667</span>
+					</li>
+					<li>
+						<b>email:</b> <span>www.laleonaresort.com</span>
+					</li>
+				</ul>
+			</div>
+			<div class="tweets">
+				<h3>recent tweets</h3>
+				<ul>
+					<li>
+						<a href="#">We’re officially welcoming summer 2012! And with that, here are the new and updated rates here in La Leona Resort. Enjoy your vacation with us and have loads of fun here for a memorable summer.<span>1 day ago</span></a>
+					</li>
+				</ul>
+			</div>
+			<div class="posts">
+				<h3>recent blog post</h3>
+				<ul>
+					<li>
+						<a href="#">The Casa Leona</a>
+					</li>
+					<li>
+						<a href="#">Mutya ng Batangan 2010 Candidates’ Pictorial at La Leona Resort</a>
+					</li>
+					<li>
+						<a href="#">La Leona Resort is now Online!</a>
+					</li>
+					<li>
+						<a href="#">La Leona Resort’s Recreation  </a>
+					</li>
+				</ul>
+			</div>
+			<div class="connect">
+				<h3>stay in touch</h3>
+				<p>
+					Are you in search for the best venue for your event? Why not celebrate birthdays, reunions, anniversaries, and weddings or conduct corporate events like team building, seminars, fora and business meetings at La Leona Resort
+				</p>
+				<ul>
+					<li id="facebook">
+						<a href="">facebook</a>
+					</li>
+					<li id="twitter">
+						<a href="">twitter</a>
+					</li>
+					<li id="googleplus">
+						<a href="">googleplus</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="section">
+			<p>
+				&copy; this is the copyright area
+			</p>
+			<ul>
+				<li>
+					<a href="index.html">home</a>
+				</li>
+				<li>
+					<a href="about.html">room</a>
+				</li>
+				<li>
+					<a href="services.html">event</a>
+				</li>
+				<li>
+					<a href="blog.html">manage reservation</a>
+				</li>
+				<li>
+					<a href="booking.html">admin</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
