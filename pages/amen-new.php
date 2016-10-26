@@ -187,9 +187,9 @@
 		<?php 
 			include "connect.php";
 
-			$result = mysql_query("SELECT MAX(code) as maxcode FROM tbltype where facid=$facid;");
-				if(mysql_num_rows($result)){
-					while($row = mysql_fetch_array($result))
+			$result = mysqli_query($con,"SELECT MAX(code) as maxcode FROM tbltype where facid=$facid;");
+				if(mysqli_num_rows($result)){
+					while($row = mysqli_fetch_array($result))
 					{
 						$prefix = substr($row['maxcode'],0,3); 
 						$code = substr($row['maxcode'],-3);

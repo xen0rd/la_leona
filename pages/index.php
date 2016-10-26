@@ -188,9 +188,9 @@
 					<ul class="rslides2" style="align:center;margin:auto 0px;">
 						<?php
 							include "connect.php";
-							$result = mysql_query("SELECT * FROM tblfacilities;");
-							if(mysql_num_rows($result)){
-								while($row = mysql_fetch_array($result))
+							$result = mysqli_query($con,"SELECT * FROM tblfacilities;");
+							if(mysqli_num_rows($result)){
+								while($row = mysqli_fetch_array($result))
 								{
 									echo "<li><img src=\"".$row['image']."\" title=\"Happy trees\" />
 											<div style=\"margin-left:258px;margin-top:-60px;\">

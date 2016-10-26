@@ -188,9 +188,9 @@
 
 			include "connect.php";
 
-			$result = mysql_query("SELECT * FROM tbltype where id=$id and facid=$facid;");
-				if(mysql_num_rows($result)){
-					while($row = mysql_fetch_array($result))
+			$result = mysqli_query($con,"SELECT * FROM tbltype where id=$id and facid=$facid;");
+				if(mysqli_num_rows($result)){
+					while($row = mysqli_fetch_array($result))
 					{
 						$code = $row['code'];
 						$name = $row['name'];

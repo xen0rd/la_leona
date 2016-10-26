@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "connect.php";
 $error=''; 
 if (isset($_POST['submit'])) {
 	if (empty($_POST['username']) || empty($_POST['password'])) {
@@ -11,12 +12,12 @@ if (isset($_POST['submit'])) {
 		$password=$_POST['password'];
 		$username = stripslashes($username);
 		$password = stripslashes($password);
-		$username = mysql_real_escape_string($username);
-		$password = mysql_real_escape_string($password);
-		include "connect.php";
-		$result = mysql_query("select * from tbllogin where password='$password' AND username='$username'");
-		if(mysql_num_rows($result)){
-			while($row = mysql_fetch_array($result))
+		$username = mysqli_real_escape_string($con,$username);
+		$password = mysqli_real_escape_string($con,$password);
+		
+		$result = mysqli_query($con,"select * from tbllogin where password='$password' AND username='$username'");
+		if(mysqli_num_rows($result)){
+			while($row = mysqli_fetch_array($result))
 			{
 				$_SESSION['login_user']=$username;
 				$_SESSION['login_type']=$row['type'];
@@ -26,7 +27,7 @@ if (isset($_POST['submit'])) {
 		}else{
 			$error = "<br><br><br> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color='red' size='3'> Invalid Username or Password </font>";		
 		}
-	mysql_close($con); 
+	mysqli_close($con); 
 	}
 }
 ?>

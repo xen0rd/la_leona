@@ -162,9 +162,9 @@
 		<table class="room">
 			<?php
 				include "connect.php";
-				$result = mysql_query("SELECT * FROM tblfacilities;");
-				if(mysql_num_rows($result)){
-					while($row = mysql_fetch_array($result))
+				$result = mysqli_query($con,"SELECT * FROM tblfacilities;");
+				if(mysqli_num_rows($result)){
+					while($row = mysqli_fetch_array($result))
 					{
 						echo "<tr>
 								<th style=\"padding:10px;\"><br /><br />

@@ -178,9 +178,9 @@
 			<?php
 				include "connect.php";
 
-				$result = mysql_query("SELECT * FROM tblamenities where facid=$id;");
-				if(mysql_num_rows($result)){
-					while($row = mysql_fetch_array($result))
+				$result = mysqli_query($con,"SELECT * FROM tblamenities where facid=$id;");
+				if(mysqli_num_rows($result)){
+					while($row = mysqli_fetch_array($result))
 					{
 						echo "<tr>
 								<td>&nbsp;</td>
@@ -200,9 +200,9 @@
 								$ordered = 0;
 								$mydate = date("m/d/Y");
 								//echo $mydate;
-								$resultx = mysql_query("SELECT tbladdons.trxnid, tbladdons.facid, tbladdons.devname, tbladdons.pieces, tblreservations.status, tblreservations.facid, tblreservations.trxnid, tblreservations.facname FROM tbladdons, tblreservations where tbladdons.facid=tblreservations.facid and tbladdons.devname='".$row['devname']."' and (tblreservations.status='checkedin' or tblreservations.status='reserved') and tblreservations.cin>='$mydate' and tbladdons.trxnid=tblreservations.trxnid");
-									if(mysql_num_rows($resultx)){
-										while($rowx = mysql_fetch_array($resultx))
+								$resultx = mysqli_query($con,"SELECT tbladdons.trxnid, tbladdons.facid, tbladdons.devname, tbladdons.pieces, tblreservations.status, tblreservations.facid, tblreservations.trxnid, tblreservations.facname FROM tbladdons, tblreservations where tbladdons.facid=tblreservations.facid and tbladdons.devname='".$row['devname']."' and (tblreservations.status='checkedin' or tblreservations.status='reserved') and tblreservations.cin>='$mydate' and tbladdons.trxnid=tblreservations.trxnid");
+									if(mysqli_num_rows($resultx)){
+										while($rowx = mysqli_fetch_array($resultx))
 										{
 											$tot_items += $rowx['pieces'];
 										}
