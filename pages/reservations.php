@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ session_start();
 			mode: 'fade',
 			captions: true
 		});*/
-		
+
 		 $(function () {
 
 		      // Slideshow 1
@@ -51,7 +51,7 @@ session_start();
 			var email2 = document.getElementById('xemail2');
 			var pwd = document.getElementById('xpwd');
 			var pwd2 = document.getElementById('xpwd2');
-			
+
 			if(email.value!=""){
 				filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				if (filter.test(email.value)) {
@@ -70,7 +70,7 @@ session_start();
 			                            	if(pwd.value!="" && pwd2.value!="" && pwd.value.length >=8){
 												if(pwd.value==pwd2.value){
 													alertify.success('password is allowed!');
-													return true;	
+													return true;
 												}else{
 													alertify.error('Password mismatch!');
 													pwd2.value="";
@@ -79,7 +79,7 @@ session_start();
 											}else{
 												if(pwd.value.length<8 && pwd.value.length>0){
 													alertify.error('Minimum Length of Password is 8!');
-													pwd.focus();		
+													pwd.focus();
 												}
 											}
 			                            }else{
@@ -92,7 +92,7 @@ session_start();
 			                    });
 						}else{
 							alertify.error('Email mismatch!');
-							email2.focus();	
+							email2.focus();
 						}
 					}
 				}else{
@@ -100,19 +100,21 @@ session_start();
 					email.value="";
 					email.focus();
 					return false;
-				}	
+				}
 			}else{
 				//email.focus();
 			}
 		 }
 
 		 function cancel_r(trxnid,name){
+			 var reason = prompt("WHY ARE YOU CANCELLING YOUR RESERVATION?");
+
 		 	alertify.confirm('Are you sure you want to cancel this booking?', function (e) {
 		 		if(e){
 		 			$.ajax({
 	                    type: "POST",
 	                    url: "cancel-reserve.php",
-	                    data: "trxnid="+trxnid,
+	                    data: {'trxnid': trxnid, 'reason': reason},
 	                    cache: false,
 	                    success: function(result){
 	                    	if(result=="success"){
@@ -125,6 +127,17 @@ session_start();
 		 		}
 		 	});
 
+		 }
+	
+		 
+		  function view_r(trxnid){
+		 	alertify.confirm('Are you sure you want to view details?', function (e) {
+		 		if(e){
+		 			window.location.href="receipt.upload.php?id="+trxnid;
+		 		}else{
+		 			alertify.error('Cancel viewing details!');
+		 		}
+		 	});
 		 }
 	</script>
 
@@ -179,9 +192,9 @@ session_start();
                 <li>
                     <a href="slideshow.php" >Gallery</a>
                 </li>
-                <li>    
+                <li>
                     <a>Reservation</a>
-                        <?php 
+                        <?php
                     	//echo $_SESSION['login_type'];
                     	if(isset($_SESSION['login_type'])){
                     		if($_SESSION['login_type']=="customer"){
@@ -190,9 +203,11 @@ session_start();
 					                            <a href=\"reservations.php?name=".$_SESSION['login_user']."\">View Reservations</a>
 					                        </li>
 					                        <li>
-					                            
+
 					                        </li>
 					                  </ul>";
+	                    		}else if($_SESSION['login_type']=="admin"){
+
 	                    		}else{
 	                    			echo "<ul>
 	                    					<li>
@@ -205,7 +220,7 @@ session_start();
 					                            <a href=\"reservations-list.php\">View Reservations</a>
 					                        </li>
 					                        <li>
-					                            
+
 					                        </li>
 					                  </ul>";
 	                    		}
@@ -225,7 +240,7 @@ session_start();
                 </li>
                 <li >
                     <a href="admin.php">Admin</a>
-                    <?php 
+                    <?php
                     	//echo $_SESSION['login_type'];
                     	if(isset($_SESSION['login_type'])){
                     		if($_SESSION['login_type']=="admin"){
@@ -264,14 +279,14 @@ session_start();
             					echo "<script> window.location.href=\"reservations.php?name=".$_SESSION['login_email']."\";</script>";
             					$email="";
             				}
-            					
+
             			}else{
             				echo "<script> window.location.href=\"reservations.php?name=".$_SESSION['login_email']."\";</script>";
             				$email="";
             			}
-            			$res_name = mysql_query("SELECT * FROM tblregister where fldemail='$email';");
-						if(mysql_num_rows($res_name)){
-							while($rowx = mysql_fetch_array($res_name)){
+            			$res_name = mysqli_query($con, "SELECT * FROM tblregister where fldemail='$email';");
+						if(mysqli_num_rows($res_name)){
+							while($rowx = mysqli_fetch_array($res_name)){
 								$fullname = $rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'].".";
 								$email = $rowx['fldemail'];
 							}
@@ -284,27 +299,30 @@ session_start();
             			";
             		}else{
             			if(isset($_GET['name'])){
-            				$email=$_GET['name'];            					
+            				$email=$_GET['name'];
             			}else{
             				$email="";
             			}
-            			$res_name = mysql_query("SELECT * FROM tblregister where fldemail='$email';");
-						if(mysql_num_rows($res_name)){
-							while($rowx = mysql_fetch_array($res_name)){
+            			$res_name = mysqli_query($con, "SELECT * FROM tblregister where fldemail='$email';");
+						if(mysqli_num_rows($res_name)){
+							while($rowx = mysqli_fetch_array($res_name)){
 								$fullname = $rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'].".";
 								$email = $rowx['fldemail'];
 							}
 						}else{
 							$fullname="";
 						}
-						echo "
-	        				<a style=\"margin-top:50px;margin-left:50px;font-size:16px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
+						if($_SESSION['login_type']=="admin"){
+						}else{
+							echo "<a style=\"margin-top:50px;margin-left:50px;font-size:16px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
 	        			";
+						}
+
 					}
             	}
             ?>
 			<h1 style="padding:20px;">Booked Reservations for <?php echo $fullname;?></h1>
-			<?php 
+			<?php
 			//echo $email;
 			$date_ = date("m/d/Y");
 			//echo $date_;
@@ -320,7 +338,8 @@ session_start();
 					<th><a style=\"text-decoration:none;\" href=\"reservations.php?name=".$email."&order=tin\">Time In</a></th>
 					<th>Time Out</th>
 					<th><a style=\"text-decoration:none;\" href=\"reservations.php?name=".$email."&order=status\">Status</a></th>
-					<th>Cancel</th>";
+					<th>Cancel</th>
+					<th>Upload Receipt Picture here </th>";
 					//<th>Checkout</th>
 					//<th>Update</th>
 					//<th>Details</th>
@@ -328,18 +347,18 @@ session_start();
 			</tr>";
 			if(isset($_GET['order'])){
 				$order = $_GET['order'];
-				$result = mysql_query("SELECT * FROM tblreservations where email='$email' and cin>'$date_' order by $order;");
+				$result = mysqli_query($con, "SELECT * FROM tblreservations where email='$email' and cin>'$date_' order by $order;");
 			}else{
-				$result = mysql_query("SELECT * FROM tblreservations where email='$email' and cin>'$date_';");	
+				$result = mysqli_query($con, "SELECT * FROM tblreservations where email='$email' and cin>'$date_';");
 			}
-			if(mysql_num_rows($result)){
-				while($row = mysql_fetch_array($result)){
+			if(mysqli_num_rows($result)){
+				while($row = mysqli_fetch_array($result)){
 					echo "<tr>
 						<td>".$row['trxnid']."</td>
 						<td>".$row['facname']."</td>";
-						$res_reg = mysql_query("SELECT * FROM tblregister where fldemail='$email';");
-						if(mysql_num_rows($res_reg)){
-							while($rowx = mysql_fetch_array($res_reg)){
+						$res_reg = mysqli_query($con, "SELECT * FROM tblregister where fldemail='$email';");
+						if(mysqli_num_rows($res_reg)){
+							while($rowx = mysqli_fetch_array($res_reg)){
 								$fullname=$rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'];
 								$contact = $rowx['fldcontact1'];
 							}
@@ -353,13 +372,17 @@ session_start();
 						if($row['status']=="pending" or $row['status']=="pending-cd" or $row['status']=="reserved"){
 							echo "<td style=\"background-color:yellow;\">".$row['status']."</td>";
 							echo "<td><button style=\"font-size:13px;\" onclick=\"cancel_r('".$row['trxnid']."','".$email."');\">Cancel</button></td>";
+
+							echo "<td><button style=\"font-size:10px;\" onclick=\"view_r('".$row['trxnid']."');\">Upload</button></td>";
+
+
 							//echo "<td>&nbsp;</td>";
 						}else{
 							echo "<td style=\"background-color:lightblue;\">".$row['status']."</td>";
 							echo "<td>&nbsp;</td>";
-							//echo "<td><button style=\"font-size:13px;\">Checkout</button></td>";	
+							//echo "<td><button style=\"font-size:13px;\">Checkout</button></td>";
 						}
-						
+
 					//echo "<td><button style=\"font-size:13px;\">Update</button></td>
 					//	<td><button style=\"font-size:13px;\">Details</button></td>
 					echo "</tr>";
@@ -410,7 +433,7 @@ session_start();
 					<li>
 						<b>mobile:</b> <span>09175048667</span>
 					</li>
-					
+
 				</ul>
 			</div>
 			<div class="tweets">
@@ -453,7 +476,7 @@ session_start();
 			<p>
 				&copy; this is the copyright area
 			</p>
-	
+
 		</div>
 	</div>
 

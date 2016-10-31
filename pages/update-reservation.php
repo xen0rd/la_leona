@@ -1,6 +1,10 @@
-<?php 
+
+
+
+<?php
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +29,7 @@ session_start();
 			captions: true
 		});*/
 		
+
 		 $(function () {
 
 		      // Slideshow 1
@@ -51,7 +56,7 @@ session_start();
 			var email2 = document.getElementById('xemail2');
 			var pwd = document.getElementById('xpwd');
 			var pwd2 = document.getElementById('xpwd2');
-			
+
 			if(email.value!=""){
 				filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				if (filter.test(email.value)) {
@@ -70,7 +75,7 @@ session_start();
 			                            	if(pwd.value!="" && pwd2.value!="" && pwd.value.length >=8){
 												if(pwd.value==pwd2.value){
 													alertify.success('password is allowed!');
-													return true;	
+													return true;
 												}else{
 													alertify.error('Password mismatch!');
 													pwd2.value="";
@@ -79,7 +84,7 @@ session_start();
 											}else{
 												if(pwd.value.length<8 && pwd.value.length>0){
 													alertify.error('Minimum Length of Password is 8!');
-													pwd.focus();		
+													pwd.focus();
 												}
 											}
 			                            }else{
@@ -92,7 +97,7 @@ session_start();
 			                    });
 						}else{
 							alertify.error('Email mismatch!');
-							email2.focus();	
+							email2.focus();
 						}
 					}
 				}else{
@@ -100,10 +105,10 @@ session_start();
 					email.value="";
 					email.focus();
 					return false;
-				}	
+				}
 			}else{
 				//email.focus();
-			}	
+			}
 		 }
 
 		 function reserve(){
@@ -113,11 +118,11 @@ session_start();
 		 	var use = document.getElementById("huse").value;
 		 	var rate = document.getElementById("hrate").value;
 		 	if(facid==1){
-		 		var bedx = document.getElementById("hbedx").value;	
+		 		var bedx = document.getElementById("hbedx").value;
 		 	}else{
 		 		var bedx =0;
 		 	}
-		 	
+
 		 	var numpax = document.getElementById("hnumpax").value;
 		 	var xcs = document.getElementById("hxcs").value;
 		 	var xcsamt = document.getElementById("hxcsamt").value;
@@ -126,7 +131,7 @@ session_start();
 		 	if(facid!=3){
 		 		var cout = document.getElementById("hcout").value;
 		 		var occa = "";
-		 		var cater = "";	
+		 		var cater = "";
 		 		var tin = "";
 			 	var tout = "";
 			 	var totime = "";
@@ -209,7 +214,7 @@ session_start();
 		 		}
 
 		 		if(sel_status.value=="for cancellation" || sel_status.value=="cancelled"){
-		 			if(downp.readOnly){
+		 			if(status.value=="for cancellation" || status.value=="checkedin" ){
 		 				alertify.error('Cannot cancel checked in booking!');
 		 				return false;
 		 			}else{
@@ -231,42 +236,51 @@ session_start();
 			 				}else{
 			 					alertify.error('Cancelling...');
 			 				}
-			 			});	
+			 			});
 		 			}
-		 			
+
 		 		}
-		 		else if(sel_status.value=="checkedin" || sel_status.value=="checkedout"){
-		 			var tot = totamt.value;
+		 		else if(sel_status.value=="checkedin" || sel_status.value=="checkedout" ){
+		 			var tot = totsss.value;
 		 			tot = Number(tot.replace(/,/g, ""));
 		 			var dp = xdp.value;
 		 			if(sel_status.value=="checkedin"){
-		 				if(downp.readOnly){
-			 				alertify.error('Already checked in!');
-			 				return false;
+		 				if(status.value=="checkedin" || status.value=="checkedout"){
+
+			 					alertify.error('Already checked in!');
+			 					return false;
+								
+
 			 			}else{
-			 				if(xdp.value==0.00 || xdp.value<1000 || xdp.value>tot){
+			 				if((xdp.value==0.00 || xdp.value>tot || xdp.value<1000) && tot>1000){
 			 					alertify.error('Please enter valid value for downpayment!');
 			 					xdp.value=parseFloat(0).toFixed(2);
 			 					xdp.focus();
 			 				}else{
-			 					xdp.value = parseFloat(dp).toFixed(2);		 					
+			 					xdp.value = parseFloat(dp).toFixed(2);
 			 					var bal = tot - dp;
+			 					if(bal<0){
+			 						alertify.error('Please enter valid value for downpayment!');
+				 					xdp.value=parseFloat(0).toFixed(2);
+			 						xdp.focus();
+			 						return false;
+			 					}
 			 					//alertify.error(bal);
 			 					rembal.value = parseFloat(bal).toFixed(2);
 			 					rembal.readOnly = true;
 			 					var mydate = new Date();
 			 					time = mydate.toLocaleTimeString();
-			 					dataString="type=cin&item="+item+"&trxnid="+trxnid+"&email="+email+"&dp="+dp+"&bal="+bal+"&fullname="+fullname+"&time="+time+"&totamt="+tot+"&items="+items;
+			 					dataString="type=cin&item="+item+"&trxnid="+trxnid+"&email="+email+"&dp="+dp+"&bal="+bal+"&fullname="+fullname+"&time="+time+"&totamt="+tot+"&items="+items+"&mode="+mode.value+"&statuss="+status.value;
 			 					alertify.confirm('Are you sure you want to proceed?', function (e){
 			 						if(e){
-			 							//alertify.alert(dataString);
+			 							alertify.alert(dataString);
 			 							$.ajax({
 						                    type: "POST",
 						                    url: "reserve-update.php",
-						                    data: dataString,
+						                    data: dataString, 
 						                    cache: false,
 						                    success: function(result){
-						                    	//alert(result);
+						                    	alert(result);
 						                    	//document.write(result);
 						                    	if(result=="success"){
 						                    		window.location.href="reservations-list.php";
@@ -280,28 +294,32 @@ session_start();
 			 					});
 			 				}
 			 			}
-		 			}else{
+						
+		 			}
+					
+					else{
 		 				if(status.value=="checkedin"){
 		 					totdue.readOnly=true;
 		 					totdue.value = Number(rembal.value)+Number(food.value)+Number(damage.value);
+							
 		 					if(payment.value!="" && payment.value>=totdue.value){
 		 						if(ornum.value!=""){
 		 							var mydate = new Date();
 				 					time = mydate.toLocaleTimeString();
-				 					dataString="type=cout&item="+item+"&trxnid="+trxnid+"&email="+email+"&food="+food.value+"&damage="+damage.value+"&fullname="+fullname+"&time="+time+"&totamt="+totdue.value+"&payment="+payment.value+"&ornum="+ornum.value;
+				 					dataString="type=cout&item="+item+"&trxnid="+trxnid+"&email="+email+"&food="+food.value+"&damage="+damage.value+"&fullname="+fullname+"&time="+time+"&totamt="+totdue.value+"&payment="+payment.value+"&ornum="+ornum.value+"&mode="+mode.value+"&statuss="+status.value;
 				 					alertify.confirm('Are you sure you want to proceed?', function (e){
 				 						if(e){
-				 							//alertify.alert(dataString);
+				 							alertify.alert(dataString);
 				 							$.ajax({
 							                    type: "POST",
 							                    url: "reserve-update.php",
 							                    data: dataString,
 							                    cache: false,
 							                    success: function(result){
-							                    	//alert(result);
+							                    	alert(result);
 							                    	//document.write(result);
 							                    	if(result=="success"){
-							                    		window.location.href="reservations-list.php";
+							                    		window.location.href="update-reservation.php?id="+trxnid;
 							                    	}
 							                    }
 							                });
@@ -309,7 +327,7 @@ session_start();
 				 							alertify.error('Cancelling downpayment!');
 				 						}
 
-				 					});		
+				 					});
 		 						}else{
 		 							ornum.focus();
 		 							alertify.error('Please enter OR number!');
@@ -319,13 +337,13 @@ session_start();
 		 						payment.focus();
 		 						alertify.error('Please enter valid amount for payment!');
 		 					}
-		 					
+
 
 		 				}else{
 		 					alertify.error('Cannot checked out this booking!');
 		 				}
 		 			}
-		 			
+
 		 		}else{
 		 			//alertify.error('Error in status.');
 		 			sel_status.focus();
@@ -363,13 +381,13 @@ session_start();
 			 	var totaldamage = Number(totd)-Number(priced);
 			 	document.getElementById('totald').value = totaldamage;
 			 	document.getElementById('xdamaged').value = totaldamage;
-			 	//alert(totaldamage);	
+			 	//alert(totaldamage);
 			}
 			var xtotal = document.getElementById('xtotal');
 			var xfood = document.getElementById('xfood');
 			var xdamaged = document.getElementById('xdamaged');
 			var xrembal = document.getElementById('xrembal');
-			xtotal.value = Number(xrembal.value) + Number(xfood.value) + Number(xdamaged.value);			
+			xtotal.value = Number(xrembal.value) + Number(xfood.value) + Number(xdamaged.value);
 		 }
 
 		 function clear2(id){
@@ -389,15 +407,15 @@ session_start();
 			 		document.getElementById('totaladd').value = totaladdons;
 			 		document.getElementById('xfood').value = totaladdons;
 			 	}
-			 	
-			 	//alert(totaldamage);	
+
+			 	//alert(totaldamage);
 			}
 			var xtotal = document.getElementById('xtotal');
 			var xfood = document.getElementById('xfood');
 			var xdamaged = document.getElementById('xdamaged');
 			var xrembal = document.getElementById('xrembal');
 			xtotal.value = Number(xrembal.value) + Number(xfood.value) + Number(xdamaged.value);
-			
+
 		 }
 
 		 function addons(id){
@@ -413,7 +431,7 @@ session_start();
 			 	var totaladdons = Number(tota)+Number(pricea)*Number(item);
 			 	document.getElementById('totaladd').value = totaladdons;
 			 	document.getElementById('xfood').value = totaladdons;
-			 	//alert(totaldamage);	
+			 	//alert(totaldamage);
 		 	}else{
 		 		alertify.error('Please enter value in items...');
 		 		document.getElementById('item_'+id).focus();
@@ -423,7 +441,7 @@ session_start();
 			var xdamaged = document.getElementById('xdamaged');
 			var xrembal = document.getElementById('xrembal');
 			xtotal.value = Number(xrembal.value) + Number(xfood.value) + Number(xdamaged.value);
-		 	
+
 		}
 		function calc(){
 			var xtotal = document.getElementById('xtotal');
@@ -489,9 +507,9 @@ session_start();
                 <li>
                     <a href="slideshow.php" >Gallery</a>
                 </li>
-                <li>    
+                <li>
                     <a>Reservation</a>
-                        <?php 
+                        <?php
                     	//echo $_SESSION['login_type'];
                     	if(isset($_SESSION['login_type'])){
                     		if($_SESSION['login_type']=="customer"){
@@ -500,7 +518,7 @@ session_start();
 					                            <a href=\"reservations.php?name=".$_SESSION['login_user']."\">View Reservations</a>
 					                        </li>
 					                        <li>
-					                            
+
 					                        </li>
 					                  </ul>";
 	                    		}else if($_SESSION['login_type']=="FRONTDESK"){
@@ -515,7 +533,7 @@ session_start();
 					                            <a href=\"reservations-list.php\">View Reservations</a>
 					                        </li>
 					                        <li>
-					                            
+
 					                        </li>
 					                  </ul>";
 	                    		}
@@ -535,7 +553,7 @@ session_start();
                 </li>
                 <li >
                     <a href="admin.php">Admin</a>
-                    <?php 
+                    <?php
                     	//echo $_SESSION['login_type'];
                     	if(isset($_SESSION['login_type'])){
                     		if($_SESSION['login_type']=="admin"){
@@ -547,7 +565,7 @@ session_start();
 					                            <a href=\"reservations-list.php\">Reservations</a>
 					                        </li>
 					                        <li>
-					                            <a href=\"payment.php\">Payments</a>
+					                            <a href=\"payments-list.php\">Payments</a>
 					                        </li>
 					                        <li>
 					                            <a href=\"logout.php\">Logout</a>
@@ -563,13 +581,13 @@ session_start();
 	<div id="body" style="margin-top:-4px;">
 		<div class="body" style="align:center;height:790px;overflow:auto;">
 			<?php
-				include "connect.php"; 
+				include "connect.php";
 				if(isset($_GET['id']))
 				{
 					$trxnid=$_GET["id"];
-					$resx = mysql_query("SELECT * FROM tblreservations where trxnid=$trxnid");
-						if(mysql_num_rows($resx)){
-							while($rowx = mysql_fetch_array($resx)){
+					$resx = mysqli_query($con, "SELECT * FROM tblreservations where trxnid=$trxnid");
+						if(mysqli_num_rows($resx)){
+							while($rowx = mysqli_fetch_array($resx)){
 								$facid = $rowx['facid'];
 								$faci = $rowx['facname'];
 								$use_d = $rowx['typeofuse'];
@@ -578,6 +596,8 @@ session_start();
 								$cout = $rowx['cout'];
 								$bedx = $rowx['xbed'];
 								$xbed = $bedx;
+								$totsss = $rowx['totamt'];
+
 								if($bedx!=0){
 									$xbedx = "Yes";
 								}else{
@@ -585,7 +605,7 @@ session_start();
 								}
 								$numpax = $rowx['numpax'];
 								$xcs = $rowx['xcs'];
-								$xpax = $numpax + $xcs;
+								$xpax = $numpax - $xcs;
 								$per = $rowx['per'];
 								$addhrs = $rowx['addhrs'];
 								$tout = $rowx['tout'];
@@ -598,25 +618,11 @@ session_start();
 								$status = $rowx['status'];
 								$diff=date_diff(date_create($cin),date_create($cout));
 								$_SESSION['set_reservation']=$rowx['email'];
+								$reason = $rowx['reason'];
+								$mode = $rowx['mode'];
 							}
 						}
 
-						//check for payment
-						$dp=0;
-						$bal=0;
-						$food=0;
-						$damage=0;
-						$respym = mysql_query("SELECT * FROM tblpayments where trxnid=$trxnid");
-						if(mysql_num_rows($respym)){
-							while($rowp = mysql_fetch_array($respym)){
-								//echo "<script>document.getElementById('xdp').value=".number_format($rowp['downpayment'],2).";</script>";
-								$dp = $dp + $rowp['downpayment'];
-								$bal = $bal + $rowp['balance'];
-								$food = $food + $rowp['food'];
-								$damage = $damage + $rowp['damage'];
-							}
-							$totamtx = $bal + $dp + $food +$damage;
-						}
 
 				}
             	//echo $_SESSION['login_type'];
@@ -628,43 +634,99 @@ session_start();
             			";
 					}else{
 						$email=$_SESSION['set_reservation'];
-						$res_name = mysql_query("SELECT * FROM tblregister where fldemail='$email';");
-						if(mysql_num_rows($res_name)){
-							while($rowx = mysql_fetch_array($res_name)){
+						$res_name = mysqli_query($con, "SELECT * FROM tblregister where fldemail='$email';");
+						if(mysqli_num_rows($res_name)){
+							while($rowx = mysqli_fetch_array($res_name)){
 								$fullname = $rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'].".";
 								$email = $rowx['fldemail'];
 							}
 						}else{
 							$fullname="";
 						}
-						echo "
-        				<a style=\"margin-top:50px;margin-left:50px;font-size:16px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
-        			";
+						if($_SESSION['login_type']=="admin"){
+						}else{
+							echo "
+        					<a style=\"margin-top:50px;margin-left:50px;font-size:16px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
+        			";}
 					}
             	}
+
+				$dp=0;
+				$bal=0;
+				$food=0;
+				$damage=0;
+
+				$res_name = mysqli_query($con, "SELECT * FROM payments where item_number='$trxnid';");
+				if(mysqli_num_rows($res_name)){
+					while($rowx = mysqli_fetch_array($res_name)){
+						$pay_pal = $rowx['payment_gross'];
+					}
+				}else{
+					$pay_pal=0;
+				}
+				if($pay_pal==0){
+					//$dp=1000;
+				}else{
+					//$dp=$pay_pal;
+				}
+				$need=0;
+				$respym = mysqli_query($con, "SELECT * FROM tblpayments where trxnid=$trxnid");
+				if(mysqli_num_rows($respym)){
+				}else{
+					if($status=="pending-cd" || $status=="pending")
+					{
+					$strUP = "INSERT INTO tblpayments(payid,payment_status,trxnid,email,fullname,food,damage,downpayment,balance,totamt)values(0,'$status','$trxnid','$email','$fullname','0','0','0','90','90')";
+					}
+					else{
+					$strUP = "INSERT INTO tblpayments(payid,payment_status,trxnid,email,fullname,food,damage,downpayment,balance,totamt)values(0,'$status','$trxnid','$email','$fullname','0','0','$pay_pal','0','0')";
+					}
+					//echo $strUP;
+					mysqli_query($con, $strUP);
+					$need=1;
+					
+				}
+				
+
+				//check for payment
+
+				$respym = mysqli_query($con, "SELECT * FROM tblpayments where trxnid=$trxnid");
+				if(mysqli_num_rows($respym)){
+					while($rowp = mysqli_fetch_array($respym)){
+						//echo "<script>document.getElementById('xdp').value=".number_format($rowp['downpayment'],2).";</script>";
+						$dp = $dp + $rowp['downpayment'];
+						$bals = $rowp['downpayment'];						
+						$bal = $bal + $rowp['balance'];
+						
+						$totss = $rowp['payment_amount'] + $dp;
+						$food = $food + $rowp['food'];
+						$damage = $damage + $rowp['damage'];
+					}
+					$totamtx = $bal + $dp + $food +$damage;
+				}
+
             ?>
 			<h1 style="padding:20px;">Booking Reservation details for <?php echo $fullname;?></h1>
-			<?php 
+			<?php
 			echo "<div style=\"margin-top:-100px;margin-left:-80px;\">";
-				if(isset($_GET["id"])){			
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:10px;\">You choose facility id: <span style=\"color:red;\">". $facid."</span></p><br />";
+				if(isset($_GET["id"])){
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:10px;\">Facility ID: <span style=\"color:red;\">". $facid."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"htrxn\" id=\"htrxn\" value=\"".$trxnid."\">";
 					echo "<input type=\"hidden\" name=\"hfname\" id=\"hfname\" value=\"".$fullname."\">";
 					echo "<input type=\"hidden\" name=\"hfacid\" id=\"hfacid\" value=\"".$facid."\">";
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose facility: <span style=\"color:red;\">". $faci."</span></p><br />";
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Facility Type: <span style=\"color:red;\">". $faci."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfaci\" id=\"hfaci\" value=\"".$faci."\">";
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose type of use: <span style=\"color:red;\">". $use_d."</span></p><br />";
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Type of use: <span style=\"color:red;\">". $use_d."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"huse\" id=\"huse\" value=\"".$use_d."\">";
 					echo "<input type=\"hidden\" name=\"hrate\" id=\"hrate\" value=\"".$rate."\">";
 					if($facid==3){
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate is <span style=\"color:red;\">". $rate."</span> for ".number_format($numhrs)." hours</p><br />";
 						echo "<input type=\"hidden\" name=\"hnumhrs\" id=\"hnumhrs\" value=\"".number_format($numhrs)."\">";
 					}else{
-						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate is <span style=\"color:red;\">". $rate."</span></p><br />";
+						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Rate is: PHP <span style=\"color:red;\">". $rate."</span></p><br />";
 					}
 
 					if($facid==1){
-						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Extra bed? <span style=\"color:red;\">". $xbedx." </span>Worth of <span style=\"color:red;\">".$bedx."</span></p><br />";
+						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Extra bed? <span style=\"color:red;\">". $xbedx." </span>Worth of: PHP<span style=\"color:red;\">".$bedx."</span></p><br />";
 						echo "<input type=\"hidden\" name=\"hxbed\" id=\"hxbed\" value=\"".$xbedx."\">";
 						echo "<input type=\"hidden\" name=\"hbedx\" id=\"hbedx\" value=\"".$bedx."\">";
 					}
@@ -706,8 +768,9 @@ session_start();
 						if($days<1){
 							$days=1;
 						}
-						$totamt = $days * $rate + $xbed + $add_per;
 					}
+											$totamt = $days * $rate + $xbed + $add_per;
+
 						echo "<input type=\"hidden\" name=\"hdays\" id=\"hdays\" value=\"".$days."\">";
 					if ($days>1) {
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of days is <span style=\"color:red;\">" . $days . " days </span></p><br />";
@@ -715,39 +778,122 @@ session_start();
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of day is <span style=\"color:red;\">" . $days . " day </span></p><br />";
 					}
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total amount is Php<span style=\"color:red;\"><b> " . number_format($totamt,2)." </b></span></p><br />" ;
-					echo "<input type=\"hidden\" name=\"htotamt\" id=\"htotamt\" value=\"".number_format($totamt,2)."\">";					
+					echo "<input type=\"hidden\" name=\"htotamt\" id=\"htotamt\" value=\"".number_format($totamt,2)."\">";
+					
+								echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total amount is Php<span style=\"color:red;\"><b> " . number_format($totsss,2)." </b></span></p><br />" ;
+					echo "<input type=\"hidden\" name=\"totsss\" id=\"totsss\" value=\"".number_format($totsss,2)."\">";
+					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Current status is<span style=\"color:red;\"><b> " . $status." </b></span></p><br />" ;
 					echo "<input type=\"hidden\" name=\"hcstatus\" id=\"hcstatus\" value=\"".$status."\">";
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Payment status: <span style=\"color:red;\"><b> " . $mode." </b></span></p><br />" ;
+					echo "<input type=\"hidden\" name=\"mode\" id=\"mode\" value=\"".$mode."\">";
+
+					if ($status == "for cancellation")
+					{
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Reason of Cancellation: <span style=\"color:red;\"><b> " .$reason." </b></span></p><br />" ;
+					echo "<input type=\"hidden\" name=\"hcstatus\" id=\"hcstatus\" value=\"".$reason."\">";
+						
+					}
 					echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Status: <select name=\"sel_stat\" id=\"sel_stat\">
 							<option value=\"\">None</option>
+						
 							<option value=\"for cancellation\">FOR CANCELLATION</option>
 							<option value=\"cancelled\">CANCELLED</option>
 							<option value=\"checkedin\">CHECKED-IN</option>
 							<option value=\"checkedout\">CHECKED-OUT</option>
+							<option value=\"checkedin\">RESERVED</option>
 						</select></p>";
+					//
+
 
 					//check payment table
-					if($dp>0){
-						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$dp."\" readOnly=\"true\"></p>";
-					}else{
-						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$dp."\"></p>";						
+					//echo "PAYMENT THRU PAYPAL: ".$pay_pal;
+					$bal = $totsss - $dp;
+					$sukli = $totamt - $dp;
+
+					
+					if($bal <= 0 ) 
+					{
+						$bal = 0;
 					}
+					if($pay_pal>0){
+						
+						
+							if($dp>0 && $bal>0){
+								echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$dp."\" readOnly=\"true\"></p>";
+							}else{
+								echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".($totamt-10)."\"></p>";
+							}
+						
+					}else{
+						if ($status == "pending-cd" || $status=="pending" && $mode=="paypal" || $mode=="cashdp")
+						{
+							if($dp>0 && $bal>0)
+							{
+								echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$dp."\" readOnly=\"true\"></p>";
+							}else{
+								echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$dp."\"></p>";
+							}
+						}
+						elseif ($status == "pending" && $mode=="cash")
+						{
+							if($dp>0 && $bal>0)
+							{
+								echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$dp."\" readOnly=\"true\"></p>";
+							}else{
+								echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$dp."\"></p>";
+							}
+						}
+						else
+						{
+							if($dp>0 && $bal>0)
+							{
+								echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$dp."\" readOnly=\"true\"></p>";
+							}else{
+								echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Downpayment: <input type=\"text\" name=\"xdp\" id=\"xdp\" style=\"width:80px\" value=\"".$totamt."\"></p>";
+							}
+						}
+						
+					}
+					
+					
+					$respym = mysqli_query($con, "SELECT * FROM tblpayments where trxnid=$trxnid");
+					if(mysqli_num_rows($respym)){
+						if($need=="1"){
+							if($bal>0){
+								$strUP = "UPDATE tblpayments set balance='$bal',totamt='$totsss' where trxnid='$trxnid'";
+							}
+							else{
+								$strUP = "UPDATE tblpayments set balance='$totsss',totamt='$totsss' where trxnid='$trxnid'";
+							}
+
+							//echo $strUP;
+							mysqli_query($con, $strUP);
+						}
+					}else{
+
+					}
+					$need=0;
+					$dp=0;
 					if($status!="checkedout"){
 						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Remaining Balance: <input type=\"text\" name=\"xrembal\" id=\"xrembal\" style=\"width:80px\" value=\"".$bal."\" readOnly=\"true\"></p>";
+
 						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Addons: <input type=\"text\" name=\"xfood\" id=\"xfood\" style=\"width:80px\" onchange=\"calc();\"></p>";
 						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Additional cost for damaged amenities: <input type=\"text\" name=\"xdamaged\" id=\"xdamaged\" style=\"width:80px\" onchange=\"calc();\"></p>";
 						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Due: <input type=\"text\" name=\"xtotal\" id=\"xtotal\" style=\"width:80px\"></p>";
 						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Payment: <input type=\"text\" name=\"xpay\" id=\"xpay\" style=\"width:80px\"></p>";
 						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">OR Number: <input type=\"text\" name=\"xornum\" id=\"xornum\" style=\"width:80px\"></p>";
 					}else{
-						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Remaining Balance: <input type=\"text\" name=\"xrembal\" id=\"xrembal\" style=\"width:80px\" value=\"".$bal."\" readOnly=\"true\"></p>";
+						echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Remaining Balance: <input type=\"text\" name=\"xrembal\" id=\"xrembal\" style=\"width:80px\" value=\"".$bals."\" readOnly=\"true\"></p>";
 					echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Addons: <input type=\"text\" name=\"xfood\" id=\"xfood\" style=\"width:80px\" value=\"".$food."\" readOnly=\"true\" onchange=\"calc();\"></p>";
 					echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Additional cost for damaged amenities: <input type=\"text\" name=\"xdamaged\" id=\"xdamaged\" style=\"width:80px\" value=\"".$damage."\" readOnly=\"true\" onchange=\"calc();\"></p>";
-					echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Due: <input type=\"text\" name=\"xtotal\" id=\"xtotal\" style=\"width:80px\" value=\"".$totamtx."\" readOnly=\"true\"></p>";
-					echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Payment: <input type=\"text\" name=\"xpay\" id=\"xpay\" style=\"width:80px\"></p>";
+					echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Due: <input type=\"text\" name=\"xtotal\" id=\"xtotal\" style=\"width:80px\" value=\"". $totamtx ."\" readOnly=\"true\"></p>";
+					echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Payment here: PHP <input type=\"text\" name=\"xpay\" id=\"xpay\" style=\"width:80px\"></p>";
 					echo "<br /><p style=\"font-size:14px;padding:0px;margin-top:-12px;\">OR Number: <input type=\"text\" name=\"xornum\" id=\"xornum\" style=\"width:80px\"></p>";
+					echo "<br /><br><br><br><p style=\"font-size:14px;padding:0px;margin-top:-12px;margin-left:300px;\"><button type='button'><a href=\"receipt.php?id=".$_GET['id']."&email=$email&name=$fullname&total=$totss&totals=$totamtx\" target=\"_blank\"></i> Print Receipt </a></button></p>";
+
 					}
-					
+
 					//echo "<div style=\"margin-left:-400px;margin-top:40px;\">";
 					//echo "<button style=\"height:30px;width:100px;margin-left:360px;\"><a href=\"void:javascript();\" onclick=\"window.history.back();\" style=\"text-decoration:none;font-size:12px;margin-top:-8px;color:white;\">Modify this</a></button>";
 					//	</div>";
@@ -757,20 +903,20 @@ session_start();
 				echo "
 					</div>
 					<div style=\"float:right;margin-top:-140px;\"><div>";
-						$res = mysql_query("SELECT * FROM tbltype where facid='$facid' and name='$faci'");
-						if(mysql_num_rows($res)){
-							while($rowx = mysql_fetch_array($res))
+						$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$facid' and name='$faci'");
+						if(mysqli_num_rows($res)){
+							while($rowx = mysqli_fetch_array($res))
 							{
 								echo "<img src=\"".$rowx['image']."\" alt=\"".$faci."\" style=\"height:240px;width:360px\">";
 							}
 						}
 
 				echo "</div>";
-				echo "<br /><br /><br /><div style=\"inline-block;\">Amenities:";
+				echo "<br /><br /><br /><div style=\"inline-block;\">Damaged Ameneties:";
 				echo "<table>";
-				$res = mysql_query("SELECT * FROM tblamenities where facid='$facid'");
-				if(mysql_num_rows($res)){
-					while($rowx = mysql_fetch_array($res)){
+				$res = mysqli_query($con, "SELECT * FROM tblamenities where facid='$facid'");
+				if(mysqli_num_rows($res)){
+					while($rowx = mysqli_fetch_array($res)){
 						echo "<tr><td>".$rowx['devname']."</td><td>&nbsp;&nbsp;&nbsp;</td><td><input type=\"text\" value=\"".$rowx['price1']."\" style=\"width:80px;\" readonly id=\"prcd_".$rowx['id']."\"></td><td><button style=\"font-size:10px;\" id=\"btndmg_".$rowx['id']."\" onclick=\"damaged('".$rowx['id']."');\">Damaged</button></td><td><button style=\"font-size:10px;\" id=\"btnclr_".$rowx['id']."\" onclick=\"cleard('".$rowx['id']."');\">Clear</button></td></tr>";
 					}
 				}
@@ -781,12 +927,12 @@ session_start();
 				echo "</table></div>";
 				$trxnid = $_GET["id"];
 				$count = 1;
-				$res = mysql_query("SELECT * FROM tbladdons where trxnid='$trxnid'");
-				if(mysql_num_rows($res)){
+				$res = mysqli_query($con, "SELECT * FROM tbladdons where trxnid='$trxnid'");
+				if(mysqli_num_rows($res)){
 					echo "<span\">Addons:";
 					echo "<table>";
-					while($rowx = mysql_fetch_array($res)){
-						
+					while($rowx = mysqli_fetch_array($res)){
+
 						//$res = mysql_query("SELECT * FROM tblamenities where facid='$facid'");
 						//if(mysql_num_rows($res)){
 						//	while($rowx = mysql_fetch_array($res)){
@@ -804,17 +950,17 @@ session_start();
 					echo "<span\">Addons:";
 					echo "<table>";
 					$count = 0;
-					$res = mysql_query("SELECT * FROM tblamenities where facid='$facid'");
-					if(mysql_num_rows($res)){
-						while($rowx = mysql_fetch_array($res)){
+					$res = mysqli_query($con, "SELECT * FROM tblamenities where facid='$facid'");
+					if(mysqli_num_rows($res)){
+						while($rowx = mysqli_fetch_array($res)){
 
 							$tot_items = 0;
 							$ordered = 0;
 							$mydate = date("m/d/Y");
 							//echo $mydate;
-							$resultxx = mysql_query("SELECT tbladdons.trxnid, tbladdons.facid, tbladdons.devname, tbladdons.pieces, tblreservations.status, tblreservations.facid, tblreservations.trxnid, tblreservations.facname FROM tbladdons, tblreservations where tbladdons.facid=tblreservations.facid and tbladdons.devname='".$rowx['devname']."' and (tblreservations.status='checkedin' or tblreservations.status='reserved') and tblreservations.cin>='$mydate' and tbladdons.trxnid=tblreservations.trxnid");
-								if(mysql_num_rows($resultxx)){
-									while($rowxx = mysql_fetch_array($resultxx))
+							$resultxx = mysqli_query($con, "SELECT tbladdons.trxnid, tbladdons.facid, tbladdons.devname, tbladdons.pieces, tblreservations.status, tblreservations.facid, tblreservations.trxnid, tblreservations.facname FROM tbladdons, tblreservations where tbladdons.facid=tblreservations.facid and tbladdons.devname='".$rowx['devname']."' and (tblreservations.status='checkedin' or tblreservations.status='reserved' or tblreservations.status='pending') and tblreservations.cin>='$mydate' and tbladdons.trxnid=tblreservations.trxnid");
+								if(mysqli_num_rows($resultxx)){
+									while($rowxx = mysqli_fetch_array($resultxx))
 									{
 										$tot_items += $rowxx['pieces'];
 									}
@@ -835,7 +981,7 @@ session_start();
 					echo "</table></span></div>";
 				}
 			?>
-			
+
 
 			<?php
 				$countx = $count - 1;
@@ -845,14 +991,17 @@ session_start();
 						echo "
 							<div style=\"margin-left:auto 0;margin-top:0px;;width:900px;padding-top:30px;\">
 							<button style=\"height:30px;\"><a href=\"void:javascript();\" onclick=\"update_r('".$trxnid."','".$countx."')\" style=\"text-decoration:none;font-size:20px;margin-top:-8px;color:white;\">Update</a></button>
+						
 						</div>
-						";	
+						";
 					}else{
 						if($_SESSION['set_reservation']!=""){
 							echo "<input type=\"hidden\" name=\"hemail\" id=\"hemail\" value=\"".$_SESSION['set_reservation']."\">";
 							echo "
 							<div style=\"margin-left:auto 0;margin-top:0px;;width:900px;padding-top:30px;\">
 								<button style=\"height:30px;\"><a href=\"void:javascript();\" onclick=\"update_r('".$trxnid."','".$countx."')\" style=\"text-decoration:none;font-size:20px;margin-top:-8px;color:white;\">Update</a></button>
+									<br>					<button style=\"height:30px;\"><a href=\"reservations-list.php\" style=\"text-decoration:none;font-size:20px;margin-top:-8px;color:white;\">Back</a></button>
+
 							</div>
 							";
 						}
@@ -884,14 +1033,14 @@ session_start();
 					<li>
 						<b>mobile:</b> <span>09175048667</span>
 					</li>
-					
+
 				</ul>
 			</div>
 			<div class="tweets">
 				<h3>recent tweets</h3>
 				<ul>
 					<li>
-						<!--a href="https://www.twitter.com/@FIMejico">Weâ€™re officially welcoming summer 2012! And with that, here are the new and updated rates here in La Leona Resort. Enjoy your vacation with us and have loads of fun here for a memorable summer.<span>1 day ago</span></a-->
+						<!--a href="https://www.twitter.com/@FIMejico">We’re officially welcoming summer 2012! And with that, here are the new and updated rates here in La Leona Resort. Enjoy your vacation with us and have loads of fun here for a memorable summer.<span>1 day ago</span></a-->
 						<a class="twitter-timeline" href="https://twitter.com/salemcoe" data-widget-id="731417495416905732">Tweets by @salemcoe</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 					</li>
@@ -927,7 +1076,7 @@ session_start();
 			<p>
 				&copy; this is the copyright area
 			</p>
-	
+
 		</div>
 	</div>
 

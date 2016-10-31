@@ -36,7 +36,7 @@ if (!isset($_GET['id'])){
 		        onSelect: function(selected) {
 		    	var date = $(this).datepicker('getDate');
 		         if(date){
-		            date.setDate(date.getDate() + 1);
+		            date.setDate(date.getDate());
 		          }
 		          $("#txtToDate").datepicker("option","minDate", date)
 		          daysbetween();
@@ -139,6 +139,9 @@ if (!isset($_GET['id'])){
 		function chkrate(facid) {
 			type = document.getElementById('typefaci').value;
 			stay = document.getElementById('typeuse').value;	
+			console.log(facid);
+			console.log(type);
+			console.log(stay);
 			if(stay!="none" && type!="none"){
 				$.ajax({
                     type: "POST",
@@ -492,7 +495,7 @@ if (!isset($_GET['id'])){
 	</div>
 	<?php
 		include "connect.php";
-		$result = mysqli_query($con,"SELECT * FROM tblfacilities where id=$id");
+		$result = mysqli_query ($con, "SELECT * FROM tblfacilities where id=$id");
 		if(mysqli_num_rows($result)){
 			while($row = mysqli_fetch_array($result))
 			{
@@ -511,7 +514,7 @@ if (!isset($_GET['id'])){
 	        	if(isset($_SESSION['login_type'])){
 	        		if($_SESSION['login_type']=="customer"){
         				echo "
-            				<a style=\"margin-top:50px;margin-left:50px;font-size:16px;\">Welcome, [".$_SESSION['login_name']."]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
+            				<a style=\"margin-top:50px;margin-left:170px;font-size:16px;\">Welcome, [".$_SESSION['login_name']."]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
             			";
 					}else if($_SESSION['login_type']=="FRONTDESK"){
 						echo "
@@ -572,7 +575,7 @@ if (!isset($_GET['id'])){
 					if($_SESSION['login_type']=="customer"){
 						$email = $_SESSION['login_email'];
 						
-						$res = mysqli_query($con,"SELECT * FROM tblreserve_temp where email='$email' and date_='$mydate' order by trxnid");
+						$res = mysqli_query($con, "SELECT * FROM tblreserve_temp where email='$email' and date_='$mydate' order by trxnid");
 							if(mysqli_num_rows($res)){
 								$with_booking=1;
 								echo "<span style=\"font-size:18px;\">Current Reservations</span>";
@@ -604,7 +607,7 @@ if (!isset($_GET['id'])){
 								echo "<select id=\"typefaci\" name=\"facility\" required onchange=\"chkrate('".$id."');\">
 							<option value=\"none\"></option>";
 							
-							$res = mysqli_query($con,"SELECT * FROM tbltype where facid='$id' order by code");
+							$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 							if(mysqli_num_rows($res)){
 								while($rowx = mysqli_fetch_array($res))
 								{
@@ -676,7 +679,7 @@ if (!isset($_GET['id'])){
 						    }
 					echo "<strong>&nbsp;Number of Persons:&nbsp;</strong>
 						    	<input type=\"hidden\" name=\"xpax\" id=\"xpax\" value=\"".$_SESSION['xpax']."\">
-						    <span class=\"tab\"><input type=\"number\" name=\"numpax\" id=\"numpax\" style=\"width:108px\" required value=\"".$_SESSION['numpax']."\"></span>";
+						    <span class=\"tab\"><input type=\"number\" max=\"4\" name=\"numpax\" id=\"numpax\" style=\"width:108px\" required value=\"".$_SESSION['numpax']."\"></span>";
 					echo "<strong>&nbsp;Per Head:&nbsp;</strong>
 						    <span class=\"tab\"><input type=\"number\" readonly name=\"xper\" id=\"xper\" style=\"width:88px\" value=\"".$_SESSION['per']."\"></span><br /><br /><br />";
 
@@ -693,7 +696,7 @@ if (!isset($_GET['id'])){
 								echo "<select id=\"typefaci\" name=\"facility\" required onchange=\"chkrate('".$id."');\">
 								<option value=\"none\"></option>";
 								$count=0;
-								$res = mysqli_query($con,"SELECT * FROM tbltype where facid='$id' order by code");
+								$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 								if(mysqli_num_rows($res)){
 									while($rowx = mysqli_fetch_array($res))
 									{
@@ -720,7 +723,6 @@ if (!isset($_GET['id'])){
 								<option value=\"none\"></option>
 								<option value=\"Day\">Day</option>
 								<option value=\"Night\">Night</option>
-								<option value=\"DayAndNight\">DayAndNight</option>
 							</select>
 						</span>";
 						}
@@ -740,9 +742,16 @@ if (!isset($_GET['id'])){
 						echo "<strong>&nbsp;Number of Persons:&nbsp;</strong>
 							    	<input type=\"hidden\" name=\"xpax\" id=\"xpax\">
 							    <span class=\"tab\"><input type=\"number\" name=\"numpax\" id=\"numpax\" style=\"width:108px\" required></span>";
-						echo "<strong>&nbsp;Per Head:&nbsp;</strong>
+						if ($id==1)
+						{
+						echo "<strong>&nbsp;Rate of excess Head:&nbsp;</strong>
 							    <span class=\"tab\"><input type=\"number\" readonly name=\"xper\" id=\"xper\" style=\"width:88px\"></span><br /><br /><br />";
-
+						}
+						elseif ($id==2)
+						{
+						echo "<strong>&nbsp;Rate per Head:&nbsp;</strong>
+							    <span class=\"tab\"><input type=\"number\" readonly name=\"xper\" id=\"xper\" style=\"width:88px\"></span><br /><br /><br />";
+						}
 						echo "<span>
 							    <strong>Check-in Date:</strong>
 							    	<span class=\"tab\"><input id=\"txtFromDate\" name=\"check_in\" style=\"width:108px\" type=\"text\" readonly=\"readonly\" AUTOCOMPLETE=OFF onfocusout=\"daysbetween();\" /></span>
@@ -773,7 +782,7 @@ if (!isset($_GET['id'])){
 							echo "<select id=\"typefaci\" name=\"facility\" required style=\"width:160px;\" onchange=\"chkrate('".$id."');\">
 								<option value=\"none\"></option>";
 								
-								$res = mysqli_query($con,"SELECT * FROM tbltype where facid='$id' order by code");
+								$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 								if(mysqli_num_rows($res)){
 									while($rowx = mysqli_fetch_array($res))
 									{
@@ -873,7 +882,7 @@ if (!isset($_GET['id'])){
 						echo "<select id=\"typefaci\" name=\"facility\" required style=\"width:160px;\" onchange=\"chkrate('".$id."');\">
 							<option value=\"none\"></option>";
 							
-							$res = mysqli_query($con,"SELECT * FROM tbltype where facid='$id' order by code");
+							$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 							if(mysqli_num_rows($res)){
 								while($rowx = mysqli_fetch_array($res))
 								{
@@ -955,7 +964,7 @@ if (!isset($_GET['id'])){
 			<hr />
 			<table class="room">
 				<?php
-				$res = mysqli_query($con,"SELECT * FROM tbltype where facid='$id' order by code");
+				$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 				if(mysqli_num_rows($res)){
 					while($rowx = mysqli_fetch_array($res))
 					{
