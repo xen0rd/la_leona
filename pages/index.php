@@ -143,16 +143,15 @@
 					                        <li >
 					                            <a href=\"reservations-list.php\">Reservations</a>
 					                        </li>
+											<li>
+					                            <a href=\"inventory.php\">Inventory</a>
+					                        </li>
 					                        <li>
 					                            <a href=\"payments-list.php\">Payments</a>
 					                            	<ul style=\"display:none;\" id=\"submenu\">
 					                            		<li><a href=\"payments-list.php\">Paymentsx</a></li>
 					                            	</ul>
 					                        </li>
-					                            
-					                            	
-					                            
-					                        
 					                        <li>
 					                            <a href=\"logout.php\">Logout</a>
 					                        </li>
