@@ -11,6 +11,56 @@
 	<link rel="stylesheet" href="button.css" type="text/css">
 	<link rel="stylesheet" type="text/css" href="css/ie.css">
 	<link rel="stylesheet" type="text/css" href="css/ie.css">
+	
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" href="table.css" type="text/css">
+	<link rel="stylesheet" href="button.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/ie.css">
+	<link rel="stylesheet" href="css/responsiveslides.css">
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/responsiveslides.min.js"></script>
+
+	<script>
+		/*$('.bxslider').bxSlider({
+			mode: 'fade',
+			captions: true
+		});*/
+		
+		 $(function () {
+
+		      // Slideshow 1
+		      $(".rslides1").responsiveSlides({
+		      	auto: false,
+		      	pager: false,
+		      	nav: true,
+		        speed: 1000,
+		        maxwidth: 900
+		      });
+
+		      // Slideshow 2
+		      $(".rslides2").responsiveSlides({
+		        auto: true,
+		        pager: false,
+		        speed: 500,
+		        maxwidth: 720
+		      });
+
+		    });
+	</script>
+
+	<style>
+		#horizontalmenu li ul {
+		    display:none;
+		position:absolute;
+		}
+		#horizontalmenu li:hover ul{ 
+			display:block; 
+			background:red; 
+			height:auto; 
+			width:8em; 
+		}
+	</style>
 </head>
 
 <body>
@@ -58,7 +108,9 @@
 					                        <li>
 					                            <a href=\"reservations-list.php\">View Reservations</a>
 					                        </li>
-					                        
+					                        <li>
+					                            
+					                        </li>
 					                  </ul>";
 	                    		}
 	                    	}else{
@@ -142,18 +194,6 @@
 					<label ><font face="century gothic" color="#f3be4b" size="4">Facilities Details </label></font>
 				</li>
 			</ul>
-			<div style="padding-left:20px;padding-bottom:10px;display:inline-block;">
-				<label ><font face="century gothic" color="#f3be4b" size="4">
-					<?php
-						if(isset($_SESSION['login_type'])){
-							if($_SESSION['login_type']=="admin"){
-								echo "<a href=\"facility-maintenance.php\" style=\"text-decoration:none;\">Edit</a>";
-							}
-						}
-						
-					?>
-				</label></font>
-			</div>
 			
 		</div>
 
@@ -175,7 +215,7 @@
 							    	<h1><font face=\"century gothic\" color=\"#f3be4b\" size=\"5\">".$row['name']."</font></h1>
 							    	<p style font-size=\"30\">".$row['description']."...</p>
 								<br />
-							    	<button class=\"button\" onClick=\"location.href='fac.php?id=".$row['id']."'\"> <span>View more</span></button>
+							    	<button class=\"button\" onClick=\"location.href='inventory_details.php?id=".$row['id']."'\"> <span>View Inventory</span></button>
 								<br /><br />
 								</td>
 							</tr><tr><td colspan=\"2\"><hr /></td><tr>";
@@ -208,7 +248,7 @@
 				<h3>recent tweets</h3>
 				<ul>
 					<li>
-						<!--a href="https://www.twitter.com/@FIMejico">Weâ€™re officially welcoming summer 2012! And with that, here are the new and updated rates here in La Leona Resort. Enjoy your vacation with us and have loads of fun here for a memorable summer.<span>1 day ago</span></a-->
+						<!--a href="https://www.twitter.com/@FIMejico">We’re officially welcoming summer 2012! And with that, here are the new and updated rates here in La Leona Resort. Enjoy your vacation with us and have loads of fun here for a memorable summer.<span>1 day ago</span></a-->
 						<a class="twitter-timeline" href="https://twitter.com/salemcoe" data-widget-id="731417495416905732">Tweets by @salemcoe</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 					</li>

@@ -11,18 +11,18 @@ if (isset($_POST['submit'])) {
 		$password=$_POST['password'];
 		$username = stripslashes($username);
 		$password = stripslashes($password);
-		$username = mysql_real_escape_string($username);
-		$password = mysql_real_escape_string($password);
+		$username = mysqli_real_escape_string($username);
+		$password = mysqli_real_escape_string($password);
 		include "connect.php";
-		$result = mysql_query("select * from tbllogin where password='$password' AND username='$username'");
-		if(mysql_num_rows($result)){
-			while($row = mysql_fetch_array($result))
+		$result = mysqli_query($con,"select * from tbllogin where password='$password' AND username='$username'");
+		if(mysqli_num_rows($result)){
+			while($row = mysqli_fetch_array($result))
 			{
 				$_SESSION['login_user']=$username;
 				header("location: admin_home.php"); 
 			}
 		}
-	mysql_close($connection); 
+	mysqli_close($connection); 
 	}
 }
 ?>
