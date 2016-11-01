@@ -1,15 +1,15 @@
 <?php
 include "connect.php";    
 
-$facid = mysql_real_escape_string($_POST["id"]);
-$name = mysql_real_escape_string($_POST["name"]);
-$tag = mysql_real_escape_string($_POST["tagprice"]);
+$facid = mysqli_real_escape_string($con, $_POST["id"]);
+$name = mysqli_real_escape_string($con, $_POST["name"]);
+$tag = mysqli_real_escape_string($con, $_POST["tagprice"]);
 
 $query = "SELECT * FROM tbltype where facid=$facid and name='$name'";
-$result = mysql_query($query);
+$result = mysqli_query($con, $query);
 //$con -> query($query);
-if(mysql_num_rows($result)){
-	while($row = mysql_fetch_array($result)){
+if(mysqli_num_rows($result)){
+	while($row = mysqli_fetch_array($result)){
 		if($tag=="Day" || $tag=="AM"){
 			if($facid!=3){
 				$out=$row['price1']."-".$row['price3']."-".$row['pax']."-".$row['perhead'];

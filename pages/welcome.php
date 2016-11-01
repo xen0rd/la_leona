@@ -123,7 +123,7 @@
 	</div>
 	<div id="body" style="margin-top:-4px;">
 		<div class="body" style="align:center;height:890px;">
-			<center><h2>Congratulations, you are successfully logged in!</h2></center>
+			<center><h2>Welcome, you are successfully logged in!</h2></center>
 			<br />
 			<?php 
 				header("Refresh:1; url=index.php");

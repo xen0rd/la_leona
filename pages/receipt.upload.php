@@ -20,6 +20,54 @@ session_start();
 	<script type="text/javascript" src="js/responsiveslides.min.js"></script>
 
 	<script>
+	
+		function validate(){
+			var filevalue=document.getElementById("txtname").value;
+			var description=document.getElementById("txtdes").value;
+			//alertify.alert(document.getElementById("file").value);
+			var file = document.getElementById("file").value;
+			if(filevalue=="" || filevalue.length<1){
+				document.getElementById("txtname").focus();
+				alertify.alert("Name must not be blank.");
+				return false;
+			}
+			if(description=="" || description.length<1){
+				document.getElementById("txtdes").focus();
+				alertify.alert("File Description must not be blank.");
+				return false;
+			}
+ 			if(file=="" || filevalue.length<1){
+				document.getElementById("file").focus();
+				alertify.alert("Select File.");
+				return false;
+			}
+
+			var fd = new FormData(document.getElementById("formfile"));
+            fd.append("txtname", filevalue);
+            fd.append("txtdes", description);
+            $.ajax({
+            	url: "file_upload.php",
+            	type: "POST",
+            	data: fd,
+            	processData: false,  // tell jQuery not to process the data
+            	contentType: false,   // tell jQuery not to set contentType
+            	enctype: 'multipart/form-data',
+            	success: function(result){
+            		alertify.alert(result);
+                    if(result=="success"){
+                        alertify.alert("Record deleted successfully!");
+                        //window.location.href="facility-maintenance.php";
+                        return true;
+                    }else{
+                    	alertify.error('Error in uploading...')
+                        //window.location.href="facility-maintenance.php";
+                        return false;
+                    }
+                }
+
+            })
+			
+		}
 		/*$('.bxslider').bxSlider({
 			mode: 'fade',
 			captions: true
@@ -354,7 +402,6 @@ session_start();
 							while($rowx = mysqli_fetch_array($res_name)){
 								$fullname = $rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'].".";
 								$email = $rowx['fldemail'];
-								$contact = $rowx['fldcontact1'];
 							}
 						}else{
 							$fullname="";
@@ -365,11 +412,10 @@ session_start();
 					}
             	}
             ?>
-			<h1 style="padding:20px;">Booking Reservation details for <?php echo $fullname;?><Br> Contact No. ( <?php echo $contact; ?>) </h1>
+			<h1 style="padding:20px;">Booking Reservation details for <?php echo $fullname;?> </h1>
 			<?php
 			echo "<div style=\"margin-top:-100px;margin-left:-80px;\">";
 				if(isset($_GET["id"])){
-					echo "<input type=\"hidden\" name=\"hfacid\" id=\"hfacid\" value=\"".$contact."\">";
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:10px;\">Facility id: <span style=\"color:red;\">". $facid."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfacid\" id=\"hfacid\" value=\"".$facid."\">";
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Facility Type: <span style=\"color:red;\">". $faci."</span></p><br />";
@@ -474,7 +520,8 @@ session_start();
 						echo "<input type=\"hidden\" name=\"hemail\" id=\"hemail\" value=\"".$_SESSION['login_email']."\">";
 						echo "
 							<div style=\"margin-left:auto 0;margin-top:0px;;width:900px;padding-top:30px;\">
-							<button style=\"height:30px;\"><a href=\"reservations-list.php\" onclick=\"\" style=\"text-decoration:none;font-size:20px;margin-top:-8px;color:white;\">Back</a></button>
+							<button style=\"height:30px;\"><a href=\"reservations.php\" onclick=\"\" style=\"text-decoration:none;font-size:20px;margin-top:-8px;color:white;\">Back</a></button>
+						
 						</div>
 						";
 					}else{
@@ -496,9 +543,8 @@ session_start();
 				}
 
 			?>
-			
-			
-			<?php 
+
+		<?php 
 			if(isset($_GET['id']) ){
 				$id = $_GET['id'];
 			}else{
@@ -520,9 +566,8 @@ session_start();
 					$imagepath = "";
 				}
 		?>
-		<?php if($status == "pending-cd" || $status=="pending")
-		{?>
-			 <a href =" <?php echo $imagepath; ?>" width="500px" height="500px" target="_blank" style=" text-decoration:none;" ><button style=" position: relative; top: 180px;  left: 245px;" > View image</button></a>
+ 
+ <a href =" <?php echo $imagepath; ?>" width="500px" height="500px" target="_blank" style=" text-decoration:none;" ><button style=" position: relative; top: 210px;  left: 245px;" > View image</button></a>
 
  		<form method="POST" action="upload-edit.php" enctype="multipart/form-data">
 		
@@ -536,13 +581,18 @@ session_start();
 
 				<img src="<?php echo $imagepath; ?>" width="400px;" height="200px" title="<?php echo $imagepath; ?>">
 				
-					
-				
+					<div id="fileup_" >
+						
+			<input type="file" id="file" name="file" style="width:200px;" required></td>
+					</div>
+				</tr>	
 				
 			</table>
+ 					<td ><button style="  position: relative; top: -40px;  left: 70px;" id="btn">Submit</button></td>
 
-		</form> <?php } ?>
-	
+		</form>
+
+	</div>
 
 		</div>
 	</div>

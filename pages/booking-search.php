@@ -1,3 +1,5 @@
+
+
 <?php 
 session_start();
 ?>
@@ -112,6 +114,7 @@ session_start();
 		 		for(x=1;x<item;x++){
 			 		price_ = document.getElementById('item_'+x).value;
 			 		items = items + price_+",";
+			
 			 		//items = items + x +",";
 			 	}
 			 	price_ = document.getElementById('item_'+item).value;
@@ -179,10 +182,10 @@ session_start();
 		 		//alertify.error('No total amount...');
 		 		return false;
 		 	}
-	 		dataString="id="+facid+"&fac="+faci+"&use="+use+"&rate="+rate+"&bedx="+bedx+"&numpax="+numpax+"&xcs="+xcs+"&xcsamt="+xcsamt+"&per="+per+"&cin="+cin+"&cout="+cout+"&tin="+tin+"&tout="+tout+"&totime="+totime+"&addhrs="+addhrs+"&addhrsamt="+addhrsamt+"&days="+days+"&totamt="+totamt+"&mode="+mode.value+"&status="+status+"&email="+email+"&occa="+occa+"&cater="+cater+"&image="+image+"&addons="+addons+"&totalamt="+totalamt+"&items="+items;
+	 		dataString="id="+facid+"&fac="+faci+"&totalamt="+totamt+"&totamt="+totalamt+"&use="+use+"&rate="+rate+"&bedx="+bedx+"&numpax="+numpax+"&xcs="+xcs+"&xcsamt="+xcsamt+"&per="+per+"&cin="+cin+"&cout="+cout+"&tin="+tin+"&tout="+tout+"&totime="+totime+"&addhrs="+addhrs+"&addhrsamt="+addhrsamt+"&days="+days+"&mode="+mode.value+"&status="+status+"&email="+email+"&occa="+occa+"&cater="+cater+"&image="+image+"&addons="+addons+"&totalamt="+totalamt+"&items="+items;
 		 	alertify.confirm('Are you sure you want to reserve this booking?', function (e) {
                 if(e){
-                	//alertify.alert(dataString);
+                	alertify.alert(dataString);
                 	$.ajax({
 	                    type: "POST",
 	                    url: "reserve.php",
@@ -196,7 +199,8 @@ session_start();
 	                    		window.location.href="productsx.php?image=../"+image+"&name="+faci+"-Downpayment&price=1,000.00&id="+result+"&client="+email;
 	                    	}
 	                    	else{
-	                    		window.location.href="products.php?image=../"+image+"&name="+faci+"-Downpayment&price=1,000.00&id="+result+"&client="+email;
+
+	                    		window.location.href="products.php?image=../"+image+"&name="+faci+"-Downpayment&price="+document.getElementById('price').value+"&id="+result+"&client="+email;
 	                    	}
 	                    }
 	                });
@@ -231,6 +235,7 @@ session_start();
 			 	totalamt = parseFloat(totalamt.replace(',',''));
 		 		var xtotal = document.getElementById('totalamount');
 				xtotal.value = Number(totaladdons)+Number(totalamt);
+			
 			}else{
 
 			}
@@ -260,6 +265,16 @@ session_start();
 		 		document.getElementById('item_'+id).focus();
 		 	}
 		}
+		
+ function Sbox()
+    {
+    if(document.getElementById("mode").value=='paypal')
+    {
+
+        document.getElementById("price").disabled=false;
+
+    }
+    }
 	</script>
 
 	<style>
@@ -294,6 +309,7 @@ session_start();
 </head>
 
 <body>
+ 
 	<div id="header">
 		<div>
 			<a href="index.php" class="logo"><img src="logo-trans.png" alt=""></a>
@@ -315,7 +331,9 @@ session_start();
                 </li>
                 <li>    
                     <a>Reservation</a>
-                        <?php 
+                        <?php  
+						
+					
                     	//echo $_SESSION['login_type'];
                     	if(isset($_SESSION['login_type'])){
                     		if($_SESSION['login_type']=="customer"){
@@ -388,6 +406,7 @@ session_start();
 	<div id="body" style="margin-top:-4px;">
 		<div class="body" style="align:center;height:790px;">
 			<?php
+			
 				include "connect.php"; 
             	//echo $_SESSION['login_type'];
             	if(isset($_SESSION['login_type'])){
@@ -399,9 +418,9 @@ session_start();
 					}else{
 						if(isset($_SESSION['set_reservation'])){
 							$email=$_SESSION['set_reservation'];
-							$res_name = mysql_query("SELECT * FROM tblregister where fldemail='$email';");
-							if(mysql_num_rows($res_name)){
-								while($rowx = mysql_fetch_array($res_name)){
+							$res_name = mysqli_query($con, "SELECT * FROM tblregister where fldemail='$email';");
+							if(mysqli_num_rows($res_name)){
+								while($rowx = mysqli_fetch_array($res_name)){
 									$fullname = $rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'].".";
 									$email = $rowx['fldemail'];
 								}
@@ -434,14 +453,14 @@ session_start();
 			 
 			echo "<div style=\"margin-top:-100px;margin-left:-80px;\">";
 				if(isset($_POST["facid"])){
-					$facid = mysql_real_escape_string($_POST["facid"]);
-					$faci = mysql_real_escape_string($_POST["facility"]);
-					$use = mysql_real_escape_string($_POST["usage"]);
-					$rate = floatval(mysql_real_escape_string($_POST["xrate"]));
-					$cin = (mysql_real_escape_string($_POST["check_in"]));
+					$facid = mysqli_real_escape_string($con, $_POST["facid"]);
+					$faci = mysqli_real_escape_string($con, $_POST["facility"]);
+					$use = mysqli_real_escape_string($con, $_POST["usage"]);
+					$rate = floatval(mysqli_real_escape_string($con, $_POST["xrate"]));
+					$cin = (mysqli_real_escape_string($con, $_POST["check_in"]));
 					if($facid==1){
-						$xbed = (mysql_real_escape_string($_POST["xbed"]));
-						$bedx = (mysql_real_escape_string($_POST["bedx"]));
+						$xbed = (mysqli_real_escape_string($con, $_POST["xbed"]));
+						$bedx = (mysqli_real_escape_string($con, $_POST["bedx"]));
 						if($xbed=="Yes"){
 							$xbedx = $xbed;
 						}else{
@@ -451,23 +470,24 @@ session_start();
 					}else{
 						$xbed=0.00;
 					}
-					$xpax = (mysql_real_escape_string($_POST["xpax"]));
-					$numpax = (mysql_real_escape_string($_POST["numpax"]));
-					$per = (mysql_real_escape_string($_POST["xper"]));
+					$xpax = (mysqli_real_escape_string($con, $_POST["xpax"]));
+
+					$numpax = (mysqli_real_escape_string($con, $_POST["numpax"]));
+					$per = (mysqli_real_escape_string($con, $_POST["xper"]));
 
 					if($facid==3){
 						if($_POST["addhrs"]!=""){
-							$addhrs = (mysql_real_escape_string($_POST["addhrs"]));	
+							$addhrs = (mysqli_real_escape_string($con, $_POST["addhrs"]));	
 						}else{
 							$addhrs = 0;
 						}
 						
-						$numhrs = floatval((mysql_real_escape_string($_POST["numhrs"])));
-						$numpax = (mysql_real_escape_string($_POST["numpax"]));
-						$occasion = (mysql_real_escape_string($_POST["occasion"]));
-						$cater = (mysql_real_escape_string($_POST["cater"]));
-						$tin = (mysql_real_escape_string($_POST["time_in"]));
-						$tout = (mysql_real_escape_string($_POST["time_out"]));
+						$numhrs = floatval((mysqli_real_escape_string($con, $_POST["numhrs"])));
+						$numpax = (mysqli_real_escape_string($con, $_POST["numpax"]));
+						$occasion = (mysqli_real_escape_string($con, $_POST["occasion"]));
+						$cater = (mysqli_real_escape_string($con, $_POST["cater"]));
+						$tin = (mysqli_real_escape_string($con, $_POST["time_in"]));
+						$tout = (mysqli_real_escape_string($con, $_POST["time_out"]));
 						$totime = $tout - $tin;
 						if($totime>$numhrs){
 							$addhrs = $totime - $numhrs;
@@ -475,28 +495,28 @@ session_start();
 							$addhrs = 0;
 						}
 					}else{
-						$cout = (mysql_real_escape_string($_POST["check_out"]));
+						$cout = (mysqli_real_escape_string($con, $_POST["check_out"]));
 						$diff=date_diff(date_create($cin),date_create($cout));
 					}
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:10px;\">You choose facility id: <span style=\"color:red;\">". $facid."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfacid\" id=\"hfacid\" value=\"".$facid."\">";
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose facility: <span style=\"color:red;\">". $faci."</span></p><br />";
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose facility type: <span style=\"color:red;\">". $faci."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfaci\" id=\"hfaci\" value=\"".$faci."\">";
-					if($use==1){
-						$use_d="Day";
-					}else if($use==2){
-						$use_d="Night";
+					if($diff->format('%d')=='0'){
+						$use_d="Day use";
 					}else{
-						$use_d="Day and Night";
+						$use_d="Overnight";
 					}
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose type of use: <span style=\"color:red;\">". $use_d."</span></p><br />";
+				
+					
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose type of stay: <span style=\"color:red;\">". $use_d."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"huse\" id=\"huse\" value=\"".$use_d."\">";
 					echo "<input type=\"hidden\" name=\"hrate\" id=\"hrate\" value=\"".$rate."\">";
 					if($facid==3){
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate is <span style=\"color:red;\">". $rate."</span> for ".number_format($numhrs)." hours</p><br />";
 						echo "<input type=\"hidden\" name=\"hnumhrs\" id=\"hnumhrs\" value=\"".number_format($numhrs)."\">";
 					}else{
-						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate is <span style=\"color:red;\">". $rate."</span></p><br />";
+						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Room Rate: PHP <span style=\"color:red;\">". $rate."</span></p><br />";
 					}
 
 					if($facid==1){
@@ -513,7 +533,15 @@ session_start();
 					}
 					$xcs_amt = $xcs * $per;
 					echo "<input type=\"hidden\" name=\"hxcsamt\" id=\"hxcsamt\" value=\"".$xcs_amt."\">";
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate per person <span style=\"color:red;\">". $per." </span></p><br />";
+					
+					if($facid==2)
+					{
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate per person: PHP <span style=\"color:red;\">". $per." </span></p><br />";
+					}
+					if($facid==1)
+					{
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate of excess person: PHP<span style=\"color:red;\">". $per." </span></p><br />";
+					}
 					echo "<input type=\"hidden\" name=\"hper\" id=\"hper\" value=\"".$per."\">";
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">No. of Persons <span style=\"color:red;\">". $numpax." </span>Max(".$xpax.") Excess(<span style=\"color:red;\">".$xcs."</span>) Amount(<span style=\"color:red;\">".$xcs_amt."</span>)</p><br />";
 					echo "<input type=\"hidden\" name=\"hnumpax\" id=\"hnumpax\" value=\"".$numpax."\">";
@@ -539,18 +567,29 @@ session_start();
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Check out date is <span style=\"color:red;\">". $cout."</span></p><br />";
 						echo "<input type=\"hidden\" name=\"hcout\" id=\"hcout\" value=\"".$cout."\">";
 						$days = $diff->format("%a");
-						$totamt = $days * $rate + $xbed + $add_per;
+						
+						
 					}
 						echo "<input type=\"hidden\" name=\"hdays\" id=\"hdays\" value=\"".$days."\">";
-					if ($days>1) {
+					if ($days==0) {
+						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of day is within the day </p><br />";
+						$days =1 ;
+					}	
+					elseif ($days>1) {
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of days is <span style=\"color:red;\">" . $days . " days </span></p><br />";
 					}else{
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of day is <span style=\"color:red;\">" . $days . " day </span></p><br />";
 					}
+					
+					
+					$totamt = $days * $rate + $bedx + $add_per;
+
+					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The amount is Php<span id=\"totamt\" style=\"color:red;\"><b> " . number_format($totamt,2)." </b></span></p><br />" ;
 					echo "<input type=\"hidden\" name=\"htotamt\" id=\"htotamt\" value=\"".number_format($totamt,2)."\">";					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Addons Amount&nbsp;<input type=\"text\" style=\"width:80px;\" readonly name=\"addons\" id=\"addons\"></p>";
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:0px;\">Total Amount&nbsp;<input type=\"text\" style=\"width:80px;\" readonly name=\"totalamount\" id=\"totalamount\"></p>";
+					
 					//echo "<div style=\"margin-left:-400px;margin-top:40px;\">";
 					echo "<button style=\"height:30px;width:100px;margin-left:360px;margin-top:10px;\"><a href=\"void:javascript();\" onclick=\"window.history.back();\" style=\"text-decoration:none;font-size:12px;margin-top:-8px;color:white;\">Modify this</a></button>";
 					//	</div>";
@@ -562,9 +601,9 @@ session_start();
 				echo "
 					</div>
 					<div style=\"float:right;margin-top:-80px;\">";
-						$res = mysql_query("SELECT * FROM tbltype where facid='$facid' and name='$faci'");
-						if(mysql_num_rows($res)){
-							while($rowx = mysql_fetch_array($res))
+						$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$facid' and name='$faci'");
+						if(mysqli_num_rows($res)){
+							while($rowx = mysqli_fetch_array($res))
 							{
 								echo "<img src=\"".$rowx['image']."\" alt=\"".$faci."\" style=\"height:240px;width:360px\">";
 								echo "<input type=\"hidden\" id=\"image_path\" value=\"".$rowx['image']."\">";
@@ -575,18 +614,18 @@ session_start();
 					echo "<div><span\">Addons:";
 					echo "<table>";
 					$items=0;
-					$res = mysql_query("SELECT * FROM tblamenities where facid='$facid'");
-					if(mysql_num_rows($res)){
-						while($rowx = mysql_fetch_array($res)){
+					$res = mysqli_query($con, "SELECT * FROM tblamenities where facid='$facid'");
+					if(mysqli_num_rows($res)){
+						while($rowx = mysqli_fetch_array($res)){
 							$item = $items + 1 ;
 
 							$tot_items = 0;
 							$ordered = 0;
 							$mydate = date("m/d/Y");
 							//echo $mydate;
-							$resultxx = mysql_query("SELECT tbladdons.trxnid, tbladdons.facid, tbladdons.devname, tbladdons.pieces, tblreservations.status, tblreservations.facid, tblreservations.trxnid, tblreservations.facname FROM tbladdons, tblreservations where tbladdons.facid=tblreservations.facid and tbladdons.devname='".$rowx['devname']."' and (tblreservations.status='checkedin' or tblreservations.status='reserved') and tblreservations.cin>='$mydate' and tbladdons.trxnid=tblreservations.trxnid");
-								if(mysql_num_rows($resultxx)){
-									while($rowxx = mysql_fetch_array($resultxx))
+							$resultxx = mysqli_query($con, "SELECT tbladdons.trxnid, tbladdons.facid, tbladdons.devname, tbladdons.pieces, tblreservations.status, tblreservations.facid, tblreservations.trxnid, tblreservations.facname FROM tbladdons, tblreservations where tbladdons.facid=tblreservations.facid and tbladdons.devname='".$rowx['devname']."' and (tblreservations.status='checkedin' or tblreservations.status='reserved') and tblreservations.cin>='$mydate' and tbladdons.trxnid=tblreservations.trxnid");
+								if(mysqli_num_rows($resultxx)){
+									while($rowxx = mysqli_fetch_array($resultxx))
 									{
 										$tot_items += $rowxx['pieces'];
 									}
@@ -614,8 +653,10 @@ session_start();
 
 			?>
 			
-
+		
 			<?php
+		
+
 				if(isset($_SESSION['set_reservation'])){
 					if($_SESSION['set_reservation']!=""){
 						echo "<input type=\"hidden\" name=\"hemail\" id=\"hemail\" value=\"".$_SESSION['set_reservation']."\">";
@@ -633,21 +674,30 @@ session_start();
 						";
 					}
 				}else{
+					
 					if(isset($_SESSION['login_type'])){
 						if(($_SESSION['login_type'])=="customer"){
 							echo "<input type=\"hidden\" name=\"hemail\" id=\"hemail\" value=\"".$_SESSION['login_email']."\">";
 							echo "
 							<div style=\"margin-left:auto 0;margin-top:auto 0;width:900px;padding-top:30px;\">
-								<span style=\"margin-left:400px;\">Payment:
-									<select name=\"mode\" id=\"mode\">
-									<option value=\"\"></option><option value=\"cashdp\">Cash Deposit</option>
+								<span style=\"margin-left:370px;\">Payment:
+									<select name=\"mode\" id=\"mode\"  onchange=\"return Sbox();\">
+									<option value=\"\"></option>
+									<option value=\"cashdp\">Cash Deposit</option>
 									<option value=\"paypal\">Paypal</option>
-									</select>
-									<br /> <br /><center>Minimum of 1,000.00 for downpayment</center>
+									</select><br>";
+									echo "<br><span style=\"margin-left:350px;\"> Amount: <input type=\"text\" id=\"price\" name=\"price\" disabled ></span>";
+
+										echo "<input type=\"hidden\" name=\"hemail\" id=\"hemail\" class=\"box2\"value=\"".$_SESSION['login_email']."\">";
+
+									
+									
+									
+									echo "<br /> <br /><center>Minimum of 1,000.00 for downpayment</center>
 								</span>
 							</div>
-
-							<div style=\"margin-left:auto 0;margin-top:-20px;;width:900px;padding-top:30px;\">
+								
+								<div style=\"margin-left:auto 0;margin-top:-20px;;width:900px;padding-top:30px;\">
 								<button style=\"height:30px;\"><a href=\"void:javascript();\" onclick=\"reserve('".$items."');\" style=\"text-decoration:none;font-size:20px;margin-top:-8px;color:white;\">Continue</a></button>
 							</div>
 							";	
@@ -657,6 +707,7 @@ session_start();
 							$_SESSION['faci']=$faci;
 							$_SESSION['use']=$use;
 							$_SESSION['rate']=$rate;
+							$_SESSION['cin']=$cin;
 							$_SESSION['cin']=$cin;
 							if($facid==1){
 								$_SESSION['xbed']=$xbed;
@@ -668,6 +719,7 @@ session_start();
 								$_SESSION['xbedx']="None";
 							}
 							$_SESSION['xpax']=$xpax;
+							$_SESSION['xcsamt']=$xcsamt;
 							$_SESSION['numpax']=$numpax;
 							$_SESSION['per']=$per;
 							if($facid==3){
@@ -679,6 +731,9 @@ session_start();
 							}else{
 								$_SESSION['cout']=$cout;	
 							}
+							$_SESSION['days']=$days;
+							$_SESSION['totamt']=$totamt;
+
 							echo "
 								<div style=\"margin-left:0px;margin-top:-20px;width:900px;\">
 									<button style=\"height:30px;\"><a href=\"registerx_w.php\" style=\"text-decoration:none;font-size:20px;margin-top:-8px;color:white;\">Register & Continue</a></button>
@@ -721,6 +776,8 @@ session_start();
 							";
 					}
 				}
+				
+					
 			?>
 
 		</div>

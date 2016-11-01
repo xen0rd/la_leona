@@ -1,15 +1,15 @@
 <?php
 include "connect.php";    
 
-$uname = mysql_real_escape_string($_POST["uname"]);
-$pwd = mysql_real_escape_string($_POST["pwd"]);
+$uname = mysqli_real_escape_string($con, $_POST["uname"]);
+$pwd = mysqli_real_escape_string($con, $_POST["pwd"]);
 
 $query = "SELECT * FROM tblregister where fldemail='$uname' and password='$pwd' and type='customer'";
-$result = mysql_query($query);
+$result = mysqli_query($con, $query);
 //$con -> query($query
-if(mysql_num_rows($result)){
+if(mysqli_num_rows($result)){
 	session_start();
-	while($row = mysql_fetch_array($result)){
+	while($row = mysqli_fetch_array($result)){
 		$_SESSION['login_user']=$uname;
 		$_SESSION['login_name']=$row['fldlname'].', '.$row['fldfname'].' '.$row['fldmname'].'.';
 		$_SESSION['login_type']=$row['type'];

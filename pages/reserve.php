@@ -1,51 +1,51 @@
 <?php 
 	include "connect.php";
 
-	$facid = mysql_real_escape_string($_POST["id"]);
-	$faci = mysql_real_escape_string($_POST["fac"]);
-	$use = mysql_real_escape_string($_POST["use"]);
-	$rate = mysql_real_escape_string($_POST["rate"]);
-	$bedx = mysql_real_escape_string($_POST["bedx"]);
-	$numpax = mysql_real_escape_string($_POST["numpax"]);
-	$xcs = mysql_real_escape_string($_POST["xcs"]);
-	$xcsamt = mysql_real_escape_string($_POST["xcsamt"]);
-	$per = mysql_real_escape_string($_POST["per"]);
-	$cin = mysql_real_escape_string($_POST["cin"]);
-	$cout = mysql_real_escape_string($_POST["cout"]);
-	$occa = mysql_real_escape_string($_POST["occa"]);
-	$cater = mysql_real_escape_string($_POST["cater"]);
-	$tin = mysql_real_escape_string($_POST["tin"]);
-	$tout = mysql_real_escape_string($_POST["tout"]);
-	$totime = mysql_real_escape_string($_POST["totime"]);
-	$addhrs = mysql_real_escape_string($_POST["addhrs"]);
-	$addhrsamt = mysql_real_escape_string($_POST["addhrsamt"]);
-	$days = mysql_real_escape_string($_POST["days"]);
-	$totamt = mysql_real_escape_string($_POST["totamt"]);
-	$totalamt = mysql_real_escape_string($_POST["totalamt"]);
-	$addons = mysql_real_escape_string($_POST["addons"]);
-	$mode = mysql_real_escape_string($_POST["mode"]);
-	$status = mysql_real_escape_string($_POST["status"]);
-	$email = mysql_real_escape_string($_POST["email"]);
-	$image = mysql_real_escape_string($_POST["image"]);
-	$items = mysql_real_escape_string($_POST["items"]);
+	$facid = mysqli_real_escape_string($con, $_POST["id"]);
+	$faci = mysqli_real_escape_string($con, $_POST["fac"]);
+	$use = mysqli_real_escape_string($con, $_POST["use"]);
+	$rate = mysqli_real_escape_string($con, $_POST["rate"]);
+	$bedx = mysqli_real_escape_string($con, $_POST["bedx"]);
+	$numpax = mysqli_real_escape_string($con, $_POST["numpax"]);
+	$xcs = mysqli_real_escape_string($con, $_POST["xcs"]);
+	$xcsamt = mysqli_real_escape_string($con, $_POST["xcsamt"]);
+	$per = mysqli_real_escape_string($con, $_POST["per"]);
+	$cin = mysqli_real_escape_string($con, $_POST["cin"]);
+	$cout = mysqli_real_escape_string($con, $_POST["cout"]);
+	$occa = mysqli_real_escape_string($con, $_POST["occa"]);
+	$cater = mysqli_real_escape_string($con, $_POST["cater"]);
+	$tin = mysqli_real_escape_string($con, $_POST["tin"]);
+	$tout = mysqli_real_escape_string($con, $_POST["tout"]);
+	$totime = mysqli_real_escape_string($con, $_POST["totime"]);
+	$addhrs = mysqli_real_escape_string($con, $_POST["addhrs"]);
+	$addhrsamt = mysqli_real_escape_string($con, $_POST["addhrsamt"]);
+	$days = mysqli_real_escape_string($con, $_POST["days"]);
+	$totamt = mysqli_real_escape_string($con, $_POST["totamt"]);
+	$totalamt = mysqli_real_escape_string($con, $_POST["totalamt"]);
+	$addons = mysqli_real_escape_string($con, $_POST["addons"]);
+	$mode = mysqli_real_escape_string($con, $_POST["mode"]);
+	$status = mysqli_real_escape_string($con, $_POST["status"]);
+	$email = mysqli_real_escape_string($con, $_POST["email"]);
+	$image = mysqli_real_escape_string($con, $_POST["image"]);
+	$items = mysqli_real_escape_string($con, $_POST["items"]);
 	//echo $sql;
 	if($mode=="cash"){
 		$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','$status')";
-		$result = mysql_query($sql);
+		$result = mysqli_query($con, $sql);
 		echo "success-cash";
 	}else if($mode=="cashdp"){
 		$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','pending-cd')";
-		$result = mysql_query($sql);
+		$result = mysqli_query($con, $sql);
 		echo "success-cashdp";
 	}
 	else{
-		$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','reserved')";
-		$result = mysql_query($sql);
+		$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','pending')";
+		$result = mysqli_query($con, $sql);
 		$sql="SELECT * FROM tblreservations where facid='$facid' and email='$email' and cin='$cin' and tin='$tin'";
 		//echo $sql;
-		$resultR = mysql_query($sql);
-		if(mysql_num_rows($resultR)){
-			while($rowR = mysql_fetch_array($resultR)){
+		$resultR = mysqli_query($con, $sql);
+		if(mysqli_num_rows($resultR)){
+			while($rowR = mysqli_fetch_array($resultR)){
 				$ltrxnid =  $rowR['trxnid'];
 			}
 		}else{
@@ -55,9 +55,9 @@
 	}
 		$sql="SELECT * FROM tblreservations where facid='$facid' and email='$email' and cin='$cin' and tin='$tin'";
 		//echo $sql;
-		$resultR = mysql_query($sql);
-		if(mysql_num_rows($resultR)){
-			while($rowR = mysql_fetch_array($resultR)){
+		$resultR = mysqli_query($con, $sql);
+		if(mysqli_num_rows($resultR)){
+			while($rowR = mysqli_fetch_array($resultR)){
 				$ltrxnid =  $rowR['trxnid'];
 			}
 		}else{
@@ -66,37 +66,37 @@
 		//echo $ltrxnid;
 		$sql="SELECT * FROM tbladdons where trxnid='$ltrxnid'";
 		//echo $sql;
-		$resultR = mysql_query($sql);
-		if(mysql_num_rows($resultR)){
+		$resultR = mysqli_query($con, $sql);
+		if(mysqli_num_rows($resultR)){
 			//update
 			$sql="SELECT * FROM tblamenities where facid='$facid'";
-			$resultR = mysql_query($sql);
+			$resultR = mysqli_query($con, $sql);
 			$x=0;
 			$item_exp = explode(",",$items);
-			if(mysql_num_rows($resultR)){
-				while($rowR = mysql_fetch_array($resultR)){
+			if(mysqli_num_rows($resultR)){
+				while($rowR = mysqli_fetch_array($resultR)){
 					$y = $x + 1;
 					$itemx = $item_exp[$x];
 					$devx = $rowR['devname'];
 					$sql="UPDATE tbladdons set pieces='$itemx' where trxnid='$ltrxnid' and facid='$facid' and devname='$devx'";
-					$result = mysql_query($sql);			
+					$result = mysqli_query($con, $sql);			
 					$x++;			
 				}
 			}
 		}else{
 			//insert
 			$sql="SELECT * FROM tblamenities where facid='$facid'";
-			$resultR = mysql_query($sql);
+			$resultR = mysqli_query($con, $sql);
 			$x=0;
 			$item_exp = explode(",",$items);
-			if(mysql_num_rows($resultR)){
-				while($rowR = mysql_fetch_array($resultR)){
+			if(mysqli_num_rows($resultR)){
+				while($rowR = mysqli_fetch_array($resultR)){
 					$y = $x + 1;
 					$itemx = $item_exp[$x];
 					$devx = $rowR['devname'];
 					$pricex = $rowR['price1'];
 					$sql="INSERT into tbladdons (pieces, trxnid, facid, devname, price1) VALUES('$itemx','$ltrxnid','$facid','$devx','$pricex')";
-					$result = mysql_query($sql);			
+					$result = mysqli_query($con, $sql);			
 					$x++;
 				}
 		}
