@@ -134,6 +134,24 @@ if (!isset($_GET['id'])){
 			  		return true;
 			 	}
 			});
+			
+			$("#typefaci").change(function(){
+				if($(this).val() == "Casa Leona 1"){
+					$("#numpax").attr("max","1").attr("min","0");
+				}
+				else if($(this).val() == "Casa Leona 2"){
+					$("#numpax").attr("max","2").attr("min","0");
+				}
+				else if($(this).val() == "La Leona Attic"){
+					$("#numpax").attr("max","2").attr("min","0");
+				}
+			});
+			 
+			$("#numpax").change(function(){
+				$("#xper").val($(this).val()*200);
+			});
+			
+			
 		});
 
 		function chkrate(facid) {
@@ -691,7 +709,7 @@ if (!isset($_GET['id'])){
 						}
 					}else{
 								echo "<select id=\"typefaci\" name=\"facility\" required onchange=\"chkrate('".$id."');\">
-								<option value=\"none\"></option>";
+								<option value=\"none\" selected disabled> - Please Select - </option>";
 								$count=0;
 								$res = mysqli_query($con,"SELECT * FROM tbltype where facid='$id' order by code");
 								if(mysqli_num_rows($res)){
