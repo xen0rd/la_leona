@@ -380,6 +380,7 @@ session_start();
 						}else{
 							echo "<td style=\"background-color:lightblue;\">".$row['status']."</td>";
 							echo "<td>&nbsp;</td>";
+							
 							//echo "<td><button style=\"font-size:13px;\">Checkout</button></td>";
 						}
 
@@ -388,11 +389,12 @@ session_start();
 					echo "</tr>";
 				}
 				if($_SESSION['login_type']!="customer"){
-					echo "<tr><td colspan=\"10\">";
+					echo "<tr><td colspan=\"11\">";
 					echo "<button><a href=\"reservation-add.php?name=".$email."\" style=\"text-decoration:none;\">Add Reservation</a></button></td></tr>";
 				}
 			}else{
 				echo "<tr>
+					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -408,7 +410,7 @@ session_start();
 					//<th>Details</th>
 					echo "</tr>";
 				if($_SESSION['login_type']!="customer"){
-					echo "<tr><td colspan=\"10\">";
+					echo "<tr><td colspan=\"11\">";
 					echo "<button><a href=\"reservation-add.php?name=".$email."\" style=\"text-decoration:none;\">Add Reservation</a></button></td></tr>";
 				}
 			}

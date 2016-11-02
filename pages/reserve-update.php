@@ -1,45 +1,85 @@
-<?php 
+<?php
 	session_start();
 	include "connect.php";
-	$type = mysql_real_escape_string($_POST["type"]);
+	$type = mysqli_real_escape_string($con, $_POST["type"]);
+	$mode = mysqli_real_escape_string($con, $_POST["mode"]);
+	$statuss = mysqli_real_escape_string($con, $_POST["statuss"]);
+
+		
+
 	if($type=="cin")
 	{
-		$dp = mysql_real_escape_string($_POST["dp"]);
-		$bal = mysql_real_escape_string($_POST["bal"]);
-		$status = "checkedin";
-	}else{
-		$status = "checkedout";
-		$food = mysql_real_escape_string($_POST["food"]);
-		$damage = mysql_real_escape_string($_POST["damage"]);
-		$payment = mysql_real_escape_string($_POST["payment"]);
-		$ornum = mysql_real_escape_string($_POST["ornum"]);
+		if($statuss=="pending" || $statuss=="pending-cd")
+		{
+			$dp = mysqli_real_escape_string($con, $_POST["dp"]);
+			$bal = mysqli_real_escape_string($con, $_POST["bal"]);
+			$status = "reserved";
+		}
+		if($statuss=="reserved")
+		{
+			$dp = mysqli_real_escape_string($con, $_POST["dp"]);
+			$bal = mysqli_real_escape_string($con, $_POST["bal"]);
+			$status = "checkedin";
+		
+		}
+		if($statuss=="pending" && $mode=="cash")
+		{
+			$dp = mysqli_real_escape_string($con, $_POST["dp"]);
+			$bal = mysqli_real_escape_string($con, $_POST["bal"]);
+			$status = "checkedin";
+		
+		}
+		
 	}
-	$trxnid = mysql_real_escape_string($_POST["trxnid"]);
-	$item = mysql_real_escape_string($_POST["item"]);
-	$email = mysql_real_escape_string($_POST["email"]);
-	$fullname = mysql_real_escape_string($_POST["fullname"]);
-	$totamt = mysql_real_escape_string($_POST["totamt"]);
-	$items = mysql_real_escape_string($_POST["items"]);
+	if($type=="cout"){
+		$status = "checkedout";
+		$food = mysqli_real_escape_string($con, $_POST["food"]);
+		$damage = mysqli_real_escape_string($con, $_POST["damage"]);
+		$payment = mysqli_real_escape_string($con, $_POST["payment"]);
+		$ornum = mysqli_real_escape_string($con, $_POST["ornum"]);
+	$totamt = mysqli_real_escape_string($con, $_POST["totamt"]);
+
+$change = $payment - $totamt;
+
+						
+
+	}
+	$trxnid = mysqli_real_escape_string($con, $_POST["trxnid"]);
+	$item = mysqli_real_escape_string($con, $_POST["item"]);
+	$email = mysqli_real_escape_string($con, $_POST["email"]);
+	$fullname = mysqli_real_escape_string($con, $_POST["fullname"]);
+	$totamt = mysqli_real_escape_string($con, $_POST["totamt"]);
+
+
+
+
+	if(isset($_POST["items"])){
+		$items = mysqli_real_escape_string($con, $_POST["items"]);
+	}else{
+		$items = "";
+	}
+
 	//$time = date("h:i:sa",time());
 	setlocale(LC_ALL, "0");
 	//$timex = localtime();
 	//$time = $timex[2].":".$timex[1].":".$timex[0];
-	$time = mysql_real_escape_string($_POST["time"]);
+	$time = mysqli_real_escape_string($con, $_POST["time"]);
 	$date = date("m/d/Y");
 	if($type=="cin"){
-		$sql="INSERT INTO tblpayments(trxnid,email,fullname,downpayment,balance,totamt,itemid,createdtime,date_) VALUES($trxnid,'$email','$fullname','$dp','$bal','$totamt','$item','$time','$date')";	
+		//$sql="INSERT INTO tblpayments(trxnid,email,fullname,downpayment,balance,totamt,itemid,createdtime,date_) VALUES($trxnid,'$email','$fullname','$dp','$bal','$totamt','$item','$time','$date')";
+		$sql="UPDATE tblpayments set email='$email',fullname='$fullname',payment_status='$status', downpayment='$dp', balance='$bal',totamt='$totamt',itemid='$item',date_='$date' where trxnid='$trxnid'";
 	}else{
-		$sql="INSERT INTO tblpayments(trxnid,email,fullname,food,damage,totamt,itemid,createdtime,date_,payment_amount,ornum) VALUES($trxnid,'$email','$fullname','$food','$damage','$totamt','$item','$time','$date','$payment','$ornum')";
+		$sql="INSERT INTO tblpayments(trxnid,email,fullname,food,damage,totamt,itemid,createdtime,date_,payment_amount,ornum,changes) VALUES($trxnid,'$email','$fullname','$food','$damage','$totamt','$item','$time','$date','$payment','$ornum','$change')";
 	}
-	$result = mysql_query($sql);
+	$result = mysqli_query($con, $sql);
 
 	if($status=="checkedin"){
 		//sending email reservation details
         $sql="SELECT * FROM tblreservations, tblpayments where tblreservations.trxnid=tblpayments.trxnid and tblreservations.trxnid='$trxnid'";
         //echo $sql;
-        $resultR = mysql_query($sql);
-        if(mysql_num_rows($resultR)){
-            while($rowR = mysql_fetch_array($resultR)){
+        $resultR = mysqli_query($con, $sql);
+        if(mysqli_num_rows($resultR)){
+            while($rowR = mysqli_fetch_array($resultR)){
                 $facid = $rowR['facid'];
                 $facility = $rowR['facname'];
                 $use = $rowR['typeofuse'];
@@ -48,30 +88,36 @@
                 $xcs = $rowR['xcs'];
                 $cin = $rowR['cin'];
                 $cout = $rowR['cout'];
+                $downp = $rowR['downpayment'];
                 if($facid==3){
                     $tin = $rowR['tin'];
                     $tout = $rowR['tout'];
                 }
                 $totamt = $rowR['totamt'];
+                if($totamt>$downp){
+                    $balance = $totamt - $downp;
+                }else{
+                    $balance = 0.00;
+                }
             }
 
             $sqlx="SELECT * FROM tbladdons where trxnid='$trxnid'";
 			//echo $sql;
-			$resultRx = mysql_query($sqlx);
-			if(mysql_num_rows($resultRx)){
+			$resultRx = mysqli_query($con, $sqlx);
+			if(mysqli_num_rows($resultRx)){
 				//update
 				$sqlxx="SELECT * FROM tblamenities where facid='$facid'";
-				$resultRxx = mysql_query($sqlxx);
+				$resultRxx = mysqli_query($con, $sqlxx);
 				$x=0;
 				$item_exp = explode(",",$items);
-				if(mysql_num_rows($resultRxx)){
-					while($rowRxx = mysql_fetch_array($resultRxx)){
+				if(mysqli_num_rows($resultRxx)){
+					while($rowRxx = mysqli_fetch_array($resultRxx)){
 						$y = $x + 1;
 						$itemx = $item_exp[$x];
 						$devx = $rowRxx['devname'];
 						$sql="UPDATE tbladdons set pieces='$itemx' where trxnid='$trxnid' and facid='$facid' and devname='$devx'";
-						$result = mysql_query($sql);			
-						$x++;			
+						$result = mysqli_query($con, $sql);
+						$x++;
 					}
 				}
 			}
@@ -89,6 +135,7 @@
         $message .= "<p>Check-in date is ".$cin."</p><br>";
         $message .= "<p>Check-out date is ".$cout."</p><br>";
         $message .= "<p>The total amount is ".$totamt."</p><br>";
+        $message .= "<p>The remaining balance is ".$balance."</p><br>";
 
         $header = "From: salem.mit5@gmail.com";
         $header .= "Cc:salem.mit5@gmail \r\n";
@@ -99,7 +146,7 @@
 	}
 
 	$sql="UPDATE tblreservations set status='$status' where trxnid='$trxnid'";
-	$result = mysql_query($sql);	
+	$result = mysqli_query($con, $sql);
 	//echo $sql;
 	echo "success";
 ?>

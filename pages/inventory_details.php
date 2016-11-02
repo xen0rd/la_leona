@@ -21,7 +21,7 @@
 
 <body>
 <?php include "header.php"; ?>
-
+<div id="body" style="margin-top:-4px;">
 <div class="header">
 	<?php 
 		if(isset($_SESSION['reserve'])){
@@ -58,13 +58,31 @@
 		</li>
 	</ul>
 	
-</div>
+	
+	<style>
+	
+	.dataTables_wrapper .dataTables_length {
+float: left;
+}
+.dataTables_wrapper .dataTables_filter {
+float: left;
+margin-left: 51%;
+text-align: center;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: left;
+	margin-left: 51%;
+}
 
+</style>
+</div>
+<div style="margin-top:-5px; margin-left:280px; width:940px; background-color: white;" >
+		<div  style="align:center;height:890px; width:50px; background-color: white;">
 <?php if($_GET['id'] == 1) {?>
 	<div class="container">
 		<button class="btn btn-success" style="margin-bottom:20px;" data-toggle="modal" data-target="#casaModal"><i class="glyphicon glyphicon-plus"></i> Add item</button>
 			
-		<table id="CasaDatatables" class="display">
+		<table id="CasaDatatables"  style="margin-left:0px;"  cellspacing="0" width="80%">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -82,14 +100,15 @@
 			</tbody>
 		</table>
 	</div>
-
+</div></div>
 <?php } ?>
 
 <?php if($_GET['id'] == 2) {?>
+
 	<div class="container">
 		<button class="btn btn-success" style="margin-bottom:20px;" data-toggle="modal" data-target="#cabanasModal"><i class="glyphicon glyphicon-plus"></i> Add item</button>
 		
-		<table id="CabanasDatatables" class="display">
+		<table id="CabanasDatatables"  style="margin-left:0px;"  cellspacing="0" width="80%">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -114,7 +133,7 @@
 	<div class="container">
 		<button class="btn btn-success" style="margin-bottom:20px;" data-toggle="modal" data-target="#functionModal"><i class="glyphicon glyphicon-plus"></i> Add item</button>
 			
-		<table id="FunctionDatatables" class="display">
+		<table id="FunctionDatatables"  style="margin-left:0px;"  cellspacing="0" width="80%">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -258,12 +277,14 @@
 
 
 
+</div>
 <?php include "footer.php"; ?>
 <script>
 	$(document).ready(function(){
 		$("#CasaDatatables").DataTable();
 		$("#CabanasDatatables").DataTable();
 		$("#FunctionDatatables").DataTable();
+		
 		
 		$.ajax({
 			url : window.location.protocol+"//"+window.location.host+"/la_leona/ajax/fetchCasaInventory.php",
@@ -289,6 +310,7 @@
 														"</tr>");
 				}
 				$("#CasaDatatables").DataTable();
+
 				console.log("Casa Inventory successfully fetched!");
 			}
 		});

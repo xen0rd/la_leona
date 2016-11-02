@@ -160,21 +160,23 @@ session_start();
 		 }
 		 
 		 
-		function openCity(evt, cityName) {
-		var i, tabcontent, tablinks;
-		tabcontent = document.getElementsByClassName("tabcontent");
-		for (i = 0; i < tabcontent.length; i++) {
-			tabcontent[i].style.display = "none";
-		}
-		tablinks = document.getElementsByClassName("tablinks");
-		for (i = 0; i < tablinks.length; i++) {
-			tablinks[i].className = tablinks[i].className.replace(" active", "");
-		}
-		document.getElementById(cityName).style.display = "block";
-		evt.currentTarget.className += " active";
-		}
+		 function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
 
-		document.getElementById("defaultOpen").click();
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+	
 	</script>
 
 	<style>
@@ -206,7 +208,8 @@ session_start();
 			text-shadow:1px 1px 1px #fff;
 		}
 		
-	body {font-family: "Lato", sans-serif;}
+		
+		body {font-family: "Lato", sans-serif;}
 
 ul.tab {
     list-style-type: none;
@@ -243,11 +246,12 @@ ul.tab li a:focus, .active {
 
 /* Style the tab content */
 .tabcontent {
-    display: none;
-	
     padding: 6px 12px;
-    border-top: none;
+	border-top: none;
 }
+
+
+</style>
 
 	</style>
 </head>
@@ -373,15 +377,16 @@ ul.tab li a:focus, .active {
 			<h1 style="padding:20px;">Booked Reservations</h1>
 			
 
+<ul class="tab">
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'reservation')" id="defaultOpen">Reservations</a></li>
+   <li><a href="javascript:void(0)" class="tablinks" onclick="location.href='arrivals.php'">Arrivals</a></li>
 
-	<ul class="tab">
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Reservation')"id="defaultOpen">Reservations</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Arrivals')">Arrivals</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Check-Outs')">Check-Outs</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="location.href='checkouts.php'">Check-Outs</a></li>
 </ul>
 			
-			<div id="Reservation" class="tabcontent">
+				
 			
+			<div id="reservation" class="tabcontent" >
 			<?php 
 			//echo $email;
 			$date_ = date("m/d/Y");
@@ -541,325 +546,6 @@ ul.tab li a:focus, .active {
 		</div>
 		
 		
-		
-			<div id="Check-Outs" class="tabcontent">
-			
-			<?php 
-			//echo $email;
-			$date_ = date("m/d/Y");
-			//echo $date_;
-			echo "<div style=\"margin-top:0px;margin-left:20px;padding:0px;width:900px;overflow:auto;\">";
-			
-			echo "<center><table class=\"room\" border=\"1\" cellpadding=\"5\" cellspacing=\"0\" style=\"font-size:12px;\">";
-			echo "<tr>";
-			if(isset($_GET['page'])){
-				echo "<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=trxnid&page=".$_GET['page']."\">Booking No.</a></th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=facname&page=".$_GET['page']."\">Type</a></th>
-					<th>Guest Name</th>
-					<th>Type of Stay</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=cin&page=".$_GET['page']."\">Checkin Date</a></th>
-					<th>Checkout Date</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=tin&page=".$_GET['page']."\">Time In</a></th>
-					<th>Time Out</th>
-					<th>Payment Type</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=status&page=".$_GET['page']."\">Status</a></th>";	
-			}else{
-				echo "<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=trxnid\">Booking No.</a></th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=facname\">Type</a></th>
-					<th>Guest Name</th>
-					<th>Type of Stay</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=cin\">Checkin Date</a></th>
-					<th>Checkout Date</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=tin\">Time In</a></th>
-					<th>Time Out</th>
-					<th>Payment Type</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=status\">Status</a></th>";
-			}
-			
-			echo "<th>Cancel</th>";
-					if($_SESSION['login_type']!="customer"){
-						echo "<th>Update</th>
-						<th>Details</th>";	
-					}
-					echo "
-			</tr>";
-			$result = mysqli_query($con, "SELECT COUNT(*) AS REC_NUM FROM tblreservations WHERE status='checkedout'");
-			if(mysqli_num_rows($result)){
-				while($rowp = mysqli_fetch_array($result)){
-					$totpage = $rowp['REC_NUM'];
-				}
-			}
-			$numpage = ceil($totpage/10) - 1;
-			$npage=1;
-			$ppage=0;
-			if(isset($_GET['page'])){
-				$page = $_GET['page'];
-				$npage = $page + 1;
-				$ppage = $page - 1;
-				if($page<0){
-					$page=0;
-				}
-
-				if($page>=$numpage){
-					$page=$numpage;
-					if($npage>=$numpage){
-						$npage = $page;
-					}
-					if($ppage<=0){
-						$ppage=0;
-					}
-					$start = $page * 10; 	
-				}else{
-					if($npage>=$numpage){
-						$npage = $page+1;
-					}
-					if($ppage<0){
-						$ppage=$page;
-						//echo $ppage;
-					}
-					$start = $page * 10; 	
-				}
-				//echo $page;	
-			}else{
-				if($npage>=$numpage){
-					$npage = 1;
-				}
-				if($ppage<=0){
-					$ppage=0;
-				}
-				$start = 0;
-			}
-
-			if(isset($_GET['order'])){
-				$order = $_GET['order'];
-				$result = mysqli_query($con, "SELECT * FROM tblreservations  WHERE status='checkedout' order by $order limit 10 OFFSET $start");
-			}else{
-				$result = mysqli_query($con, "SELECT * FROM tblreservations WHERE status='checkedout' limit 10 OFFSET $start ");	
-			}
-			
-			if(mysqli_num_rows($result)){
-				while($row = mysqli_fetch_array($result)){
-					echo "<tr>
-						<td>".$row['trxnid']."</td>
-						<td>".$row['facname']."</td>";
-						$res_reg = mysqli_query($con, "SELECT * FROM tblregister where fldemail='".$row['email']."';");
-						if(mysqli_num_rows($res_reg)){
-							while($rowx = mysqli_fetch_array($res_reg)){
-								$fullname=$rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'];
-								$contact = $rowx['fldcontact1'];
-							}
-						}
-					echo "<td>".$fullname."</td>
-						<td>".$row['typeofuse']."</td>
-						<td>".$row['cin']."</td>
-						<td>".$row['cout']."</td>
-						<td>".$row['tin']."</td>
-						<td>".$row['tout']."</td>
-						<td>".$row['mode']."</td>";
-
-						if($row['status']=="pending"|| $row['status']=="pending-cd"){
-							echo "<td style=\"background-color:yellow;\">".$row['status']."</td>";
-							echo "<td><button style=\"font-size:11px;\" onclick=\"cancel_r('".$row['trxnid']."');\">Cancel</button></td>";
-							//echo "<td>&nbsp;</td>";
-						}else if($row['status']=="for cancellation"){
-							echo "<td style=\"background-color:lightgreen;\">".$row['status']."</td>";
-							echo "<td>&nbsp;</td>";
-						}else if($row['status']=="reserved"){
-							echo "<td style=\"background-color:orange;\">".$row['status']."</td>";
-							echo "<td>&nbsp;</td>";
-						}else{
-							echo "<td style=\"background-color:lightblue;\">".$row['status']."</td>";
-							echo "<td>&nbsp;</td>";
-						}
-						if($_SESSION['login_type']!="customer"){
-							echo "<td><button style=\"font-size:10px;\" onclick=\"update_r('".$row['trxnid']."');\">Update</button></td>
-							<td><button style=\"font-size:10px;\" onclick=\"view_r('".$row['trxnid']."');\">Details</button></td>";
-						}
-						
-					//echo "<td><button style=\"font-size:13px;\">Update</button></td>
-					//	<td><button style=\"font-size:13px;\">Details</button></td>
-					echo "</tr>";
-				}
-			}
-			echo "</table></center><br />";
-			echo "<span style=\"float:right;\">";
-			if(isset($_GET['order'])){
-				echo "<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?order=".$_GET['order']."&page=0'\"> << </button>
-			<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?order=".$_GET['order']."&page=".$ppage."'\"> < </button>
-			<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?order=".$_GET['order']."&page=".$npage."'\"> > </button>
-			<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?order=".$_GET['order']."&page=".$numpage."'\"> >> </button>";
-			}else{
-				echo "<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?page=0'\"> << </button>
-				<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?page=".$ppage."'\"> < </button>
-				<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?page=".$npage."'\"> > </button>
-				<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?page=".$numpage."'\"> >> </button>";	
-			}
-			
-			echo "</span>";
-			echo "</div>";
-			?>
-
-		</div>
-		
-		
-			<div id="Arrivals" class="tabcontent">
-			
-			<?php 
-			//echo $email;
-			$date_ = date("m/d/Y");
-			//echo $date_;
-			echo "<div style=\"margin-top:0px;margin-left:20px;padding:0px;width:900px;overflow:auto;\">";
-			
-			echo "<center><table class=\"room\" border=\"1\" cellpadding=\"5\" cellspacing=\"0\" style=\"font-size:12px;\">";
-			echo "<tr>";
-			if(isset($_GET['page'])){
-				echo "<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=trxnid&page=".$_GET['page']."\">Booking No.</a></th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=facname&page=".$_GET['page']."\">Type</a></th>
-					<th>Guest Name</th>
-					<th>Type of Stay</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=cin&page=".$_GET['page']."\">Checkin Date</a></th>
-					<th>Checkout Date</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=tin&page=".$_GET['page']."\">Time In</a></th>
-					<th>Time Out</th>
-					<th>Payment Type</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=status&page=".$_GET['page']."\">Status</a></th>";	
-			}else{
-				echo "<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=trxnid\">Booking No.</a></th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=facname\">Type</a></th>
-					<th>Guest Name</th>
-					<th>Type of Stay</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=cin\">Checkin Date</a></th>
-					<th>Checkout Date</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=tin\">Time In</a></th>
-					<th>Time Out</th>
-					<th>Payment Type</th>
-					<th><a style=\"text-decoration:none;\" href=\"reservations-list.php?order=status\">Status</a></th>";
-			}
-			
-			echo "<th>Cancel</th>";
-					if($_SESSION['login_type']!="customer"){
-						echo "<th>Update</th>
-						<th>Details</th>";	
-					}
-					echo "
-			</tr>";
-			$result = mysqli_query($con, "SELECT COUNT(*) AS REC_NUM FROM tblreservations WHERE status='reserved'");
-			if(mysqli_num_rows($result)){
-				while($rowp = mysqli_fetch_array($result)){
-					$totpage = $rowp['REC_NUM'];
-				}
-			}
-			$numpage = ceil($totpage/10) - 1;
-			$npage=1;
-			$ppage=0;
-			if(isset($_GET['page'])){
-				$page = $_GET['page'];
-				$npage = $page + 1;
-				$ppage = $page - 1;
-				if($page<0){
-					$page=0;
-				}
-
-				if($page>=$numpage){
-					$page=$numpage;
-					if($npage>=$numpage){
-						$npage = $page;
-					}
-					if($ppage<=0){
-						$ppage=0;
-					}
-					$start = $page * 10; 	
-				}else{
-					if($npage>=$numpage){
-						$npage = $page+1;
-					}
-					if($ppage<0){
-						$ppage=$page;
-						//echo $ppage;
-					}
-					$start = $page * 10; 	
-				}
-				//echo $page;	
-			}else{
-				if($npage>=$numpage){
-					$npage = 1;
-				}
-				if($ppage<=0){
-					$ppage=0;
-				}
-				$start = 0;
-			}
-
-			if(isset($_GET['order'])){
-				$order = $_GET['order'];
-				$result = mysqli_query($con, "SELECT * FROM tblreservations  WHERE  status='reserved' order by $order limit 10 OFFSET $start");
-			}else{
-				$result = mysqli_query($con, "SELECT * FROM tblreservations  WHERE status='reserved' limit 10 OFFSET $start ");	
-			}
-			
-			if(mysqli_num_rows($result)){
-				while($row = mysqli_fetch_array($result)){
-					echo "<tr>
-						<td>".$row['trxnid']."</td>
-						<td>".$row['facname']."</td>";
-						$res_reg = mysqli_query($con, "SELECT * FROM tblregister where fldemail='".$row['email']."';");
-						if(mysqli_num_rows($res_reg)){
-							while($rowx = mysqli_fetch_array($res_reg)){
-								$fullname=$rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'];
-								$contact = $rowx['fldcontact1'];
-							}
-						}
-					echo "<td>".$fullname."</td>
-						<td>".$row['typeofuse']."</td>
-						<td>".$row['cin']."</td>
-						<td>".$row['cout']."</td>
-						<td>".$row['tin']."</td>
-						<td>".$row['tout']."</td>
-						<td>".$row['mode']."</td>";
-
-						if($row['status']=="pending"|| $row['status']=="pending-cd"){
-							echo "<td style=\"background-color:yellow;\">".$row['status']."</td>";
-							echo "<td><button style=\"font-size:11px;\" onclick=\"cancel_r('".$row['trxnid']."');\">Cancel</button></td>";
-							//echo "<td>&nbsp;</td>";
-						}else if($row['status']=="for cancellation"){
-							echo "<td style=\"background-color:lightgreen;\">".$row['status']."</td>";
-							echo "<td>&nbsp;</td>";
-						}else if($row['status']=="reserved"){
-							echo "<td style=\"background-color:orange;\">".$row['status']."</td>";
-							echo "<td>&nbsp;</td>";
-						}else{
-							echo "<td style=\"background-color:lightblue;\">".$row['status']."</td>";
-							echo "<td>&nbsp;</td>";
-						}
-						if($_SESSION['login_type']!="customer"){
-							echo "<td><button style=\"font-size:10px;\" onclick=\"update_r('".$row['trxnid']."');\">Update</button></td>
-							<td><button style=\"font-size:10px;\" onclick=\"view_r('".$row['trxnid']."');\">Details</button></td>";
-						}
-						
-					//echo "<td><button style=\"font-size:13px;\">Update</button></td>
-					//	<td><button style=\"font-size:13px;\">Details</button></td>
-					echo "</tr>";
-				}
-			}
-			echo "</table></center><br />";
-			echo "<span style=\"float:right;\">";
-			if(isset($_GET['order'])){
-				echo "<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?order=".$_GET['order']."&page=0'\"> << </button>
-			<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?order=".$_GET['order']."&page=".$ppage."'\"> < </button>
-			<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?order=".$_GET['order']."&page=".$npage."'\"> > </button>
-			<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?order=".$_GET['order']."&page=".$numpage."'\"> >> </button>";
-			}else{
-				echo "<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?page=0'\"> << </button>
-				<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?page=".$ppage."'\"> < </button>
-				<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?page=".$npage."'\"> > </button>
-				<button style=\"display:inline-block;\" onclick=\"javascript:location.href='reservations-list.php?page=".$numpage."'\"> >> </button>";	
-			}
-			
-			echo "</span>";
-			echo "</div>";
-			?>
-
-		</div>
 		</div>
 		</div>
 		

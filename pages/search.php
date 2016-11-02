@@ -153,9 +153,9 @@
 					echo "<div style=\"margin-left:80px;margin-top:-100px;width:700px;\"><span><h2>for \"$strsearch\"</h2></span><ol>";
 					$strsql = "SELECT * FROM tblfacilities where name like '%$strsearch%' OR description like '%$strsearch%'";
 					//echo $strsql;
-					$resultx = mysql_query($strsql);
-					if(mysql_num_rows($resultx)){
-						while($row = mysql_fetch_array($resultx)){
+					$resultx = mysqli_query($con, $strsql);
+					if(mysqli_num_rows($resultx)){
+						while($row = mysqli_fetch_array($resultx)){
 							echo "<li><span><a style=\"width:800px;\" href=\"facdetails.php?id=".$row['id']."\">".$row['name']."-".$row['description']."</a></span></li><br />";
 						}
 						if(isset($_SESSION['login_type'])){
@@ -165,9 +165,9 @@
 									//echo "<ol>";
 									$strsql = "SELECT * FROM tblreservations where facname like '%$strsearch%' OR email like '%$strsearch%'";
 									//echo $strsql;
-									$resultx = mysql_query($strsql);
-									if(mysql_num_rows($resultx)){
-										while($row = mysql_fetch_array($resultx)){
+									$resultx = mysqli_query($con, $strsql);
+									if(mysqli_num_rows($resultx)){
+										while($row = mysqli_fetch_array($resultx)){
 											echo "<li><span><a style=\"width:800px;\" href=\"reservations-list.php\">".$row['email']."-".$row['facname']."</a></span></li><br />";
 										}
 									}else{
@@ -188,9 +188,9 @@
 									echo "<ol>";
 									$strsql = "SELECT * FROM tblreservations where facname like '%$strsearch%' OR email like '%$strsearch%'";
 									//echo $strsql;
-									$resultx = mysql_query($strsql);
-									if(mysql_num_rows($resultx)){
-										while($row = mysql_fetch_array($resultx)){
+									$resultx = mysqli_query($con, $strsql);
+									if(mysqli_num_rows($resultx)){
+										while($row = mysqli_fetch_array($resultx)){
 											echo "<li><span><a style=\"width:800px;\" href=\"reservations-list.php\">".$row['email']."-".$row['facname']."</a></span></li><br />";
 										}
 									}else{
