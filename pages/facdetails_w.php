@@ -515,9 +515,9 @@ if (!isset($_GET['id'])){
 	</div>
 	<?php
 		include "connect.php";
-		$result = mysql_query("SELECT * FROM tblfacilities where id=$id");
-		if(mysql_num_rows($result)){
-			while($row = mysql_fetch_array($result))
+		$result = mysqli_query($con, "SELECT * FROM tblfacilities where id=$id");
+		if(mysqli_num_rows($result)){
+			while($row = mysqli_fetch_array($result))
 			{
 				$name = $row['name'];
 				$des = $row['description'];
@@ -538,7 +538,7 @@ if (!isset($_GET['id'])){
             			";
 					}else if($_SESSION['login_type']=="FRONTDESK"){
 						echo "
-        				<a style=\"margin-top:50px;margin-left:50px;font-size:16px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
+        				<a style=\"margin-top:50px;margin-left:160px;font-size:16px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\">Logout</a>
         			";
 					}else{
 						echo "
@@ -566,9 +566,9 @@ if (!isset($_GET['id'])){
 						<span id="tab">
 							<ul>
 							<?php 
-								$res = mysql_query("SELECT * FROM tblamenities where facid='$id'");
-								if(mysql_num_rows($res)){
-									while($rowx = mysql_fetch_array($res))
+								$res = mysqli_query($con, "SELECT * FROM tblamenities where facid='$id'");
+								if(mysqli_num_rows($res)){
+									while($rowx = mysqli_fetch_array($res))
 									{
 										echo "<li><p>".$rowx['devname']."</p></li>";
 									}	
@@ -595,8 +595,8 @@ if (!isset($_GET['id'])){
 					if($_SESSION['login_type']=="customer"){
 						$email = $_SESSION['login_email'];
 						
-						$res = mysql_query("SELECT * FROM tblreserve_temp where email='$email' and date_='$mydate' order by trxnid");
-							if(mysql_num_rows($res)){
+						$res = mysqli_query($con, "SELECT * FROM tblreserve_temp where email='$email' and date_='$mydate' order by trxnid");
+							if(mysqli_num_rows($res)){
 								$with_booking=1;
 								echo "<span style=\"font-size:18px;\">Current Reservations</span>";
 								echo "<table class=\"room\" border=\"1\"><tr>
@@ -606,7 +606,7 @@ if (!isset($_GET['id'])){
 										<th>Amount</th>
 										<th>Action</th>
 										</tr>";
-								while($rowx = mysql_fetch_array($res))
+								while($rowx = mysqli_fetch_array($res))
 								{
 									
 								}
@@ -627,9 +627,9 @@ if (!isset($_GET['id'])){
 								echo "<select id=\"typefaci\" name=\"facility\" required onchange=\"chkrate('".$id."');\">
 							<option value=\"none\"></option>";
 							
-							$res = mysql_query("SELECT * FROM tbltype where facid='$id' order by code");
-							if(mysql_num_rows($res)){
-								while($rowx = mysql_fetch_array($res))
+							$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
+							if(mysqli_num_rows($res)){
+								while($rowx = mysqli_fetch_array($res))
 								{
 									if($rowx['name']==$_SESSION['faci']){
 										echo "<option value=\"".$rowx['name']."\" selected>".$rowx['name']."</option>";	
@@ -660,11 +660,11 @@ if (!isset($_GET['id'])){
 						<select id=\"typeuse\" name=\"usage\" required onchange=\"chkrate('".$id."');\">
 							<option value=\"none\"></option>";
 							if($_SESSION['use']=="Day"){
-								echo "<option value=\"Day\" selected>Day</option>
+							echo "<option value=\"Day\" selected>Day</option>
 							<option value=\"Night\">Night</option>
 							<option value=\"DayAndNight\">DayAndNight</option>";
 							}else if($_SESSION['use']=="Night"){
-								echo "<option value=\"Day\">Day</option>
+							echo "<option value=\"Day\">Day</option>
 							<option value=\"Night\" selected>Night</option>
 							<option value=\"DayAndNight\">DayAndNight</option>";
 							}else{
@@ -716,9 +716,9 @@ if (!isset($_GET['id'])){
 								echo "<select id=\"typefaci\" name=\"facility\" required onchange=\"chkrate('".$id."');\">
 								<option value=\"none\"></option>";
 								$count=0;
-								$res = mysql_query("SELECT * FROM tbltype where facid='$id' order by code");
-								if(mysql_num_rows($res)){
-									while($rowx = mysql_fetch_array($res))
+								$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
+								if(mysqli_num_rows($res)){
+									while($rowx = mysqli_fetch_array($res))
 									{
 										echo "<option value=\"".$rowx['name']."\">".$rowx['name']."</option>";
 										$count++;
@@ -796,9 +796,9 @@ if (!isset($_GET['id'])){
 							echo "<select id=\"typefaci\" name=\"facility\" required style=\"width:160px;\" onchange=\"chkrate('".$id."');\">
 								<option value=\"none\"></option>";
 								
-								$res = mysql_query("SELECT * FROM tbltype where facid='$id' order by code");
-								if(mysql_num_rows($res)){
-									while($rowx = mysql_fetch_array($res))
+								$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
+								if(mysqli_num_rows($res)){
+									while($rowx = mysqli_fetch_array($res))
 									{
 										if($rowx['name']==$_SESSION['faci']){
 											echo "<option value=\"".$rowx['name']."\" selected>".$rowx['name']."</option>";		
@@ -896,9 +896,9 @@ if (!isset($_GET['id'])){
 						echo "<select id=\"typefaci\" name=\"facility\" required style=\"width:160px;\" onchange=\"chkrate('".$id."');\">
 							<option value=\"none\"></option>";
 							
-							$res = mysql_query("SELECT * FROM tbltype where facid='$id' order by code");
-							if(mysql_num_rows($res)){
-								while($rowx = mysql_fetch_array($res))
+							$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
+							if(mysqli_num_rows($res)){
+								while($rowx = mysqli_fetch_array($res))
 								{
 								echo "<option value=\"".$rowx['name']."\">".$rowx['name']."</option>";
 								}
@@ -978,9 +978,9 @@ if (!isset($_GET['id'])){
 			<hr />
 			<table class="room">
 				<?php
-				$res = mysql_query("SELECT * FROM tbltype where facid='$id' order by code");
-				if(mysql_num_rows($res)){
-					while($rowx = mysql_fetch_array($res))
+				$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
+				if(mysqli_num_rows($res)){
+					while($rowx = mysqli_fetch_array($res))
 					{
 						if($id==1){
 							echo "<tr>

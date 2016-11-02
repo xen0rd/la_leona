@@ -182,7 +182,7 @@ session_start();
 	 		dataString="id="+facid+"&fac="+faci+"&use="+use+"&rate="+rate+"&bedx="+bedx+"&numpax="+numpax+"&xcs="+xcs+"&xcsamt="+xcsamt+"&per="+per+"&cin="+cin+"&cout="+cout+"&tin="+tin+"&tout="+tout+"&totime="+totime+"&addhrs="+addhrs+"&addhrsamt="+addhrsamt+"&days="+days+"&totamt="+totamt+"&mode="+mode.value+"&status="+status+"&email="+email+"&occa="+occa+"&cater="+cater+"&image="+image+"&addons="+addons+"&totalamt="+totalamt+"&items="+items;
 		 	alertify.confirm('Are you sure you want to reserve this booking?', function (e) {
                 if(e){
-                	//alertify.alert(dataString);
+                	alertify.alert(dataString);
                 	$.ajax({
 	                    type: "POST",
 	                    url: "reserve.php",
@@ -399,9 +399,9 @@ session_start();
 					}else{
 						if(isset($_SESSION['set_reservation'])){
 							$email=$_SESSION['set_reservation'];
-							$res_name = mysql_query("SELECT * FROM tblregister where fldemail='$email';");
-							if(mysql_num_rows($res_name)){
-								while($rowx = mysql_fetch_array($res_name)){
+							$res_name = mysqli_query($con, "SELECT * FROM tblregister where fldemail='$email';");
+							if(mysqli_num_rows($res_name)){
+								while($rowx = mysqli_fetch_array($res_name)){
 									$fullname = $rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'].".";
 									$email = $rowx['fldemail'];
 								}
@@ -434,14 +434,14 @@ session_start();
 			 
 			echo "<div style=\"margin-top:-100px;margin-left:-80px;\">";
 				if(isset($_POST["facid"])){
-					$facid = mysql_real_escape_string($_POST["facid"]);
-					$faci = mysql_real_escape_string($_POST["facility"]);
-					$use = mysql_real_escape_string($_POST["usage"]);
-					$rate = floatval(mysql_real_escape_string($_POST["xrate"]));
-					$cin = (mysql_real_escape_string($_POST["check_in"]));
+					$facid = mysqli_real_escape_string($con, $_POST["facid"]);
+					$faci = mysqli_real_escape_string($con, $_POST["facility"]);
+					$use = mysqli_real_escape_string($con, $_POST["usage"]);
+					$rate = floatval(mysqli_real_escape_string($con, $_POST["xrate"]));
+					$cin = (mysqli_real_escape_string($con, $_POST["check_in"]));
 					if($facid==1){
-						$xbed = (mysql_real_escape_string($_POST["xbed"]));
-						$bedx = (mysql_real_escape_string($_POST["bedx"]));
+						$xbed = (mysqli_real_escape_string($con, $_POST["xbed"]));
+						$bedx = (mysqli_real_escape_string($con, $_POST["bedx"]));
 						if($xbed=="Yes"){
 							$xbedx = $xbed;
 						}else{
@@ -451,23 +451,23 @@ session_start();
 					}else{
 						$xbed=0.00;
 					}
-					$xpax = (mysql_real_escape_string($_POST["xpax"]));
-					$numpax = (mysql_real_escape_string($_POST["numpax"]));
-					$per = (mysql_real_escape_string($_POST["xper"]));
+					$xpax = (mysqli_real_escape_string($con, $_POST["xpax"]));
+					$numpax = (mysqli_real_escape_string($con, $_POST["numpax"]));
+					$per = (mysqli_real_escape_string($con, $_POST["xper"]));
 
 					if($facid==3){
 						if($_POST["addhrs"]!=""){
-							$addhrs = (mysql_real_escape_string($_POST["addhrs"]));	
+							$addhrs = (mysqli_real_escape_string($con, $_POST["addhrs"]));	
 						}else{
 							$addhrs = 0;
 						}
 						
-						$numhrs = floatval((mysql_real_escape_string($_POST["numhrs"])));
-						$numpax = (mysql_real_escape_string($_POST["numpax"]));
-						$occasion = (mysql_real_escape_string($_POST["occasion"]));
-						$cater = (mysql_real_escape_string($_POST["cater"]));
-						$tin = (mysql_real_escape_string($_POST["time_in"]));
-						$tout = (mysql_real_escape_string($_POST["time_out"]));
+						$numhrs = floatval((mysqli_real_escape_string($con, $_POST["numhrs"])));
+						$numpax = (mysqli_real_escape_string($con, $_POST["numpax"]));
+						$occasion = (mysqli_real_escape_string($con, $_POST["occasion"]));
+						$cater = (mysqli_real_escape_string($con, $_POST["cater"]));
+						$tin = (mysqli_real_escape_string($con, $_POST["time_in"]));
+						$tout = (mysqli_real_escape_string($con, $_POST["time_out"]));
 						$totime = $tout - $tin;
 						if($totime>$numhrs){
 							$addhrs = $totime - $numhrs;
@@ -475,22 +475,20 @@ session_start();
 							$addhrs = 0;
 						}
 					}else{
-						$cout = (mysql_real_escape_string($_POST["check_out"]));
+						$cout = (mysqli_real_escape_string($con, $_POST["check_out"]));
 						$diff=date_diff(date_create($cin),date_create($cout));
 					}
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:10px;\">You choose facility id: <span style=\"color:red;\">". $facid."</span></p><br />";
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:10px;\">Facility id: <span style=\"color:red;\">". $facid."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfacid\" id=\"hfacid\" value=\"".$facid."\">";
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose facility: <span style=\"color:red;\">". $faci."</span></p><br />";
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Facility Type: <span style=\"color:red;\">". $faci."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfaci\" id=\"hfaci\" value=\"".$faci."\">";
-					if($use==1){
-						$use_d="Day";
-					}else if($use==2){
-						$use_d="Night";
+					if($diff->format('%d')=='0'){
+						$use="Day";
 					}else{
-						$use_d="Day and Night";
+						$use="Overnight";
 					}
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose type of use: <span style=\"color:red;\">". $use_d."</span></p><br />";
-					echo "<input type=\"hidden\" name=\"huse\" id=\"huse\" value=\"".$use_d."\">";
+					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Type of use: <span style=\"color:red;\">". $use."</span></p><br />";
+					echo "<input type=\"hidden\" name=\"huse\" id=\"huse\" value=\"".$use."\">";
 					echo "<input type=\"hidden\" name=\"hrate\" id=\"hrate\" value=\"".$rate."\">";
 					if($facid==3){
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate is <span style=\"color:red;\">". $rate."</span> for ".number_format($numhrs)." hours</p><br />";
@@ -539,17 +537,21 @@ session_start();
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Check out date is <span style=\"color:red;\">". $cout."</span></p><br />";
 						echo "<input type=\"hidden\" name=\"hcout\" id=\"hcout\" value=\"".$cout."\">";
 						$days = $diff->format("%a");
-						if ($days<1){
-							$days=1;
-						}
-						$totamt = $days * $rate + $xbed + $add_per;
+							
 					}
 						echo "<input type=\"hidden\" name=\"hdays\" id=\"hdays\" value=\"".$days."\">";
-					if ($days>1) {
+					if ($days==0) {
+						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of day is within the day </p><br />";
+						$days =1 ;
+					}	
+					elseif ($days>1) {
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of days is <span style=\"color:red;\">" . $days . " days </span></p><br />";
 					}else{
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of day is <span style=\"color:red;\">" . $days . " day </span></p><br />";
 					}
+					
+					$totamt = $days * $rate + $bedx + $add_per;
+					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The amount is Php<span id=\"totamt\" style=\"color:red;\"><b> " . number_format($totamt,2)." </b></span></p><br />" ;
 					echo "<input type=\"hidden\" name=\"htotamt\" id=\"htotamt\" value=\"".number_format($totamt,2)."\">";					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Addons Amount&nbsp;<input type=\"text\" style=\"width:80px;\" readonly name=\"addons\" id=\"addons\"></p>";
@@ -565,9 +567,9 @@ session_start();
 				echo "
 					</div>
 					<div style=\"float:right;margin-top:-80px;\">";
-						$res = mysql_query("SELECT * FROM tbltype where facid='$facid' and name='$faci'");
-						if(mysql_num_rows($res)){
-							while($rowx = mysql_fetch_array($res))
+						$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$facid' and name='$faci'");
+						if(mysqli_num_rows($res)){
+							while($rowx = mysqli_fetch_array($res))
 							{
 								echo "<img src=\"".$rowx['image']."\" alt=\"".$faci."\" style=\"height:240px;width:360px\">";
 								echo "<input type=\"hidden\" id=\"image_path\" value=\"".$rowx['image']."\">";
@@ -578,18 +580,18 @@ session_start();
 					echo "<div><span\">Addons:";
 					echo "<table>";
 					$items=0;
-					$res = mysql_query("SELECT * FROM tblamenities where facid='$facid'");
-					if(mysql_num_rows($res)){
-						while($rowx = mysql_fetch_array($res)){
+					$res = mysqli_query($con, "SELECT * FROM tblamenities where facid='$facid'");
+					if(mysqli_num_rows($res)){
+						while($rowx = mysqli_fetch_array($res)){
 							$item = $items + 1 ;
 
 							$tot_items = 0;
 							$ordered = 0;
 							$mydate = date("m/d/Y");
 							//echo $mydate;
-							$resultxx = mysql_query("SELECT tbladdons.trxnid, tbladdons.facid, tbladdons.devname, tbladdons.pieces, tblreservations.status, tblreservations.facid, tblreservations.trxnid, tblreservations.facname FROM tbladdons, tblreservations where tbladdons.facid=tblreservations.facid and tbladdons.devname='".$rowx['devname']."' and (tblreservations.status='checkedin' or tblreservations.status='reserved') and tblreservations.cin>='$mydate' and tbladdons.trxnid=tblreservations.trxnid");
-								if(mysql_num_rows($resultxx)){
-									while($rowxx = mysql_fetch_array($resultxx))
+							$resultxx = mysqli_query($con, "SELECT tbladdons.trxnid, tbladdons.facid, tbladdons.devname, tbladdons.pieces, tblreservations.status, tblreservations.facid, tblreservations.trxnid, tblreservations.facname FROM tbladdons, tblreservations where tbladdons.facid=tblreservations.facid and tbladdons.devname='".$rowx['devname']."' and (tblreservations.status='checkedin' or tblreservations.status='reserved') and tblreservations.cin>='$mydate' and tbladdons.trxnid=tblreservations.trxnid");
+								if(mysqli_num_rows($resultxx)){
+									while($rowxx = mysqli_fetch_array($resultxx))
 									{
 										$tot_items += $rowxx['pieces'];
 									}

@@ -2,17 +2,17 @@
 	session_start();
 	include "connect.php";
 	//$facid = mysql_real_escape_string($_POST["hfacid"]);
-	$email = mysql_real_escape_string($_POST["xemail"]);
-	$lname = mysql_real_escape_string($_POST["xlname"]);
-	$fname = mysql_real_escape_string($_POST["xfname"]);
-	$mname = (mysql_real_escape_string($_POST["xmname"]));
-	$age = (mysql_real_escape_string($_POST["xage"]));
-	$addr = (mysql_real_escape_string($_POST["xadd"]));
+	$email = mysqli_real_escape_string($con, $_POST["xemail"]);
+	$lname = mysqli_real_escape_string($con, $_POST["xlname"]);
+	$fname = mysqli_real_escape_string($con, $_POST["xfname"]);
+	$mname = (mysqli_real_escape_string($con, $_POST["xmname"]));
+	$age = (mysqli_real_escape_string($con, $_POST["xage"]));
+	$addr = (mysqli_real_escape_string($con, $_POST["xadd"]));
 
 	//echo $email." - ".$pwd." - ".$lname." - ".$fname." - ".$mname." - ".$age." - ".$gen." - ".$addr." - ".$mnum." - ".$hnum;
 	$query = "INSERT INTO tblregister(fldemail,password,fldlname,fldfname,fldmname,fldage,fldgender,fldaddress,fldcontact1,fldcontact2) VALUES('$email','$pwd','$lname','$fname','$mname','$age','$gen','$addr','$mnum','$hnum')";
 	//echo $query;
-	$result = mysql_query($query);
+	$result = mysqli_query($con, $query);
 
 	$to = $email;
 	$subject = "Account registration";
@@ -38,29 +38,29 @@
 	//echo "success";
 
 
-	$facid = mysql_real_escape_string($_POST["id"]);
-	$faci = mysql_real_escape_string($_POST["fac"]);
-	$use = mysql_real_escape_string($_POST["use"]);
-	$rate = mysql_real_escape_string($_POST["rate"]);
-	$bedx = mysql_real_escape_string($_POST["bedx"]);
-	$numpax = mysql_real_escape_string($_POST["numpax"]);
-	$xcs = mysql_real_escape_string($_POST["xcs"]);
-	$xcsamt = mysql_real_escape_string($_POST["xcsamt"]);
-	$per = mysql_real_escape_string($_POST["per"]);
-	$cin = mysql_real_escape_string($_POST["cin"]);
-	$cout = mysql_real_escape_string($_POST["cout"]);
-	$occa = mysql_real_escape_string($_POST["occa"]);
-	$cater = mysql_real_escape_string($_POST["cater"]);
-	$tin = mysql_real_escape_string($_POST["tin"]);
-	$tout = mysql_real_escape_string($_POST["tout"]);
-	$totime = mysql_real_escape_string($_POST["totime"]);
-	$addhrs = mysql_real_escape_string($_POST["addhrs"]);
-	$addhrsamt = mysql_real_escape_string($_POST["addhrsamt"]);
-	$days = mysql_real_escape_string($_POST["days"]);
-	$totamt = mysql_real_escape_string($_POST["totamt"]);
+	$facid = mysqli_real_escape_string($con, $_POST["id"]);
+	$faci = mysqli_real_escape_string($con, $_POST["fac"]);
+	$use = mysqli_real_escape_string($con, $_POST["use"]);
+	$rate = mysqli_real_escape_string($con, $_POST["rate"]);
+	$bedx = mysqli_real_escape_string($con, $_POST["bedx"]);
+	$numpax = mysqli_real_escape_string($con, $_POST["numpax"]);
+	$xcs = mysqli_real_escape_string($con, $_POST["xcs"]);
+	$xcsamt = mysqli_real_escape_string($con, $_POST["xcsamt"]);
+	$per = mysqli_real_escape_string($con, $_POST["per"]);
+	$cin = mysqli_real_escape_string($con, $_POST["cin"]);
+	$cout = mysqli_real_escape_string($con, $_POST["cout"]);
+	$occa = mysqli_real_escape_string($con, $_POST["occa"]);
+	$cater = mysqli_real_escape_string($con, $_POST["cater"]);
+	$tin = mysqli_real_escape_string($con, $_POST["tin"]);
+	$tout = mysqli_real_escape_string($con, $_POST["tout"]);
+	$totime = mysqli_real_escape_string($con, $_POST["totime"]);
+	$addhrs = mysqli_real_escape_string($con, $_POST["addhrs"]);
+	$addhrsamt = mysqli_real_escape_string($con, $_POST["addhrsamt"]);
+	$days = mysqli_real_escape_string($con, $_POST["days"]);
+	$totamt = mysqli_real_escape_string($con, $_POST["totamt"]);
 	$mode="cash";
 	$status="reserved";
-	$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','$status')";
-	$result = mysql_query($sql);
+	$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totamt','$occa','$cater','$mode','$email','pending')";
+	$result = mysqli_query($con, $sql);
 	header("location:reservations-list.php");
 ?>

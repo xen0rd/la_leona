@@ -327,6 +327,7 @@
 						<tr><td align="right">Firstname:</td><td><input type="text" name="xfname" id="xfname" required autocomplete="off"/></td><!--td align="right">Age:</td><td><input type="text" name="xage" id="xage" onblur="age_limit();" style="width:30px;" required autocomplete="off"></td></tr-->
 						<tr><td align="right">Middlename:</td><td><input type="text" name="xmname" id="xmname" required autocomplete="off"/></td><!--td align="right">Gender:</td><td><select name="xgen" id="xgen" required><option value=""></option><option value="Female">Female</option><option value="Male">Male</option></select></td></tr-->
 						<tr><td align="right">Address:</td><td colspan="3"><input type="text" name="xadd" id="xadd" required autocomplete="off" style="width:500px;"/></td></tr>
+
 						<tr><!--td align="right">Mobile Number:</td><td><input type="text" name="xmobnum" id="xmobnum" required autocomplete="off"/></td>
 						<td align="right">Home Number:</td><td><input type="text" name="xhomenum" id="xhomenum" /></td></tr-->
 						<tr><td align="right" colspan="4">&nbsp;</td></tr>

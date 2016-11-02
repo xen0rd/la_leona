@@ -373,6 +373,12 @@ ul.tab li a:focus, .active {
             			
             		}
             	}
+				
+				
+			$m = date("m");
+			$y = date("Y");
+
+
             ?>
 			<h1 style="padding:20px;">Booked Reservations</h1>
 			
@@ -391,7 +397,6 @@ ul.tab li a:focus, .active {
 			
 			<?php 
 			//echo $email;
-			$date_ = date("m/d/Y");
 			//echo $date_;
 			echo "<div style=\"margin-top:0px;margin-left:20px;padding:0px;width:900px;overflow:auto;\">";
 			include "connect.php";
@@ -429,7 +434,7 @@ ul.tab li a:focus, .active {
 					}
 					echo "
 			</tr>";
-			$result = mysqli_query($con, "SELECT COUNT(*) AS REC_NUM FROM tblreservations WHERE status='reserved'");
+			$result = mysqli_query($con, "SELECT COUNT(*) AS REC_NUM FROM tblreservations  WHERE  cin>='$m/01/$y' AND cin<'$m/32/$y'AND status='reserved'");
 			if(mysqli_num_rows($result)){
 				while($rowp = mysqli_fetch_array($result)){
 					$totpage = $rowp['REC_NUM'];
@@ -478,9 +483,9 @@ ul.tab li a:focus, .active {
 
 			if(isset($_GET['order'])){
 				$order = $_GET['order'];
-				$result = mysqli_query($con, "SELECT * FROM tblreservations  WHERE  status='reserved' order by $order limit 10 OFFSET $start");
+				$result = mysqli_query($con, "SELECT * FROM tblreservations  WHERE  cin>='$m/01/$y' AND cin<'$m/32/$y' AND status='reserved' order by $order limit 10 OFFSET $start");
 			}else{
-				$result = mysqli_query($con, "SELECT * FROM tblreservations  WHERE status='reserved' limit 10 OFFSET $start ");	
+				$result = mysqli_query($con, "SELECT * FROM tblreservations  WHERE cin>='$m/01/$y' AND cin<'$m/32/$y' AND status='reserved' limit 10 OFFSET $start ");	
 			}
 			
 			if(mysqli_num_rows($result)){
