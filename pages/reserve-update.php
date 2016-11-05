@@ -69,7 +69,7 @@ $change = $payment - $totamt;
 		//$sql="INSERT INTO tblpayments(trxnid,email,fullname,downpayment,balance,totamt,itemid,createdtime,date_) VALUES($trxnid,'$email','$fullname','$dp','$bal','$totamt','$item','$time','$date')";
 		$sql="UPDATE tblpayments set email='$email',fullname='$fullname',payment_status='$status', downpayment='$dp', balance='$bal',totamt='$totamt',itemid='$item',date_='$date' where trxnid='$trxnid'";
 	}else{
-		$sql="INSERT INTO tblpayments(trxnid,email,fullname,food,damage,totamt,itemid,createdtime,date_,payment_amount,ornum,changes) VALUES($trxnid,'$email','$fullname','$food','$damage','$totamt','$item','$time','$date','$payment','$ornum','$change')";
+		$sql="INSERT INTO tblpayments(trxnid,email,fullname,food,damage,totamt,itemid,createdtime,date_,payment_amount,ornum,changes,payment_status) VALUES($trxnid,'$email','$fullname','$food','$damage','$totamt','$item','$time','$date','$payment','$ornum','$change','checkedout')";
 	}
 	$result = mysqli_query($con, $sql);
 

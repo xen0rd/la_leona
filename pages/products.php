@@ -31,8 +31,8 @@ $paypal_id = 'info@codexworld.com'; //Business Email
         <input type="hidden" name="currency_code" value="USD">
         
         <!-- Specify URLs -->
-        <input type='hidden' name='cancel_return' value='http://localhost/yeah/pages/cancel.php'>
-        <input type='hidden' name='return' value='http://localhost/yeah/pages/success.php'>
+        <input type='hidden' name='cancel_return' value='http://localhost/yeah/yeah/pages/cancel.php'>
+        <input type='hidden' name='return' value='http://localhost/yeah/yeah/pages/success.php'>
         
         <!-- Display the payment button. -->
         <input type="image" name="submit" border="0" width="120"

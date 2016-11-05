@@ -2,7 +2,7 @@
 //Database credentials
 $dbHost = 'localhost';
 $dbUsername = 'root';
-$dbPassword = '1234';
+$dbPassword = '';
 $dbName = 'dbresort';
 //Connect with the database
 $db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
@@ -12,3 +12,4 @@ if ($db->connect_errno) {
     exit();
 }
 ?>
+

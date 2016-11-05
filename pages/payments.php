@@ -7,7 +7,7 @@ $db_name = ""; //database name
 
 // PayPal settings
 $paypal_email = 'laleonaresort@gmail.com';
-$return_url = 'http://localhost/yeah/pages/payment-successful.php';
+$return_url = 'http://localhost/la_leona/pages/payment-successful.php';
 $cancel_url = 'http://localhost/FU/payment-cancelled.php';
 $notify_url = 'http://localhost/FU/payments.php';
 
@@ -53,8 +53,8 @@ if (!isset($_POST["txn_id"]) && !isset($_POST["txn_type"])){
 	exit();
 } else {
 	//Database Connection
-	$link = mysql_connect($host, $user, $pass);
-	mysql_select_db($db_name);
+	$link = mysqli_connect($host, $user, $pass);
+	mysqli_select_db($db_name);
 	
 	// Response from Paypal
 

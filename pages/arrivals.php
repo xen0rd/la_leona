@@ -434,7 +434,7 @@ ul.tab li a:focus, .active {
 					}
 					echo "
 			</tr>";
-			$result = mysqli_query($con, "SELECT COUNT(*) AS REC_NUM FROM tblreservations  WHERE  cin>='$m/01/$y' AND cin<'$m/32/$y'AND status='reserved'");
+			$result = mysqli_query($con, "SELECT COUNT(*) AS REC_NUM FROM tblreservations  WHERE  cin>='$m/01/$y' AND cin<'$m/32/$y' AND status='reserved'");
 			if(mysqli_num_rows($result)){
 				while($rowp = mysqli_fetch_array($result)){
 					$totpage = $rowp['REC_NUM'];

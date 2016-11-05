@@ -188,7 +188,7 @@ p{ font-size: 15px}
                         ";
                     }else if($_SESSION['login_type']=="FRONTDESK"){
                         echo "
-                        <a style=\"margin-top:50px;margin-left:50px;font-size:16px;padding:8px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
+                        <a style=\"margin-top:50px;margin-left:160px;font-size:16px;padding:8px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
                     ";
                     }else{
                     echo "
@@ -415,9 +415,9 @@ p{ font-size: 15px}
         <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 800px; height: 456px; overflow: hidden;">
             <?php
                 include "connect.php";
-                $result = mysql_query("SELECT * FROM tblgallery;");
-                if(mysql_num_rows($result)){
-                    while($row = mysql_fetch_array($result))
+                $result = mysqli_query($con, "SELECT * FROM tblgallery;");
+                if(mysqli_num_rows($result)){
+                    while($row = mysqli_fetch_array($result))
                     {
                         echo "<div data-p=\"144.50\" style=\"display: none;\">
                                 <img data-u=\"image\" src=\"".$row['fname']."\" />

@@ -134,32 +134,11 @@ if (!isset($_GET['id'])){
 			  		return true;
 			 	}
 			});
-			
-			$("#typefaci").change(function(){
-				if($(this).val() == "Casa Leona 1"){
-					$("#numpax").attr("max","1").attr("min","0");
-				}
-				else if($(this).val() == "Casa Leona 2"){
-					$("#numpax").attr("max","2").attr("min","0");
-				}
-				else if($(this).val() == "La Leona Attic"){
-					$("#numpax").attr("max","2").attr("min","0");
-				}
-			});
-			 
-			$("#numpax").change(function(){
-				$("#xper").val($(this).val()*200);
-			});
-			
-			
 		});
 
 		function chkrate(facid) {
 			type = document.getElementById('typefaci').value;
 			stay = document.getElementById('typeuse').value;	
-			console.log(facid);
-			console.log(type);
-			console.log(stay);
 			if(stay!="none" && type!="none"){
 				$.ajax({
                     type: "POST",
@@ -513,7 +492,7 @@ if (!isset($_GET['id'])){
 	</div>
 	<?php
 		include "connect.php";
-		$result = mysqli_query ($con, "SELECT * FROM tblfacilities where id=$id");
+		$result = mysqli_query($con, "SELECT * FROM tblfacilities where id=$id");
 		if(mysqli_num_rows($result)){
 			while($row = mysqli_fetch_array($result))
 			{
@@ -564,7 +543,7 @@ if (!isset($_GET['id'])){
 						<span id="tab">
 							<ul>
 							<?php 
-								$res = mysqli_query($con,"SELECT * FROM tblamenities where facid='$id'");
+								$res = mysqli_query($con, "SELECT * FROM tblamenities where facid='$id'");
 								if(mysqli_num_rows($res)){
 									while($rowx = mysqli_fetch_array($res))
 									{
@@ -712,7 +691,7 @@ if (!isset($_GET['id'])){
 						}
 					}else{
 								echo "<select id=\"typefaci\" name=\"facility\" required onchange=\"chkrate('".$id."');\">
-								<option value=\"none\" selected disabled> - Please Select - </option>";
+								<option value=\"none\"></option>";
 								$count=0;
 								$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 								if(mysqli_num_rows($res)){
@@ -1017,7 +996,6 @@ if (!isset($_GET['id'])){
 									<span id=\"tab\">Overnight <br><br> Php ".$rowx['price2']."</span>
 								</td>
 								<td>
-									<span id=\"tab\">Day & Night <br><br> Php ".$rowx['price3']."</span>
 								</td>
 								<tr><td colspan=\"5\"><hr /></td></tr>
 							<tr>";

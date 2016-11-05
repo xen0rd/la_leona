@@ -153,6 +153,10 @@
                 $payment_gross = $_GET['amt'];
                 $currency_code = $_GET['cc'];
                 $payment_status = $_GET['st'];
+				$stat = "reserved";
+echo $item_number; 
+						$up = "UPDATE tblreservations set status='reserved' where trxnid='".$item_number."'";
+						mysqli_query($con, $up);
 
                 //Get product price
                 //$productResult = $db->query("SELECT price FROM products WHERE id = ".$item_number);
@@ -164,23 +168,33 @@
 
                     //Check if payment data exists with the same TXN ID.
                     $prevPaymentResult = $db->query("SELECT payment_id FROM payments WHERE txn_id = '".$txn_id."'");
+						$up = "UPDATE tblreservations set status='reserved' where trxnid='".$item_number."'";
+						mysqli_query($con, $up);
+
 
                     if($prevPaymentResult->num_rows > 0){
                         $paymentRow = $prevPaymentResult->fetch_assoc();
                         $last_insert_id = $paymentRow['payment_id'];
+												$up= "UPDATE tblreservations set status='reserved' where trxnid='".$item_number."'";
+												mysqli_query($con, $up);
+
                     }else{
+					
                         //Insert transaction data into the database
+						$up = "UPDATE tblreservations set status='reserved' where trxnid='".$item_number."'";
+						mysqli_query($con, $up);
                         $insert = $db->query("INSERT INTO payments(item_number,txn_id,payment_gross,currency_code,payment_status) VALUES('".$item_number."','".$txn_id."','".$payment_gross."','".$currency_code."','".$payment_status."')");
-                        $last_insert_id = $db->insert_id;
+
+						$last_insert_id = $db->insert_id;
                     }
 
                     //sending email reservation details
                     include "connect.php";
                     $sql="SELECT * FROM tblreservations, payments where tblreservations.trxnid=payments.item_number and tblreservations.trxnid='$item_number'";
                     //echo $sql;
-                    $resultR = mysql_query($sql);
-                    if(mysql_num_rows($resultR)){
-                        while($rowR = mysql_fetch_array($resultR)){
+                    $resultR = mysqli_query($con, $sql);
+                    if(mysqli_num_rows($resultR)){
+                        while($rowR = mysqli_fetch_array($resultR)){
                             $facid = $rowR['facid'];
                             $facility = $rowR['facname'];
                             $use = $rowR['typeofuse'];
@@ -189,7 +203,7 @@
                             $xcs = $rowR['xcs'];
                             $cin = $rowR['cin'];
                             $cout = $rowR['cout'];
-                            $downp = $rowR['payment_gross']
+                            $downp = $rowR['payment_gross'];
                             if($facid==3){
                                 $tin = $rowR['tin'];
                                 $tout = $rowR['tout'];
@@ -203,6 +217,7 @@
                             
                         }
                     }
+				
 
                     $to = $_SESSION['login_email'];
                     $subject = "Booking details";
@@ -225,6 +240,10 @@
                     $header .= "Content-type: text/html\r\n";
                     //echo $message;
                     $retval = @mail($to,stripslashes($subject),stripslashes($message),$header);
+
+					
+											$up = "UPDATE tblreservations set status='reserved' where trxnid='".$item_number."'";
+											mysqli_query($con, $up);
 
                     echo "<h1 style=\"padding:20px;\">Success! your payment has been made!</h1>";
                     echo "<center><h3><a href=\"facility.php\">go back</a></h3></center>";

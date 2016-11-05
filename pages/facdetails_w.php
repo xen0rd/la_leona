@@ -26,26 +26,9 @@ if (!isset($_GET['id'])){
 	<script type="text/javascript" src="js/jquery.ui.datepicker-en.js"></script>
 
 	<script type="text/javascript">
-		var qs = (function(a) {
-		    if (a == "") return {};
-		    var b = {};
-		    for (var i = 0; i < a.length; ++i)
-		    {
-		        var p=a[i].split('=', 2);
-		        if (p.length == 1)
-		            b[p[0]] = "";
-		        else
-		            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-		    }
-		    return b;
-		})(window.location.search.substr(1).split('&'));
-
 		$(document).ready(function(){
 		 $.datepicker.setDefaults( $.datepicker.regional[ "en" ] );
 		 $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});
-
-		 var fac_qs = qs["id"];
-
 		    $("#txtFromDate").datepicker({
 		        minDate: 0,
 		        maxDate: "+365D",
@@ -59,24 +42,22 @@ if (!isset($_GET['id'])){
 		          daysbetween();
 		        }
 		    });
-		 	if (fac_qs!=2){
-		 		$("#txtToDate").datepicker({ 
-			        minDate: 0,
-			        maxDate:"+365D",
-			        numberOfMonths: 2,
-			        onSelect: function(selected) {
-			           $("#txtFromDate").datepicker("option","maxDate", selected)
-			           daysbetween();
-			        }
-			    });  	
-		 	}
-		    
+		 
+		    $("#txtToDate").datepicker({ 
+		        minDate: 0,
+		        maxDate:"+365D",
+		        numberOfMonths: 2,
+		        onSelect: function(selected) {
+		           $("#txtFromDate").datepicker("option","maxDate", selected)
+		           daysbetween();
+		        }
+		    });  
 		 
 		 $("#datepickerImage").click(function() { 
 		    $("#txtFromDate").datepicker("show");
 		  });
-		 $("#datepickerImage1").click(function() {
-			$("#txtToDate").datepicker("show");
+		 $("#datepickerImage1").click(function() { 
+		    $("#txtToDate").datepicker("show");
 		  });
 		 
 		 $('#btn_room_search_').click(function() {
@@ -214,10 +195,6 @@ if (!isset($_GET['id'])){
 				var tin = "";
 				var tout = "";
 				var date2 = document.getElementById('txtToDate').value;
-			}
-			if(id==2){
-				document.getElementById('txtToDate').value = date1;
-				//document.getElementById('txtToDate').disabled = True;
 			}
 			//var result = date2.value-date1.value;
 			//alertify.alert("Number of days stay: "+date1);
@@ -534,11 +511,11 @@ if (!isset($_GET['id'])){
 	        	if(isset($_SESSION['login_type'])){
 	        		if($_SESSION['login_type']=="customer"){
         				echo "
-            				<a style=\"margin-top:50px;margin-left:50px;font-size:16px;\">Welcome, [".$_SESSION['login_name']."]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
+            				<a style=\"margin-top:50px;margin-left:170px;font-size:16px;\">Welcome, [".$_SESSION['login_name']."]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
             			";
 					}else if($_SESSION['login_type']=="FRONTDESK"){
 						echo "
-        				<a style=\"margin-top:50px;margin-left:160px;font-size:16px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\">Logout</a>
+        				<a style=\"margin-top:50px;margin-left:165px;font-size:16px;\">Welcome, [ FRONTDESK ]</a><a href=\"logout.php\" style=\"text-decoration:none;font-size:16px\"> Logout</a>
         			";
 					}else{
 						echo "
@@ -660,11 +637,11 @@ if (!isset($_GET['id'])){
 						<select id=\"typeuse\" name=\"usage\" required onchange=\"chkrate('".$id."');\">
 							<option value=\"none\"></option>";
 							if($_SESSION['use']=="Day"){
-							echo "<option value=\"Day\" selected>Day</option>
+								echo "<option value=\"Day\" selected>Day</option>
 							<option value=\"Night\">Night</option>
 							<option value=\"DayAndNight\">DayAndNight</option>";
 							}else if($_SESSION['use']=="Night"){
-							echo "<option value=\"Day\">Day</option>
+								echo "<option value=\"Day\">Day</option>
 							<option value=\"Night\" selected>Night</option>
 							<option value=\"DayAndNight\">DayAndNight</option>";
 							}else{
@@ -699,7 +676,7 @@ if (!isset($_GET['id'])){
 						    }
 					echo "<strong>&nbsp;Number of Persons:&nbsp;</strong>
 						    	<input type=\"hidden\" name=\"xpax\" id=\"xpax\" value=\"".$_SESSION['xpax']."\">
-						    <span class=\"tab\"><input type=\"number\" name=\"numpax\" id=\"numpax\" style=\"width:108px\" required value=\"".$_SESSION['numpax']."\"></span>";
+						    <span class=\"tab\"><input type=\"number\" max=\"4\" name=\"numpax\" id=\"numpax\" style=\"width:108px\" required value=\"".$_SESSION['numpax']."\"></span>";
 					echo "<strong>&nbsp;Per Head:&nbsp;</strong>
 						    <span class=\"tab\"><input type=\"number\" readonly name=\"xper\" id=\"xper\" style=\"width:88px\" value=\"".$_SESSION['per']."\"></span><br /><br /><br />";
 
@@ -743,7 +720,6 @@ if (!isset($_GET['id'])){
 								<option value=\"none\"></option>
 								<option value=\"Day\">Day</option>
 								<option value=\"Night\">Night</option>
-								<option value=\"DayAndNight\">DayAndNight</option>
 							</select>
 						</span>";
 						}
@@ -763,9 +739,16 @@ if (!isset($_GET['id'])){
 						echo "<strong>&nbsp;Number of Persons:&nbsp;</strong>
 							    	<input type=\"hidden\" name=\"xpax\" id=\"xpax\">
 							    <span class=\"tab\"><input type=\"number\" name=\"numpax\" id=\"numpax\" style=\"width:108px\" required></span>";
-						echo "<strong>&nbsp;Per Head:&nbsp;</strong>
+						if ($id==1)
+						{
+						echo "<strong>&nbsp;Rate of excess Head:&nbsp;</strong>
 							    <span class=\"tab\"><input type=\"number\" readonly name=\"xper\" id=\"xper\" style=\"width:88px\"></span><br /><br /><br />";
-
+						}
+						elseif ($id==2)
+						{
+						echo "<strong>&nbsp;Rate per Head:&nbsp;</strong>
+							    <span class=\"tab\"><input type=\"number\" readonly name=\"xper\" id=\"xper\" style=\"width:88px\"></span><br /><br /><br />";
+						}
 						echo "<span>
 							    <strong>Check-in Date:</strong>
 							    	<span class=\"tab\"><input id=\"txtFromDate\" name=\"check_in\" style=\"width:108px\" type=\"text\" readonly=\"readonly\" AUTOCOMPLETE=OFF onfocusout=\"daysbetween();\" /></span>
@@ -1013,7 +996,6 @@ if (!isset($_GET['id'])){
 									<span id=\"tab\">Overnight <br><br> Php ".$rowx['price2']."</span>
 								</td>
 								<td>
-									<span id=\"tab\">Day & Night <br><br> Php ".$rowx['price3']."</span>
 								</td>
 								<tr><td colspan=\"5\"><hr /></td></tr>
 							<tr>";

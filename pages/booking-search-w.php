@@ -399,9 +399,9 @@ session_start();
 					}else{
 						if(isset($_SESSION['set_reservation'])){
 							$email=$_SESSION['set_reservation'];
-							$res_name = mysqli_query($con, "SELECT * FROM tblregister where fldemail='$email';");
-							if(mysqli_num_rows($res_name)){
-								while($rowx = mysqli_fetch_array($res_name)){
+							$res_name = mysqlii_query($con, "SELECT * FROM tblregister where fldemail='$email';");
+							if(mysqlii_num_rows($res_name)){
+								while($rowx = mysqlii_fetch_array($res_name)){
 									$fullname = $rowx['fldlname'].", ".$rowx['fldfname']." ".$rowx['fldmname'].".";
 									$email = $rowx['fldemail'];
 								}
@@ -483,7 +483,7 @@ session_start();
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Facility Type: <span style=\"color:red;\">". $faci."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfaci\" id=\"hfaci\" value=\"".$faci."\">";
 					if($diff->format('%d')=='0'){
-						$use="Day";
+						$use="Day Use";
 					}else{
 						$use="Overnight";
 					}
@@ -550,8 +550,15 @@ session_start();
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of day is <span style=\"color:red;\">" . $days . " day </span></p><br />";
 					}
 					
+					if($facid==1)
+					{
 					$totamt = $days * $rate + $bedx + $add_per;
-					
+					}
+					if($facid==2)
+					{
+					$totamt = $days * $rate + $add_per;
+
+					}
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The amount is Php<span id=\"totamt\" style=\"color:red;\"><b> " . number_format($totamt,2)." </b></span></p><br />" ;
 					echo "<input type=\"hidden\" name=\"htotamt\" id=\"htotamt\" value=\"".number_format($totamt,2)."\">";					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Addons Amount&nbsp;<input type=\"text\" style=\"width:80px;\" readonly name=\"addons\" id=\"addons\"></p>";

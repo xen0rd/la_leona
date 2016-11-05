@@ -118,13 +118,13 @@
 	                    	}else{
 	                    		echo "<ul>
 		                    		<li>
-			                            <a href=\"registerx.php\">Register</a>
+			                            <a href=\"registerx.php\">Customer Registration</a>
 			                        </li>
 			                        <li>
-			                            <a href=\"customer.php\">Login</a>
+			                            <a href=\"customer.php\">Customer Login</a>
 			                        </li>
 			                        <li>
-			                            <a href=\"fdesk.php\">Front Desk</a>
+			                            <a href=\"fdesk.php\">Front Desk Login</a>
 			                        </li>
 		                        </ul>";
 	                    	}
