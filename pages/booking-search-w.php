@@ -151,6 +151,8 @@ session_start();
 		 		var cout = "";
 		 		var occa = document.getElementById("hocca").value;
 		 		var cater = document.getElementById("hcater").value;
+				var presyp = document.getElementById("hpresyp").value;
+
 		 		var tin = document.getElementById("htin").value;
 			 	var tout = document.getElementById("htout").value;
 			 	var totime = document.getElementById("htotime").value;
@@ -179,7 +181,7 @@ session_start();
 		 		//alertify.error('No total amount...');
 		 		return false;
 		 	}
-	 		dataString="id="+facid+"&fac="+faci+"&use="+use+"&rate="+rate+"&bedx="+bedx+"&numpax="+numpax+"&xcs="+xcs+"&xcsamt="+xcsamt+"&per="+per+"&cin="+cin+"&cout="+cout+"&tin="+tin+"&tout="+tout+"&totime="+totime+"&addhrs="+addhrs+"&addhrsamt="+addhrsamt+"&days="+days+"&totamt="+totamt+"&mode="+mode.value+"&status="+status+"&email="+email+"&occa="+occa+"&cater="+cater+"&image="+image+"&addons="+addons+"&totalamt="+totalamt+"&items="+items;
+	 		dataString="id="+facid+"&fac="+faci+"&use="+use+"&rate="+rate+"&bedx="+bedx+"&numpax="+numpax+"&xcs="+xcs+"&xcsamt="+xcsamt+"&per="+per+"&cin="+cin+"&cout="+cout+"&tin="+tin+"&tout="+tout+"&totime="+totime+"&addhrs="+addhrs+"&addhrsamt="+addhrsamt+"&days="+days+"&totamt="+totamt+"&mode="+mode.value+"&status="+status+"&email="+email+"&occa="+occa+"&cater="+cater+"&image="+image+"&addons="+addons+"&totalamt="+totalamt+"&items="+items+"&presyp="+presyp;
 		 	alertify.confirm('Are you sure you want to reserve this booking?', function (e) {
                 if(e){
                 	alertify.alert(dataString);
@@ -482,11 +484,21 @@ session_start();
 					echo "<input type=\"hidden\" name=\"hfacid\" id=\"hfacid\" value=\"".$facid."\">";
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Facility Type: <span style=\"color:red;\">". $faci."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfaci\" id=\"hfaci\" value=\"".$faci."\">";
-					if($diff->format('%d')=='0'){
+					
+					if($facid==3)
+					{
+						
+							$use_d="Day";
+					
+					}
+					
+					else($diff->format('%d')=='0'){
 						$use="Day Use";
 					}else{
 						$use="Overnight";
 					}
+					
+					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Type of use: <span style=\"color:red;\">". $use."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"huse\" id=\"huse\" value=\"".$use."\">";
 					echo "<input type=\"hidden\" name=\"hrate\" id=\"hrate\" value=\"".$rate."\">";
@@ -532,6 +544,22 @@ session_start();
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Event: <span style=\"color:red;\">". $occasion." </span> Catering service:<span style=\"color:red;\">".$cater."</span></p><br />";
 						echo "<input type=\"hidden\" name=\"hocca\" id=\"hocca\" value=\"".$occasion."\">";
 						echo "<input type=\"hidden\" name=\"hcater\" id=\"hcater\" value=\"".$cater."\">";
+						
+						if($cater == "Yes")
+						{
+							$presyp = $numpax * 400;
+							echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Catering Amount per person:<span style=\"color:red;\">400</span> </p><br />";
+							echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Amount of cater:<span style=\"color:red;\">".$presyp."</span> </p><br />";	
+
+						}
+						else
+						{
+							$presyp = 0;
+							
+						}
+						
+						echo "<input type=\"hidden\" name=\"hpresyp\" id=\"hpresyp\" value=\"".$presyp."\">";
+
 
 					}else{
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Check out date is <span style=\"color:red;\">". $cout."</span></p><br />";
@@ -550,15 +578,23 @@ session_start();
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of day is <span style=\"color:red;\">" . $days . " day </span></p><br />";
 					}
 					
-					if($facid==1)
+					if($facid == 1)
 					{
 					$totamt = $days * $rate + $bedx + $add_per;
 					}
-					if($facid==2)
+					else if($facid == 2)
 					{
 					$totamt = $days * $rate + $add_per;
 
 					}
+					else 
+					{
+					$totamt = $days * $rate + $add_per + $presyp + $addhrs_amt;
+
+					}
+					
+
+					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The amount is Php<span id=\"totamt\" style=\"color:red;\"><b> " . number_format($totamt,2)." </b></span></p><br />" ;
 					echo "<input type=\"hidden\" name=\"htotamt\" id=\"htotamt\" value=\"".number_format($totamt,2)."\">";					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Addons Amount&nbsp;<input type=\"text\" style=\"width:80px;\" readonly name=\"addons\" id=\"addons\"></p>";

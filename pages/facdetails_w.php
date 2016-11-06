@@ -224,6 +224,25 @@ if (!isset($_GET['id'])){
 
 			alertify.alert(td);
 		}
+		
+		
+		
+		$(function(){
+	$("#typefaci").change(function(){
+		if($(this).val() == "Casa Leona 1"){
+			$("#numpax").attr("max","3");
+			$("#numpax").attr("min","0");
+		}
+		if($(this).val() == "Casa Leona 2"){
+			$("#numpax").attr("max","6");
+			$("#numpax").attr("min","0");
+		}
+		if($(this).val() == "La Leona Attic"){
+			$("#numpax").attr("max","12");
+			$("#numpax").attr("min","0");
+		}
+	});
+		});
 		</script>
 
 

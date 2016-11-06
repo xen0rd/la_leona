@@ -28,13 +28,15 @@
 	$email = mysqli_real_escape_string($con, $_POST["email"]);
 	$image = mysqli_real_escape_string($con, $_POST["image"]);
 	$items = mysqli_real_escape_string($con, $_POST["items"]);
+		$presyp = mysqli_real_escape_string($con, $_POST["presyp"]);
+
 	//echo $sql;
 	if($mode=="cash"){
-		$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','$status')";
+		$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status,cateramount) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','$status','$presyp')";
 		$result = mysqli_query($con, $sql);
 		echo "success-cash";
 	}else if($mode=="cashdp"){
-		$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','pending-cd')";
+		$sql="INSERT into tblreservations(facid,facname,typeofuse,rate,xbed,numpax,xcs,xcsamt,per,cin,cout,tin,tout,totime,addhrs,addhrsamt,numdays,totamt,occasion,cater,mode,email,status,cateramount) VALUES($facid,'$faci','$use','$rate','$bedx','$numpax','$xcs','$xcsamt','$per','$cin','$cout','$tin','$tout','$totime','$addhrs','$addhrsamt','$days','$totalamt','$occa','$cater','$mode','$email','pending-cd','$presyp')";
 		$result = mysqli_query($con, $sql);
 		echo "success-cashdp";
 	}

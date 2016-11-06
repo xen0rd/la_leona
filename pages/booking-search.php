@@ -154,6 +154,8 @@ session_start();
 		 		var cout = "";
 		 		var occa = document.getElementById("hocca").value;
 		 		var cater = document.getElementById("hcater").value;
+				var presyp = document.getElementById("hpresyp").value;
+
 		 		var tin = document.getElementById("htin").value;
 			 	var tout = document.getElementById("htout").value;
 			 	var totime = document.getElementById("htotime").value;
@@ -182,7 +184,7 @@ session_start();
 		 		//alertify.error('No total amount...');
 		 		return false;
 		 	}
-	 		dataString="id="+facid+"&fac="+faci+"&totalamt="+totamt+"&totamt="+totalamt+"&use="+use+"&rate="+rate+"&bedx="+bedx+"&numpax="+numpax+"&xcs="+xcs+"&xcsamt="+xcsamt+"&per="+per+"&cin="+cin+"&cout="+cout+"&tin="+tin+"&tout="+tout+"&totime="+totime+"&addhrs="+addhrs+"&addhrsamt="+addhrsamt+"&days="+days+"&mode="+mode.value+"&status="+status+"&email="+email+"&occa="+occa+"&cater="+cater+"&image="+image+"&addons="+addons+"&totalamt="+totalamt+"&items="+items;
+	 		dataString="id="+facid+"&fac="+faci+"&totalamt="+totamt+"&totamt="+totalamt+"&presyp="+presyp+"&use="+use+"&rate="+rate+"&bedx="+bedx+"&numpax="+numpax+"&xcs="+xcs+"&xcsamt="+xcsamt+"&per="+per+"&cin="+cin+"&cout="+cout+"&tin="+tin+"&tout="+tout+"&totime="+totime+"&addhrs="+addhrs+"&addhrsamt="+addhrsamt+"&days="+days+"&mode="+mode.value+"&status="+status+"&email="+email+"&occa="+occa+"&cater="+cater+"&image="+image+"&addons="+addons+"&totalamt="+totalamt+"&items="+items;
 		 	alertify.confirm('Are you sure you want to reserve this booking?', function (e) {
                 if(e){
                 	alertify.alert(dataString);
@@ -192,7 +194,7 @@ session_start();
 	                    data: dataString,
 	                    cache: false,
 	                    success: function(result){
-	                    	//alert(result);
+	                    	alert(result);
 	                    	if(result=="success-cash"){
 	                    		window.location.href="index.php";
 	                    	}else if(result=="success-cashdp"){
@@ -500,12 +502,24 @@ session_start();
 					}
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:10px;\">You choose facility id: <span style=\"color:red;\">". $facid."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfacid\" id=\"hfacid\" value=\"".$facid."\">";
+					
+				
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">You choose facility type: <span style=\"color:red;\">". $faci."</span></p><br />";
 					echo "<input type=\"hidden\" name=\"hfaci\" id=\"hfaci\" value=\"".$faci."\">";
-					if($diff->format('%d')=='0'){
-						$use_d="Day use";
-					}else{
-						$use_d="Overnight";
+						
+					
+					if($facid==3)
+					{
+						
+							$use_d="Day";
+					
+					}
+					else{
+						if($diff->format('%d')=='0'){
+							$use_d="Day use";
+						}else{
+							$use_d="Overnight";
+						}
 					}
 				
 					
@@ -532,6 +546,7 @@ session_start();
 						$add_per= 0.00;
 					}
 					$xcs_amt = $xcs * $per;
+					
 					echo "<input type=\"hidden\" name=\"hxcsamt\" id=\"hxcsamt\" value=\"".$xcs_amt."\">";
 					
 					if($facid==2)
@@ -543,7 +558,9 @@ session_start();
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The rate of excess person: PHP<span style=\"color:red;\">". $per." </span></p><br />";
 					}
 					echo "<input type=\"hidden\" name=\"hper\" id=\"hper\" value=\"".$per."\">";
-					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">No. of Persons <span style=\"color:red;\">". $numpax." </span>Max(".$xpax.") Excess(<span style=\"color:red;\">".$xcs."</span>) Amount(<span style=\"color:red;\">".$xcs_amt."</span>)</p><br />";
+					
+						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">No. of Persons <span style=\"color:red;\">". $numpax." </span>Max(".$xpax.") Excess(<span style=\"color:red;\">".$xcs."</span>) Amount(<span style=\"color:red;\">".$xcs_amt."</span>)</p><br />";
+
 					echo "<input type=\"hidden\" name=\"hnumpax\" id=\"hnumpax\" value=\"".$numpax."\">";
 					echo "<input type=\"hidden\" name=\"hxcs\" id=\"hxcs\" value=\"".$xcs."\">";
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Check in date is <span style=\"color:red;\">". $cin."</span></p><br />";
@@ -559,14 +576,32 @@ session_start();
 						echo "<input type=\"hidden\" name=\"haddhrsamt\" id=\"haddhrsamt\" value=\"".$addhrs_amt."\">";
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Additional hours of <span style=\"color:red;\">". $addhrs." </span>hours Amount(<span style=\"color:red;\">".$addhrs_amt."</span>)</p><br />";
 						echo "<input type=\"hidden\" name=\"haddhrs\" id=\"haddhrs\" value=\"".$addhrs."\">";
-						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Event: <span style=\"color:red;\">". $occasion." </span> Catering service:<span style=\"color:red;\">".$cater."</span></p><br />";
+						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Event: <span style=\"color:red;\">". $occasion." </span> Catering service:<span style=\"color:red;\">".$cater."</span> </p><br />";
+						
+						if($cater == "Yes")
+						{
+							$presyp = $numpax * 400;
+							echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Catering Amount per person:<span style=\"color:red;\">400</span> </p><br />";
+							echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Total Amount of cater:<span style=\"color:red;\">".$presyp."</span> </p><br />";	
+
+						}
+						else
+						{
+							$presyp = 0;
+							
+						}
+						
+						
+						
 						echo "<input type=\"hidden\" name=\"hocca\" id=\"hocca\" value=\"".$occasion."\">";
 						echo "<input type=\"hidden\" name=\"hcater\" id=\"hcater\" value=\"".$cater."\">";
+						echo "<input type=\"hidden\" name=\"hpresyp\" id=\"hpresyp\" value=\"".$presyp."\">";
+
 
 					}else{
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">Check out date is <span style=\"color:red;\">". $cout."</span></p><br />";
 						echo "<input type=\"hidden\" name=\"hcout\" id=\"hcout\" value=\"".$cout."\">";
-						$days = $diff->format("%a");
+						$days = $diff->format("%d");
 						
 						
 					}
@@ -581,9 +616,20 @@ session_start();
 						echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The total number of day is <span style=\"color:red;\">" . $days . " day </span></p><br />";
 					}
 					
-					
+					if($facid == 1)
+					{
 					$totamt = $days * $rate + $bedx + $add_per;
+					}
+					else if($facid == 2)
+					{
+					$totamt = $days * $rate + $add_per;
 
+					}
+					else 
+					{
+					$totamt = $days * $rate + $add_per + $presyp + $addhrs_amt;
+
+					}
 					
 					echo "<p style=\"font-size:14px;padding:0px;margin-top:-12px;\">The amount is Php<span id=\"totamt\" style=\"color:red;\"><b> " . number_format($totamt,2)." </b></span></p><br />" ;
 					echo "<input type=\"hidden\" name=\"htotamt\" id=\"htotamt\" value=\"".number_format($totamt,2)."\">";					

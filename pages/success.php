@@ -146,6 +146,8 @@
         <div class="body" style="align:center;height:790px;">
             <?php
                 include 'db_connect.php';
+								include "connect.php"; 
+
 
                 //Store transaction information from PayPal
                 $item_number = $_GET['item_number']; 

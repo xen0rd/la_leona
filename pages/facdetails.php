@@ -32,7 +32,7 @@ if (!isset($_GET['id'])){
 		    $("#txtFromDate").datepicker({
 		        minDate: 3,
 		        maxDate: "+365D",
-		        numberOfMonths: 2,
+		        numberOfMonths: 1,
 		        onSelect: function(selected) {
 		    	var date = $(this).datepicker('getDate');
 		         if(date){
@@ -44,9 +44,9 @@ if (!isset($_GET['id'])){
 		    });
 		 
 		    $("#txtToDate").datepicker({ 
-		        minDate: 0,
+		       minDate: 0,
 		        maxDate:"+365D",
-		        numberOfMonths: 2,
+		        numberOfMonths: 1,
 		        onSelect: function(selected) {
 		           $("#txtFromDate").datepicker("option","maxDate", selected)
 		           daysbetween();
@@ -155,6 +155,7 @@ if (!isset($_GET['id'])){
                             	document.getElementById('xpax').value=display[2];
                             	document.getElementById('xper').value=display[3];
                             	document.getElementById('numpax').placeholder="Max "+display[2];
+								
                             }else if(Number(facid)==1){
                             	var display = result.split("-");
                             	document.getElementById('xrate').value=display[0];
@@ -163,6 +164,8 @@ if (!isset($_GET['id'])){
                             	document.getElementById('xpax').value=display[2];
                             	document.getElementById('xper').value=display[3];
                             	document.getElementById('numpax').placeholder="Max "+display[2];
+								
+
                             }else{
                             	var display = result.split("-");
                             	document.getElementById('xrate').value=display[0];
@@ -224,7 +227,27 @@ if (!isset($_GET['id'])){
 
 			alertify.alert(td);
 		}
-		</script>
+
+		
+		
+		$(function(){
+	$("#typefaci").change(function(){
+		if($(this).val() == "Casa Leona 1"){
+			$("#numpax").attr("max","3");
+			$("#numpax").attr("min","0");
+		}
+		if($(this).val() == "Casa Leona 2"){
+			$("#numpax").attr("max","6");
+			$("#numpax").attr("min","0");
+		}
+		if($(this).val() == "La Leona Attic"){
+			$("#numpax").attr("max","12");
+			$("#numpax").attr("min","0");
+		}
+	});
+		});
+</script>
+		
 
 
 	<style>
@@ -602,7 +625,7 @@ if (!isset($_GET['id'])){
 					if(isset($_SESSION['reserve'])){
 						if($_SESSION['reserve']==1){
 								echo "<select id=\"typefaci\" name=\"facility\" required onchange=\"chkrate('".$id."');\">
-							<option value=\"none\"></option>";
+							<option value=\"none\" disabled selected> -please select- </option>";
 							
 							$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 							if(mysqli_num_rows($res)){
@@ -621,7 +644,7 @@ if (!isset($_GET['id'])){
 					if($id==1){
 						echo "<span>&nbsp;Type of Stay:&nbsp;
 							<select id=\"typeuse\" name=\"usage\" required onchange=\"chkrate('".$id."');\">
-								<option value=\"none\"></option>";
+								<option value=\"none\" disabled selected> -please select- </option>";
 								if($_SESSION['use']=="Day"){
 									echo "<option value=\"Day\" selected>Day</option>
 									<option value=\"Night\">Night</option>";
@@ -635,7 +658,7 @@ if (!isset($_GET['id'])){
 					}else{
 						echo "<span>&nbsp;Type of Stay:&nbsp;
 						<select id=\"typeuse\" name=\"usage\" required onchange=\"chkrate('".$id."');\">
-							<option value=\"none\"></option>";
+							<option value=\"none\" disabled selected> -please select- </option>";
 							if($_SESSION['use']=="Day"){
 								echo "<option value=\"Day\" selected>Day</option>
 							<option value=\"Night\">Night</option>
@@ -674,7 +697,7 @@ if (!isset($_GET['id'])){
 						    }
 						    echo "</select></span>";
 						    }
-					echo "<strong>&nbsp;Number of Persons:&nbsp;</strong>
+					echo "<strong>&nbsp;Number of Excess Person(s):&nbsp;</strong>
 						    	<input type=\"hidden\" name=\"xpax\" id=\"xpax\" value=\"".$_SESSION['xpax']."\">
 						    <span class=\"tab\"><input type=\"number\" max=\"4\" name=\"numpax\" id=\"numpax\" style=\"width:108px\" required value=\"".$_SESSION['numpax']."\"></span>";
 					echo "<strong>&nbsp;Per Head:&nbsp;</strong>
@@ -691,7 +714,7 @@ if (!isset($_GET['id'])){
 						}
 					}else{
 								echo "<select id=\"typefaci\" name=\"facility\" required onchange=\"chkrate('".$id."');\">
-								<option value=\"none\"></option>";
+								<option value=\"none\" disabled selected> -please select- </option>";
 								$count=0;
 								$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 								if(mysqli_num_rows($res)){
@@ -709,7 +732,7 @@ if (!isset($_GET['id'])){
 						if($id==1){
 							echo "<span>&nbsp;Type of Stay:&nbsp;
 								<select id=\"typeuse\" name=\"usage\" required onchange=\"chkrate('".$id."');\">
-									<option value=\"none\"></option>
+									<option value=\"none\" disabled selected> -please select- </option>
 									<option value=\"Day\">Day</option>
 									<option value=\"Night\">Night</option>
 								</select>
@@ -717,7 +740,7 @@ if (!isset($_GET['id'])){
 						}else{
 							echo "<span>&nbsp;Type of Stay:&nbsp;
 							<select id=\"typeuse\" name=\"usage\" required onchange=\"chkrate('".$id."');\">
-								<option value=\"none\"></option>
+								<option value=\"none\" disabled selected> -please select- </option>
 								<option value=\"Day\">Day</option>
 								<option value=\"Night\">Night</option>
 							</select>
@@ -736,7 +759,7 @@ if (!isset($_GET['id'])){
 							    	<input type=\"hidden\" name=\"bedx\" id=\"bedx\">
 							    <span class=\"tab\"><select name=\"xbed\" id=\"xbed\" style=\"width:108px\"><option value=\"\">None</option><option value=\"Yes\">Yes</option></select></span>";
 							    }
-						echo "<strong>&nbsp;Number of Persons:&nbsp;</strong>
+						echo "<strong>&nbsp;Number of Excess Person(s):&nbsp;</strong>
 							    	<input type=\"hidden\" name=\"xpax\" id=\"xpax\">
 							    <span class=\"tab\"><input type=\"number\" name=\"numpax\" id=\"numpax\" style=\"width:108px\" required></span>";
 						if ($id==1)
@@ -777,7 +800,7 @@ if (!isset($_GET['id'])){
 					if(isset($_SESSION['reserve'])){
 						if($_SESSION['reserve']==1){
 							echo "<select id=\"typefaci\" name=\"facility\" required style=\"width:160px;\" onchange=\"chkrate('".$id."');\">
-								<option value=\"none\"></option>";
+								<option value=\"none\" disabled selected> -please select-</option>";
 								
 								$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 								if(mysqli_num_rows($res)){
@@ -797,7 +820,7 @@ if (!isset($_GET['id'])){
 						</span>
 						<span>&nbsp;Type of Stay:&nbsp;
 							<select id=\"typeuse\" name=\"usage\" required style=\"width:70px;\" onchange=\"chkrate('".$id."');\">
-								<option value=\"none\"></option>";
+								<option value=\"none\" disabled selected> -please select- </option>";
 								if($_SESSION['use']=="AM"){
 									echo "<option value=\"AM\">AM</option>
 											<option value=\"PM\">PM</option>
@@ -877,7 +900,7 @@ if (!isset($_GET['id'])){
 						}
 				}else{
 						echo "<select id=\"typefaci\" name=\"facility\" required style=\"width:160px;\" onchange=\"chkrate('".$id."');\">
-							<option value=\"none\"></option>";
+							<option value=\"none\" disabled selected> -please select- </option>";
 							
 							$res = mysqli_query($con, "SELECT * FROM tbltype where facid='$id' order by code");
 							if(mysqli_num_rows($res)){
@@ -893,7 +916,7 @@ if (!isset($_GET['id'])){
 					</span>
 					<span>&nbsp;Type of Stay:&nbsp;
 						<select id=\"typeuse\" name=\"usage\" required style=\"width:70px;\" onchange=\"chkrate('".$id."');\">
-							<option value=\"none\"></option>
+							<option value=\"none\" disabled selected> -please select- </option>
 							<option value=\"AM\">AM</option>
 							<option value=\"PM\">PM</option>
 							<option value=\"AM-PM\">AM-PM</option>

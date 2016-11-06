@@ -53,7 +53,7 @@ if (!isset($_POST["txn_id"]) && !isset($_POST["txn_type"])){
 	exit();
 } else {
 	//Database Connection
-	$link = mysqli_connect($host, $user, $pass);
+	$link = mysqli_connect($con, $host, $user, $pass);
 	mysqli_select_db($db_name);
 	
 	// Response from Paypal
